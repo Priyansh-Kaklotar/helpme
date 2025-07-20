@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import mongoose, { Connection } from "mongoose";
 
 // const connection: ConnectionObject = {};
@@ -60,3 +61,33 @@ export default dbConnect;
 //   cached.conn = await cached.promise;
 //   return cached.conn;
 // };
+=======
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const MONGO_URI = process.env.MONGO_URI;
+
+const cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
+export default connnectTodataBase = async () => {
+  if(cached.conn) {
+    return cached.conn;
+  }
+
+  if(!cached.promise){
+    cached.promise = mongoose.connect(MONGO_URI,{
+        usenewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+  }
+
+  cached.conn = await cached.promise;
+  return cached.conn;
+}
+>>>>>>> 892ca423c55ace531db34367085b9f2c4d873cd0
