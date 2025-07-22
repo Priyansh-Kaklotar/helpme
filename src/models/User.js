@@ -5,28 +5,20 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  type: {
-    type: String,
-    required: true,
-    enum: ["Service Provider", "Service Tacker"],
-  },
   password: {
     type: String,
     required: true,
   },
+  type: {
+    type: String,
+    enum: ["Service Provider", "Service Tacker"],
+  },
   address: {
     type: String,
-    required: true,
   },
   pincode: {
     type: Number,
     length: 6,
-    required: [true, "pincode is required"],
   },
 });
 
