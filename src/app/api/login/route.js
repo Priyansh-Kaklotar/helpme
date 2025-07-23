@@ -6,16 +6,26 @@ export async function POST(req) {
     const { name, password } = await req.json();
 
     await connectToDatabase();
-    console.log(`username = ${name}, password = ${password}`);
-    const user = { name: name, password: password };
-    User.create(user);
-    return new Response(
-      JSON.stringify({
-        success: true,
-        message: "Login route success",
-      })
-    );
+
+    const user = User.findOne({ name: name }, { password: 1, _id: 0 });
+    console.log("password = ", password);
+    if (password === password) {
+      return new Response(
+        JSON.stringify({
+          success: true,
+          message: "Login successful",
+        })
+      );
+    } else {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: "Login failed username or password is Wrong",
+        })
+      );
+    }
   } catch (error) {
+    console.log("error", error.message);
     return new Response(
       JSON.stringify({
         success: false,
@@ -24,28 +34,3 @@ export async function POST(req) {
     );
   }
 }
-
-// export async function POST(request) {
-//   try {
-//     await connectToDatabase();
-
-//     // connection thay gayu chhe have aagal karvanu chhe !!
-//     // postman ma http://localhost:3000/api/login marje username admin and password 1234 error aavse pan thay chhe
-
-//     return new Response(
-//       JSON.stringify({ message: "Connected to MongoDB Atlas" }),
-//       {
-//         status: 200,
-//         headers: { "Content-Type": "application/json" },
-//       }
-//     );
-//   } catch (err) {
-//     return new Response(
-//       JSON.stringify({ message: "DB connection failed", error: err.message }),
-//       {
-//         status: 500,
-//         headers: { "Content-Type": "application/json" },
-//       }
-//     );
-//   }
-// }
