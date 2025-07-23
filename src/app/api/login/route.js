@@ -2,6 +2,7 @@ import connectToDatabase from "../../../lib/mongodb";
 import User from "@/src/models/User";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import bcrypt from 'bcryptjs'
 
 dotenv.config();
 
@@ -15,7 +16,8 @@ export async function POST(req) {
     if(!user){
       return req.status(404).send("Chala ja BSDK")
     }
-    if(user.password === password){
+    const is_mathed = await bcrypt.compare(password ,user.password)
+    if(is_mathed){
       const token = jwt.sign(
         {
           name,
