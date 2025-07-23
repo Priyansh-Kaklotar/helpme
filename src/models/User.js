@@ -9,6 +9,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  email :{
+    type : String,
+    required : true
+  },
   type: {
     type: String,
     enum: ["Service Provider", "Service Tacker"],
