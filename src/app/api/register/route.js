@@ -1,10 +1,12 @@
 import connectToDatabase from "../../../lib/mongodb";
-// import User from "@/src/models/User";
 import Otp from "@/src/models/Otp";
 import generateOtp from "@/src/lib/generateOtp";
 import dotenv from "dotenv";
 import User from "@/src/models/User.model";
 import sendMail from "../../utils/mailSender";
+import jwt from "jsonwebtoken";
+import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
 dotenv.config();
 
@@ -12,16 +14,16 @@ export async function POST(req) {
   try {
     const { name, password, email, type, address, pincode } = await req.json();
     await connectToDatabase();
-    // console.log(`username = ${name}, password = ${password}`);
-    const user = {
-      name: name,
-      password: password,
-      email: email,
-      type: type,
-      address: address,
-      pincode: pincode,
-    };
-    await User.create(user);
+
+    const user = await User.create({
+      name,
+      password,
+      email,
+      type,
+      address,
+      pincode,
+    });
+
     // have koi error no aave etle have mail send karie
     const otp = generateOtp();
     await Otp.create({
@@ -37,12 +39,30 @@ export async function POST(req) {
       `<p>Your OTP code is <b>${otp}</b>. It expires in 5 minutes.</p>`
     );
 
-    return new Response(
-      JSON.stringify({
-        success: true,
-        message: "sign up successfully done",
-      })
-    );
+    //JWT Token created
+    const token = jwt.sign({ foo: "bar" }, process.env.JWT_KEY);
+    console.log("JWT Token = ", token);
+
+    const userId = String(user._id);
+
+    // NextResponse = aa next app ma response send karva mate vapray che.
+    const response = NextResponse.json({
+      success: true,
+      message: "User Registered Successfully",
+    });
+
+    // Set cookie with userId
+    response.cookies.set("userId", userId, {
+      httpOnly: true,
+      path: "/",
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    });
+
+    //set JWT Token also as a cookie
+    response.cookies.set("token", token);
+
+    return response;
   } catch (error) {
     return new Response(
       JSON.stringify({
