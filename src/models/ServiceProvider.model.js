@@ -16,6 +16,7 @@ const ServiceProviderSchema = new mongoose.Schema({
   },
   availability:{} ,
   address:{
-        
   }
 });
+
+export default mongoose.models.ServiceProvider || mongoose.model("ServiceProvider" ,ServiceProviderSchema);

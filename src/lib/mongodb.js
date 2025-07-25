@@ -15,7 +15,18 @@ if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
 
-async function connectToDatabase() {
+export default async function connectToDatabase() {
+  const MONGO_URI = process.env.MONGO_URI;
+
+  if (!MONGO_URI) {
+    throw new Error("Please define the MONGO_URI environment variable");
+  }
+
+  let cached = global.mongoose;
+
+  if (!cached) {
+    cached = global.mongoose = { conn: null, promise: null };
+  }
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
@@ -26,4 +37,3 @@ async function connectToDatabase() {
   return cached.conn;
 }
 
-export default connectToDatabase;

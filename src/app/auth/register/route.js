@@ -1,4 +1,4 @@
-import connectToDatabase from "../../../lib/mongodb";
+import connectToDatabase from "@/src/lib/mongodb";
 // import User from "@/src/models/User";
 import Otp from "@/src/models/Otp";
 import generateOtp from "@/src/lib/generateOtp";
