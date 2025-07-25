@@ -1,5 +1,5 @@
 import connectToDatabase from "../../../lib/mongodb";
-import User from "@/src/models/User";
+import User from "@/src/models/User.model";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
