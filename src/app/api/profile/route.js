@@ -1,9 +1,13 @@
 import User from "@/src/models/User.model";
 import connectToDatabase from "@/src/lib/mongodb";
+import { cookies } from "next/headers";
 
 export async function GET(request) {
-  const url = new URL(request.url);
-  const userid = url.searchParams.get("id");
+  //   const url = new URL(request.url);
+  //   const userid = url.searchParams.get("id");
+  const cookieStore = await cookies();
+  const userid = await cookieStore.get("userId")?.value;
+
   console.log(userid);
   await connectToDatabase();
   const user = await User.findById(userid);
