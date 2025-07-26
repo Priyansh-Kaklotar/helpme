@@ -7,6 +7,8 @@ import { NextResponse } from "next/server";
 
 dotenv.config();
 
+const JWT_SECRET = process.env.JWT_KEY;
+
 export async function POST(req) {
   try {
     const { name, password } = await req.json();

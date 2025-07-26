@@ -1,25 +1,23 @@
 import Otp from "@/src/models/Otp";
+import { NextResponse } from "next/server";
 
 export async function POST(req) {
   const { email, otp } = await req.json();
-  const record = await Otp.findOne({ email, otp, used: false });
+  try {
+    const record = await Otp.findOne({ email, otp, used: false });
+    if (!record) {
+      throw new Error("Record Not found")
+    }
+    if (record.expireAt < new Date()) {
+      throw new Error("Otp expired");
+    }
+    record.used = true;
+    await record.save();
+    return NextResponse.json({success:true , message:"OTP verified"});
 
-  // console.log(record);
-  if (!record) {
-    return new Response(
-      JSON.stringify({ success: false, error: "Invalid OTP" }),
-      { status: 400 }
-    );
+  } catch (error) {
+    return NextResponse.json({success : false, message :error.message} , {status:400});
+  }finally{
+    await Otp.findOneAndDelete({email , otp}); // extra j chhe karan ke expire thay gai chhe .
   }
-
-  if (record.expireAt < new Date()) {
-    return new Response(
-      JSON.stringify({ success: false, error: "OTP expired" }),
-      { status: 400 }
-    );
-  }
-
-  record.used = true;
-  await record.save();
-  return new Response(JSON.stringify({ success: true }), { status: 200 });
 }
