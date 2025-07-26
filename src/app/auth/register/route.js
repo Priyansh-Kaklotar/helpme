@@ -1,9 +1,10 @@
-import connectToDatabase from "../../../lib/mongodb";
+import connectToDatabase from "@/src/lib/mongodb";
 import Otp from "@/src/models/Otp";
 import generateOtp from "@/src/lib/generateOtp";
 import dotenv from "dotenv";
 import User from "@/src/models/User.model";
-import sendMail from "../../utils/mailSender";
+import ServiceProvider from '@/src/models/ServiceProvider.model';
+import sendMail from "@/src/app/utils/mailSender";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
@@ -15,14 +16,28 @@ export async function POST(req) {
     const { name, password, email, type, address, pincode } = await req.json();
     await connectToDatabase();
 
-    const user = await User.create({
-      name,
-      password,
-      email,
-      type,
-      address,
-      pincode,
-    });
+    let user;
+
+    if (type === "Customer") {
+      user = await User.create({
+        name,
+        password,
+        email,
+        type,
+        address,
+        pincode,
+      });
+    }
+    else{
+      user = await ServiceProvider.create({
+        name,
+        password,
+        email,
+        type,
+        address,
+        pincode,
+      })
+    }
 
     // have koi error no aave etle have mail send karie
     const otp = generateOtp();

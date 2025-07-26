@@ -13,6 +13,7 @@ export async function POST(req) {
   }
 
   if (record.expireAt < new Date()) {
+    await Otp.findOneAndDelete({email , otp}); // extra j chhe karan ke expire thay gai chhe .
     return new Response(
       JSON.stringify({ success: false, error: "OTP expired" }),
       { status: 400 }

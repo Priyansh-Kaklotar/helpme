@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 
 dotenv.config();
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_KEY;
 
 export async function POST(req) {
   try {

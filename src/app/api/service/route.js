@@ -1,17 +1,27 @@
 import User from "@/src/models/User.model";
 import connectToDatabase from "@/src/lib/mongodb";
 import { cookies } from "next/headers";
+import ServiceProviderModel from "@/src/models/ServiceProvider.model";
 
 export async function GET(request) {
-  //   const url = new URL(request.url);
-  //   const userid = url.searchParams.get("id");
+  const url = new URL(request.url);
+  const type = url.searchParams.get("type");
+  console.log(type);
   const cookieStore = await cookies();
   const userid = await cookieStore.get("userId")?.value;
 
   console.log(userid);
   await connectToDatabase();
-  const user = await User.findById(userid);
-  const type = user.type;
+
+  // const user = await User.findById(userid);
+  let user;
+  if(type === "Customer"){
+    user = await User.findById(userid);
+  }
+  else{
+    user = await ServiceProviderModel.findById(userid);
+  }
+  // const type = user.type;
   const userpincode = user.pincode;
   if (type === "Customer") {
     const allProvider = await User.find({
