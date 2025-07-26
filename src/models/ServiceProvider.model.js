@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const ServiceProviderSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
   businessName: {
     type: String,
     required: true,
@@ -14,9 +18,9 @@ const ServiceProviderSchema = new mongoose.Schema({
     type: String,
     enum: ["Cleaner", "Electrician", "Plumber", "Painter"],
   },
-  availability:{} ,
-  address:{
-  }
+  availability: {},
+  address: {},
 });
 
-export default mongoose.models.ServiceProvider || mongoose.model("ServiceProvider" ,ServiceProviderSchema);
+export default mongoose.models.ServiceProvider ||
+  mongoose.model("ServiceProvider", ServiceProviderSchema);
