@@ -3,7 +3,7 @@ import Otp from "@/src/models/Otp";
 import generateOtp from "@/src/lib/generateOtp";
 import dotenv from "dotenv";
 import User from "@/src/models/User.model";
-import ServiceProvider from '@/src/models/ServiceProvider.model';
+import ServiceProvider from "@/src/models/ServiceProvider.model";
 import sendMail from "@/src/app/utils/mailSender";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
@@ -27,8 +27,7 @@ export async function POST(req) {
         address,
         pincode,
       });
-    }
-    else{
+    } else {
       user = await ServiceProvider.create({
         name,
         password,
@@ -36,7 +35,7 @@ export async function POST(req) {
         type,
         address,
         pincode,
-      })
+      });
     }
 
     // have koi error no aave etle have mail send karie
@@ -56,7 +55,6 @@ export async function POST(req) {
 
     //JWT Token created
     const token = jwt.sign({ foo: "bar" }, process.env.JWT_KEY);
-    console.log("JWT Token = ", token);
 
     const userId = String(user._id);
 

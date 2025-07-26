@@ -4,10 +4,12 @@ import { cookies } from "next/headers";
 import ServiceProviderModel from "@/src/models/ServiceProvider.model";
 
 export async function GET(request) {
-  const url = new URL(request.url);
-  const type = url.searchParams.get("type");
-  console.log(type);
+  // const url = new URL(request.url);
+  // const type = url.searchParams.get("type");
+  // console.log(type);
+
   const cookieStore = await cookies();
+  const type = await cookieStore.get("type")?.value;
   const userid = await cookieStore.get("userId")?.value;
 
   console.log(userid);
@@ -15,16 +17,16 @@ export async function GET(request) {
 
   // const user = await User.findById(userid);
   let user;
-  if(type === "Customer"){
+  if (type === "Customer") {
     user = await User.findById(userid);
-  }
-  else{
+  } else {
     user = await ServiceProviderModel.findById(userid);
   }
+
   // const type = user.type;
   const userpincode = user.pincode;
   if (type === "Customer") {
-    const allProvider = await User.find({
+    const allProvider = await ServiceProviderModel.find({
       type: "Service Provider",
       pincode: userpincode,
     });
