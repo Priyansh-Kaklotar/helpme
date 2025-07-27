@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import Booking from "./Booking.model";
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -20,6 +21,10 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     length: 6,
   },
+  // booking: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "Booking",
+  // },
 });
 
 UserSchema.pre("save", async function (next) {
