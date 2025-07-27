@@ -2,7 +2,6 @@ import connectToDatabase from "@/src/lib/mongodb";
 import Otp from "@/src/models/Otp";
 import generateOtp from "@/src/lib/generateOtp";
 import dotenv from "dotenv";
-import User from "@/src/models/User.model";
 import ServiceProvider from "@/src/models/ServiceProvider.model";
 import sendMail from "@/src/app/utils/mailSender";
 import jwt from "jsonwebtoken";
@@ -18,7 +17,7 @@ export async function POST(req) {
 
     let user;
 
-    user = await User.create({
+    user = await ServiceProvider.create({
       name,
       password,
       email,
@@ -49,7 +48,7 @@ export async function POST(req) {
     // NextResponse = aa next app ma response send karva mate vapray che.
     const response = NextResponse.json({
       success: true,
-      message: "User Registered Successfully",
+      message: "Provider Registered Successfully",
     });
 
     // Set cookie with userId
@@ -60,7 +59,7 @@ export async function POST(req) {
       secure: process.env.NODE_ENV === "production",
     });
 
-    response.cookies.set("type", "Customer", {
+    response.cookies.set("type", "serviceProvider", {
       httpOnly: true,
       path: "/",
       sameSite: "strict",

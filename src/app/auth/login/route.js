@@ -17,15 +17,13 @@ export async function POST(req) {
     let userType = (await cookieStore).get("type")?.value;
 
     let user;
-    let isMatch;
     if (userType === "Customer") {
       user = await User.findOne({ name }).select("+password");
-      isMatch = await bcrypt.compare(password, user.password);
     } else {
       user = await ServiceProviderModel.findOne({ name }).select("+password");
-      isMatch = await bcrypt.compare(password, user.password);
     }
-
+    const isMatch = await bcrypt.compare(password, user.password);
+    
     // const token = await cookieStore.get("token")?.value;
     const token = jwt.sign({ foo: "bar" }, process.env.JWT_KEY);
 
