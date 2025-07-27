@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ["Service_Provider", "Customer"],
+    enum: ["Service Provider", "Customer"],
   },
   address: {
     type: String,

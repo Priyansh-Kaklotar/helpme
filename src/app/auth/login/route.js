@@ -23,7 +23,10 @@ export async function POST(req) {
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    const token = jwt.sign({ foo: "bar" }, process.env.JWT_KEY);
+
+    const cookieStore = cookies();
+    const token = await cookieStore.get("token")?.value;
+    // const token = jwt.sign({ foo: "bar" }, process.env.JWT_KEY);
 
     if (isMatch) {
       const response = NextResponse.json({

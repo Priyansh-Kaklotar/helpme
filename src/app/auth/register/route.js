@@ -72,12 +72,16 @@ export async function POST(req) {
       secure: process.env.NODE_ENV === "production",
     });
 
-    response.cookies.set("type", user.type, {
-      httpOnly: true,
-      path: "/",
-      sameSite: "strict",
-      secure: process.env.NODE_ENV === "production",
-    });
+    response.cookies.set(
+      "type",
+      user.type === "Customer" ? "Customer" : "serviceProvider",
+      {
+        httpOnly: true,
+        path: "/",
+        sameSite: "strict",
+        secure: process.env.NODE_ENV === "production",
+      }
+    );
 
     //set JWT Token also as a cookie
     response.cookies.set("token", token);
