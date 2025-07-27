@@ -22,14 +22,13 @@ export async function PATCH(request, { params }) {
       );
       return response;
     } else {
-      const response = NextResponse.json(
+      return response = NextResponse.json(
         {
           success: true,
           message: "Updated successfully",
         },
         { status: 200 }
       );
-      return response;
     }
   } catch (error) {
     return NextResponse.json(

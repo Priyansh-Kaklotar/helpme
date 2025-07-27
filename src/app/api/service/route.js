@@ -27,7 +27,7 @@ export async function GET(request) {
   const userpincode = user.pincode;
   if (type === "Customer") {
     const allProvider = await ServiceProviderModel.find({
-      type: "Service Provider",
+      type: "Service_Provider",
       pincode: userpincode,
     });
     return new Response(JSON.stringify(allProvider), {

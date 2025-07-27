@@ -1,8 +1,7 @@
-import connectToDatabase from "@/src/lib/mongodb";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export async function POST() {
+export async function GET() {
   const response = NextResponse.json({
     success: true,
     message: "User logged out successfully",
