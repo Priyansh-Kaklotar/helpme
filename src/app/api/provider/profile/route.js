@@ -1,31 +1,21 @@
+import connectToDatabase from "@/src/lib/mongodb";
 import ServiceProviderModel from "@/src/models/ServiceProvider.model";
-import UserModel from "@/src/models/User.model";
+import User from "@/src/models/User.model";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import connectToDatabase from "@/src/lib/mongodb";
 
 export async function GET() {
   try {
     const cookieStore = cookies();
     const type = (await cookieStore).get("type")?.value;
     const userId = (await cookieStore).get("userId")?.value;
-    if (type === "Customer") {
-      const user = await UserModel.findById(userId);
+    const user = await ServiceProviderModel.findById(userId);
 
-      return NextResponse.json({
-        user: user,
-        success: true,
-        message: "User data is fetched",
-      });
-    } else {
-      const user = ServiceProviderModel.findById(userId);
-
-      return NextResponse.json({
-        user: user,
-        success: true,
-        message: "Provider data is fetched",
-      });
-    }
+    return NextResponse.json({
+      user: user,
+      success: true,
+      message: "Provider data is fetched",
+    });
   } catch (error) {
     return NextResponse.json({
       error: error.message,
@@ -41,7 +31,7 @@ export async function PATCH(req) {
   const cookieStore = cookies();
   const userid = (await cookieStore).get("userId")?.value;
   await connectToDatabase();
-  const update = await UserModel.findByIdAndUpdate(userid, data, {
+  const update = await ServiceProviderModel.findByIdAndUpdate(userid, data, {
     new: true,
     runValidators: true,
   });
