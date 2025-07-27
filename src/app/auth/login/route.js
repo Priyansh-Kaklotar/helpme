@@ -1,4 +1,4 @@
-import connectToDatabase from "../../../../lib/mongodb";
+import connectToDatabase from "@/src/lib/mongodb";
 import User from "@/src/models/User.model";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";

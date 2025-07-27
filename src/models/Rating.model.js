@@ -25,5 +25,4 @@ const RatingSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Rating = mongoose.model("Rating", RatingSchema);
-export default Rating;
+export default mongoose.models.Rating || mongoose.model("Rating", RatingSchema)  ;
