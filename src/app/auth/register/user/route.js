@@ -3,7 +3,6 @@ import Otp from "@/src/models/Otp";
 import generateOtp from "@/src/lib/generateOtp";
 import dotenv from "dotenv";
 import User from "@/src/models/User.model";
-import ServiceProvider from "@/src/models/ServiceProvider.model";
 import sendMail from "@/src/app/utils/mailSender";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
