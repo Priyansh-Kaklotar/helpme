@@ -13,20 +13,21 @@ export async function POST(req) {
   try {
     const { name, password } = await req.json();
     await connectToDatabase();
+    const cookieStore = cookies();
+    let userType = (await cookieStore).get("type")?.value;
 
-    let user = await User.findOne({ name }).select("+password");
-    let userType = "Customer";
-
-    if (!user) {
+    let user;
+    let isMatch;
+    if (userType === "Customer") {
+      user = await User.findOne({ name }).select("+password");
+      isMatch = await bcrypt.compare(password, user.password);
+    } else {
       user = await ServiceProviderModel.findOne({ name }).select("+password");
-      userType = "serviceProvider";
+      isMatch = await bcrypt.compare(password, user.password);
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    const cookieStore = cookies();
-    const token = await cookieStore.get("token")?.value;
-    // const token = jwt.sign({ foo: "bar" }, process.env.JWT_KEY);
+    // const token = await cookieStore.get("token")?.value;
+    const token = jwt.sign({ foo: "bar" }, process.env.JWT_KEY);
 
     if (isMatch) {
       const response = NextResponse.json({

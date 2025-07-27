@@ -13,30 +13,18 @@ dotenv.config();
 
 export async function POST(req) {
   try {
-    const { name, password, email, type, address, pincode } = await req.json();
+    const { name, password, email, address, pincode } = await req.json();
     await connectToDatabase();
 
     let user;
 
-    if (type === "Customer") {
-      user = await User.create({
-        name,
-        password,
-        email,
-        type,
-        address,
-        pincode,
-      });
-    } else {
-      user = await ServiceProvider.create({
-        name,
-        password,
-        email,
-        type,
-        address,
-        pincode,
-      });
-    }
+    user = await ServiceProvider.create({
+      name,
+      password,
+      email,
+      address,
+      pincode,
+    });
 
     // have koi error no aave etle have mail send karie
     const otp = generateOtp();
@@ -61,7 +49,7 @@ export async function POST(req) {
     // NextResponse = aa next app ma response send karva mate vapray che.
     const response = NextResponse.json({
       success: true,
-      message: "User Registered Successfully",
+      message: "Provider Registered Successfully",
     });
 
     // Set cookie with userId
@@ -72,16 +60,12 @@ export async function POST(req) {
       secure: process.env.NODE_ENV === "production",
     });
 
-    response.cookies.set(
-      "type",
-      user.type === "Customer" ? "Customer" : "serviceProvider",
-      {
-        httpOnly: true,
-        path: "/",
-        sameSite: "strict",
-        secure: process.env.NODE_ENV === "production",
-      }
-    );
+    response.cookies.set("type", "serviceProvider", {
+      httpOnly: true,
+      path: "/",
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    });
 
     //set JWT Token also as a cookie
     response.cookies.set("token", token);

@@ -13,10 +13,6 @@ const UserSchema = new mongoose.Schema({
   email: {
     type: String,
   },
-  type: {
-    type: String,
-    enum: ["Service Provider", "Customer"],
-  },
   address: {
     type: String,
   },
