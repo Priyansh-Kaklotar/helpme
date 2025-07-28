@@ -38,6 +38,12 @@ const ServiceProviderSchema = new mongoose.Schema({
   availability: {
     type: Boolean, // true or false  thay sake em ..
   },
+  myServices: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Booking",
+    },
+  ],
 });
 
 ServiceProviderSchema.pre("save", async function (next) {
