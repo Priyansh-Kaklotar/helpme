@@ -15,7 +15,7 @@ const BookingSchema = new mongoose.Schema(
     },
     serviceProvider: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "ServiceProviderModel",
+      ref: "ServiceProvider",
     },
     time: {
       type: Date,
@@ -27,6 +27,7 @@ const BookingSchema = new mongoose.Schema(
     },
     bookingStatus: {
       type: String,
+      default: "pending",
       enum: ["pending", "accepted", "rejected"],
     },
   },

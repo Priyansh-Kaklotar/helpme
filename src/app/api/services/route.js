@@ -8,7 +8,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     await connectToDatabase();
-    const cookieStore = await cookies();
+    const cookieStore = cookies();
     const userId = await cookieStore.get("userId")?.value;
     const userType = await cookieStore.get("type")?.value;
 
@@ -25,7 +25,6 @@ export async function GET() {
     );
 
     const allServices = total.flatMap((provider) => provider.allService);
-    console.log(allServices);
 
     return NextResponse.json({
       data: allServices,
