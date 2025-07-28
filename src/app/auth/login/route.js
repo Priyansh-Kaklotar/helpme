@@ -1,11 +1,11 @@
-import User from "@/src/models/User.model";
+import connectToDatabase from "@/src/lib/mongodb";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import ServiceProviderModel from "@/src/models/ServiceProvider.model";
-import connectToDatabase from "@/src/lib/mongodb";
+import UserModel from "@/src/models/User.model";
 
 dotenv.config();
 
@@ -13,12 +13,23 @@ export async function POST(req) {
   try {
     const { name, password } = await req.json();
     await connectToDatabase();
-    const cookieStore = cookies();
-    let userType = (await cookieStore).get("type")?.value;
+    const cookieStore = await cookies();
+    let userType = await cookieStore.get("type")?.value;
+    let userId = cookieStore.get("userId")?.value;
+
+    //aa code comment ma reva deje...
+    // console.log("id = ", userId);
+    // let userType;
+    // console.log(await UserModel.findById(userId));
+    // if (await UserModel.findById(userId)) {
+    //   userType = "Customer";
+    // } else {
+    //   userType = "serviceProvider";
+    // }
 
     let user;
     if (userType === "Customer") {
-      user = await User.findOne({ name }).select("+password");
+      user = await UserModel.findOne({ name }).select("+password");
     } else {
       user = await ServiceProviderModel.findOne({ name }).select("+password");
     }

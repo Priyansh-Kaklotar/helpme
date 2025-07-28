@@ -20,7 +20,7 @@ const ServiceProviderSchema = new mongoose.Schema({
   allService: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "ServiceModel",
+      ref: "Service",
     },
   ],
   pincode: {

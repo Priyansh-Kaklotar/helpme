@@ -18,13 +18,13 @@ const ServiceSchema = new mongoose.Schema({
   },
   providerName: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "ServiceProviderModel",
+    ref: "ServiceProvider",
   },
   isActive: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "ServiceProviderModel",
+    ref: "ServiceProvider",
   },
 });
 
-export default mongoose.models.service ||
-  mongoose.model("service", ServiceSchema);
+export default mongoose.models.Service ||
+  mongoose.model("Service", ServiceSchema);

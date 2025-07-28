@@ -43,8 +43,6 @@ export async function POST(req) {
     //JWT Token created
     const token = jwt.sign({ foo: "bar" }, process.env.JWT_KEY);
 
-    const userId = String(user._id);
-
     // NextResponse = aa next app ma response send karva mate vapray che.
     const response = NextResponse.json({
       success: true,
@@ -52,18 +50,16 @@ export async function POST(req) {
     });
 
     // Set cookie with userId
-    response.cookies.set("userId", userId, {
+    response.cookies.set("userId", user._id, {
       httpOnly: true,
       path: "/",
       sameSite: "strict",
-      secure: process.env.NODE_ENV === "production",
     });
 
     response.cookies.set("type", "Customer", {
       httpOnly: true,
       path: "/",
       sameSite: "strict",
-      secure: process.env.NODE_ENV === "production",
     });
 
     //set JWT Token also as a cookie

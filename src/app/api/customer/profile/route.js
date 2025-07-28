@@ -26,6 +26,6 @@ export async function PATCH(req) {
         return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
     }
     else {
-        return NextResponse.json({ success: true, message: "Updated successfully" } , { status: 200 });
+        return NextResponse.json({ success: true, message: "Profile Updated successfully" } , { status: 200 });
     }
 }
