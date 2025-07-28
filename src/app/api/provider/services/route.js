@@ -49,7 +49,7 @@ export async function POST(req) {
 }
 
 export async function GET() {
-  const cookieStore = await cookies();
+  const cookieStore = cookies();
   const id = await cookieStore.get("userId")?.value;
 
   try {
@@ -58,6 +58,7 @@ export async function GET() {
     const provider = await ServiceProviderModel.findById(id).populate(
       "allService"
     );
+    // or const provider = await ServiceProviderModle.find({_id : id});
     return NextResponse.json({
       // allService: provider.allService,
       allService: provider.allService,
