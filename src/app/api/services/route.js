@@ -24,8 +24,7 @@ export async function GET() {
       "allService"
     );
 
-    const allServices = total.flatMap((provider) => provider.allService);
-    console.log(allServices);
+    const allServices = total.flatMap((provider) => provider.allService); // filter + map in built javascript function . 
 
     return NextResponse.json({
       data: allServices,
