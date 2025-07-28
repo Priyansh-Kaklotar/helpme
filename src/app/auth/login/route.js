@@ -1,4 +1,3 @@
-import connectToDatabase from "../../../../lib/mongodb";
 import User from "@/src/models/User.model";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -6,6 +5,7 @@ import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import ServiceProviderModel from "@/src/models/ServiceProvider.model";
+import connectToDatabase from "@/src/lib/mongodb";
 
 dotenv.config();
 
@@ -23,7 +23,7 @@ export async function POST(req) {
       user = await ServiceProviderModel.findOne({ name }).select("+password");
     }
     const isMatch = await bcrypt.compare(password, user.password);
-    
+
     // const token = await cookieStore.get("token")?.value;
     const token = jwt.sign({ foo: "bar" }, process.env.JWT_KEY);
 

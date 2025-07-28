@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import ServiceModel from "./Service.model";
 
 const ServiceProviderSchema = new mongoose.Schema({
   name: {
@@ -13,13 +14,15 @@ const ServiceProviderSchema = new mongoose.Schema({
   email: {
     type: String,
   },
-  type: {
-    type: String,
-    enum: ["Service Provider", "Customer"],
-  },
   address: {
     type: String,
   },
+  allService: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ServiceModel",
+    },
+  ],
   pincode: {
     type: Number,
     length: 6,
@@ -32,9 +35,6 @@ const ServiceProviderSchema = new mongoose.Schema({
     type: String,
     enum: ["Cleaner", "Electrician", "Plumber", "Painter"],
   },
-  availability: {},
-  address: {},
-
   availability: {
     type: Boolean, // true or false  thay sake em ..
   },
