@@ -9,8 +9,8 @@ export async function GET() {
   try {
     await connectToDatabase();
     const cookieStore = cookies();
-    const userId = await cookieStore.get("userId")?.value;
-    const userType = await cookieStore.get("type")?.value;
+    const userId = cookieStore.get("userId")?.value;
+    const userType = cookieStore.get("type")?.value;
 
     let user;
     if (userType === "Customer") {

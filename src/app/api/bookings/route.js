@@ -27,6 +27,7 @@ export async function POST(req) {
         .populate("user")
         .populate("service")
         .populate("serviceProvider");
+
       return NextResponse.json({
         fullBooking,
         success: true,
