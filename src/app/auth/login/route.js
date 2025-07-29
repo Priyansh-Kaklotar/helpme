@@ -13,7 +13,7 @@ export async function POST(req) {
   try {
     const { name, password } = await req.json();
     await connectToDatabase();
-    const cookieStore = await cookies();
+    const cookieStore = cookies();
     let userType = await cookieStore.get("type")?.value;
     let userId = cookieStore.get("userId")?.value;
 

@@ -31,18 +31,14 @@ export async function POST(req) {
         fullBooking,
         success: true,
         message: "Booking created successfully",
-      });
+      }, {status :200 , headers :{"Content-Type" : "application/json"}}); 
     } else {
-      return NextResponse.json({
-        success: false,
-        message: "Only Customer can Booking a service",
-      });
+      throw new Error("Only Customer can do the booking") // aam karay jenathi 3 vaar nextRespopnse no lakhvu pade aa me documentation ma vachyu hatu..
     }
   } catch (error) {
     return NextResponse.json({
-      error: error.message,
+      message: error.message,
       success: false,
-      message: " Error in the Booking route post request",
-    });
+    }, {status : 400});
   }
 }
