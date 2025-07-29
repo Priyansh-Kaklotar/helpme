@@ -15,7 +15,7 @@ export async function POST(req) {
 
     if (userType === "Customer") {
       const serviceData = await ServiceModel.findById(serviceId);
-      const providerId = serviceData.providerName;
+      const providerId = serviceData.serviceProvider;
 
       const booking = await BookingModel.create({
         user: userId,

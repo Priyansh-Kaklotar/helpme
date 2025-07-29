@@ -14,8 +14,8 @@ export async function POST(req) {
     const { name, password } = await req.json();
     await connectToDatabase();
     const cookieStore = cookies();
-    let userType = await cookieStore.get("type")?.value;
-    let userId = cookieStore.get("userId")?.value;
+    let userType = (await cookieStore).get("type")?.value;
+    let userId = (await cookieStore).get("userId")?.value;
 
     //aa code comment ma reva deje...
     // console.log("id = ", userId);
@@ -35,7 +35,7 @@ export async function POST(req) {
     }
     const isMatch = await bcrypt.compare(password, user.password);
 
-    // const token = await cookieStore.get("token")?.value;
+    // const token = (await cookieStore).get("token")?.value;
     const token = jwt.sign({ foo: "bar" }, process.env.JWT_KEY);
 
     if (isMatch) {
