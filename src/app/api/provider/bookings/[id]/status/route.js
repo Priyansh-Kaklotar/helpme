@@ -8,11 +8,11 @@ import { NextResponse } from "next/server";
 
 //id = booking id
 
-// me aama aatlu kam karu che baki have booking confirm karya pachi aa booking ni id ne customer and provider ma save karvanu che
 export async function PATCH(req, { params }) {
   try {
+    await connectToDatabase();
     const { statusInfo } = await req.json();
-    const { id } = params;
+    const { id } = await params;
     const cookieStore = await cookies();
     const userId = cookieStore.get("userId")?.value;
     const userType = cookieStore.get("type")?.value;
@@ -23,7 +23,6 @@ export async function PATCH(req, { params }) {
       }).populate("service");
 
       const customerId = bookingDetails.user;
-
       const customer = await UserModel.findById(customerId);
       const provider = await ServiceProviderModel.findById(userId);
 
@@ -34,22 +33,25 @@ export async function PATCH(req, { params }) {
           `<p>your service of ${bookingDetails.service.title} is accepted</p>`
         );
 
-        // await UserModel.findByIdAndUpdate(
-        //   customerId,
-        //   {
-        //     $push: { confirmBooking: id },
-        //   },
-        //   { new: true }
-        // );
+        const customerBooking = await UserModel.findByIdAndUpdate(
+          customerId,
+          {
+            $push: { confirmBooking: id },
+          },
+          { new: true }
+        );
 
-        // await ServiceProviderModel.findByIdAndUpdate(
-        //   userId,
-        //   { $push: { confirmService: id } },
-        //   { new: true }
-        // );
+        const providerConfirmService =
+          await ServiceProviderModel.findByIdAndUpdate(
+            userId,
+            { $push: { confirmService: id } },
+            { new: true }
+          );
 
         return NextResponse.json({
           bookingDetails,
+          customerBooking,
+          providerConfirmService,
           success: true,
           message: "booking accepted successfully",
         });
@@ -60,6 +62,22 @@ export async function PATCH(req, { params }) {
           `<p>your service of ${bookingDetails.service.title} is rejected by provider</p>`
         );
 
+        await ServiceProviderModel.findByIdAndUpdate(
+          userId,
+          {
+            $pull: { allService: id },
+          },
+          { new: true }
+        );
+
+        await UserModel.findByIdAndUpdate(
+          customerId,
+          {
+            $pull: { booking: id },
+          },
+          { new: true }
+        );
+
         await BookingModel.findByIdAndDelete(id);
         return NextResponse.json({
           bookingDetails,
@@ -67,12 +85,6 @@ export async function PATCH(req, { params }) {
           message: "booking rejected successfully",
         });
       }
-
-      return NextResponse.json({
-        bookingDetails,
-        success: true,
-        message: "Status updated successfully",
-      });
     } else {
       return NextResponse.json({
         success: false,
