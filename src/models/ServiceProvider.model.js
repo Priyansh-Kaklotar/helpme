@@ -38,7 +38,7 @@ const ServiceProviderSchema = new mongoose.Schema({
   availability: {
     type: Boolean, // true or false  thay sake em ..
   },
-  myServices: [
+  confirmService: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Booking",

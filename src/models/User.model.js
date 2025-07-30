@@ -27,6 +27,12 @@ const UserSchema = new mongoose.Schema({
       ref: "Booking",
     },
   ],
+  confirmBooking: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Booking",
+    },
+  ],
 });
 
 UserSchema.pre("save", async function (next) {
