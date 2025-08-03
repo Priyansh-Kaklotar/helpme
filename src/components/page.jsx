@@ -28,12 +28,11 @@ function Navbar() {
       <div className="dark:bg-gray-900 bg-white ">
           <nav className="dark:bg-gray-900 bg-white border-b dark:border-gray-700">
             <ul className="flex justify-between items-center bg-gray-800 text-white p-4">
-              <div>
+              <div className="flex items-center space-x-4">
                 <ThemeToggleButton />
               </div>
-              <div className="flex gap-12">
-                <li><Link href={"/home"}>Home</Link></li>
-                <li>contact</li>
+              <div className="flex gap-12 mx-4">
+                <li><Link href={"/contact"}>Contact</Link></li>
                 <li><Link href="/about">About</Link></li>
               </div>
             </ul>
