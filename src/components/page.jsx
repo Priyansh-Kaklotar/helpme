@@ -1,13 +1,13 @@
-"use client"
+"use client";
 import React from "react";
-import Link from 'next/link';
+import Link from "next/link";
 import { ThemeProvider } from "./ui/theme-provider";
 import ThemeToggleButton from "@/src/components/ui/theme-toggle-button";
 
 function Navbar() {
   return (
     <>
-    {/* <div className="fixed w-full z-50"></div>
+      {/* <div className="fixed w-full z-50"></div>
       <div className="bg-gradient-to-r from-purple-600 to-blue-600 p-4">
         <div className="max-w-7xl mx-auto">
           <nav>
