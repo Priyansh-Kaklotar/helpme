@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Image from 'next/image';
+import Image from "next/image";
 import Navbar from "@/src/components/page";
 import Counter from "@/src/components/ui/Counter";
 import { motion } from "framer-motion";
@@ -10,15 +10,17 @@ function Page() {
     {
       name: "Sharad vyas",
       role: "Co-Founder",
-      image: "/your-profile.jpg", // Add your image to public folder
-      description: "I am Web Developer and Ml Enthusiast. I love to create innovative solutions using technology."
+      image: "/sharad-pic.jpg", // Add your image to public folder
+      description:
+        "I am Web Developer and Ml Enthusiast. I love to create innovative solutions using technology.",
     },
     {
       name: "Priyansh Kaklotar",
       role: "Co-Founder",
-      image: "/friend-image.jpg", // Add your friend's image to public folder
-      description: "Brief description about your friend and their role in the project"
-    }
+      image: "/priyansh-pic.png", // Add your friend's image to public folder
+      description:
+        "Passionate developer dedicated to building smart, user-focused digital solutions with creativity and precision.",
+    },
   ];
 
   return (
@@ -46,7 +48,9 @@ function Page() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Our project aims to connect users with the best service providers in their area, making it easy to find, compare, and hire trusted professionals for any service you need.
+            Our project aims to connect users with the best service providers in
+            their area, making it easy to find, compare, and hire trusted
+            professionals for any service you need.
           </motion.p>
 
           {/* Stats Grid */}
@@ -60,7 +64,9 @@ function Page() {
               <h3 className="text-5xl font-bold text-indigo-300 mb-2">
                 <Counter from={0} to={500} duration={2} />+
               </h3>
-              <p className="text-lg text-indigo-100">Active Service Providers</p>
+              <p className="text-lg text-indigo-100">
+                Active Service Providers
+              </p>
             </motion.div>
 
             <motion.div
@@ -82,7 +88,8 @@ function Page() {
               transition={{ duration: 0.5, delay: 0.5 }}
             >
               <h3 className="text-5xl font-bold text-indigo-300 mb-2">
-                <Counter from={0} to={24} duration={2} />/7
+                <Counter from={0} to={24} duration={2} />
+                /7
               </h3>
               <p className="text-lg text-indigo-100">Customer Support</p>
             </motion.div>
@@ -94,7 +101,8 @@ function Page() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
           >
-            We believe in transparency, quality, and empowering both users and providers through technology.
+            We believe in transparency, quality, and empowering both users and
+            providers through technology.
           </motion.p>
 
           <motion.div
@@ -112,17 +120,31 @@ function Page() {
         </div>
 
         <section className="container mx-auto px-6 mb-12">
-        <div className="rounded-xl  p-8 text-center">
-          <h2 className="text-3xl font-bold mb-3 text-indigo-700 dark:text-indigo-300">Our Mission</h2>
-          <p className="text-lg text-gray-700 dark:text-gray-200">
-            Describe your project's mission and goals here. What problems are you solving?
-          </p>
-        </div>
-      </section>
+          <div className="rounded-xl  p-8 text-center">
+            <h2 className="text-3xl font-bold mb-3 text-indigo-700 dark:text-indigo-300">
+              Our Mission
+            </h2>
+            <p className="text-lg text-indigo-100 dark:text-gray-200">
+              Our mission is to connect users with reliable and skilled service
+              providers quickly and effortlessly. We aim to solve the common
+              problems of service delays, lack of trust, and unclear
+              communication by offering a transparent, user-friendly platform
+              where customers can book services, track progress, and rate
+              experiences—all in one place.
+            </p>
+          </div>
+        </section>
 
         {/* Improved Wave SVG */}
-           <svg className="absolute bottom-0 left-0 w-full h-24" viewBox="0 0 1440 320">
-          <path fill="#fff" fillOpacity="1" d="M0,224L60,213.3C120,203,240,181,360,186.7C480,192,600,224,720,229.3C840,235,960,213,1080,197.3C1200,181,1320,171,1380,165.3L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
+        <svg
+          className="absolute bottom-0 left-0 w-full h-24"
+          viewBox="0 0 1440 320"
+        >
+          <path
+            fill="#fff"
+            fillOpacity="1"
+            d="M0,224L60,213.3C120,203,240,181,360,186.7C480,192,600,224,720,229.3C840,235,960,213,1080,197.3C1200,181,1320,171,1380,165.3L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
+          ></path>
         </svg>
       </section>
 
@@ -132,10 +154,12 @@ function Page() {
             Why Choose Us?
           </h2>
           <p className="text-lg text-black dark:text-white mb-6 text-center">
-            We connect you with the best service providers in your area, ensuring quality and reliability for all your needs.
+            We connect you with the best service providers in your area,
+            ensuring quality and reliability for all your needs.
           </p>
           <p className="text-lg text-black dark:text-white mb-10 text-center">
-            Our platform is designed to make finding, comparing, and hiring service providers easy and efficient.
+            Our platform is designed to make finding, comparing, and hiring
+            service providers easy and efficient.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
             <motion.div
@@ -145,9 +169,12 @@ function Page() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.8 }}
             >
-              <h3 className="text-xl font-semibold text-purple-700 dark:text-purple-400 mb-2">Easy Search</h3>
-              <p className="text-lg text-white dark:text-white  mb-4">
-                Find the best service providers in your area with our easy-to-use search feature.
+              <h3 className="text-xl font-semibold text-purple-700 dark:text-purple-400 mb-2">
+                Easy Search
+              </h3>
+              <p className="text-lg text-gray-500 dark:text-white  mb-4">
+                Find the best service providers in your area with our
+                easy-to-use search feature.
               </p>
               <ul className="list-disc list-inside text-gray-600 dark:text-white">
                 <li>Search by service type, location, and ratings</li>
@@ -161,7 +188,9 @@ function Page() {
 
       {/* Founders Section */}
       <section id="founders" className="container mx-auto px-6 ">
-        <h2 className="text-3xl font-bold mb-8 text-center text-indigo-700 dark:text-indigo-300">Meet the Founders</h2>
+        <h2 className="text-3xl font-bold mb-8 text-center text-indigo-700 dark:text-indigo-300">
+          Meet the Founders
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {founders.map((founder, index) => (
             <motion.div
@@ -181,7 +210,9 @@ function Page() {
                   className="rounded-full border-4 border-indigo-400 shadow-lg"
                 />
               </div>
-              <h3 className="text-2xl font-semibold text-white mb-1">{founder.name}</h3>
+              <h3 className="text-2xl font-semibold text-white mb-1">
+                {founder.name}
+              </h3>
               <p className="text-lg text-indigo-200 mb-2">{founder.role}</p>
               <p className="text-gray-200">{founder.description}</p>
             </motion.div>
@@ -199,10 +230,15 @@ function Page() {
             transition={{ duration: 0.5 }}
             className="max-w-2xl mx-auto"
           >
-            <h2 className="text-3xl font-bold text-center mb-8 text-indigo-700">Get in Touch</h2>
+            <h2 className="text-3xl font-bold text-center mb-8 text-indigo-700">
+              Get in Touch
+            </h2>
             <form className="space-y-6 bg-gradient-to-br from-indigo-800 to-purple-800 dark:from-gray-800 dark:to-gray-900 dark:bg-gray-900  p-8 rounded-lg shadow-md">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-white mb-1">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-white mb-1"
+                >
                   Your Name
                 </label>
                 <input
@@ -214,7 +250,10 @@ function Page() {
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-white mb-1">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-white mb-1"
+                >
                   Email Address
                 </label>
                 <input
@@ -226,7 +265,10 @@ function Page() {
                 />
               </div>
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-white mb-1">
+                <label
+                  htmlFor="message"
+                  className="block text-sm font-medium text-white mb-1"
+                >
                   Your Message
                 </label>
                 <textarea
