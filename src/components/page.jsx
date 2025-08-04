@@ -32,8 +32,9 @@ function Navbar() {
                 <ThemeToggleButton />
               </div>
               <div className="flex gap-12 mx-4">
-                <li><Link href={"/contact"}>Contact</Link></li>
+                <li><Link href={"/"}>Home</Link></li>
                 <li><Link href="/about">About</Link></li>
+                <li><Link href={"/contact"}>Contact</Link></li>  {/* ahiya kak biju rakhshu contact ne About page ma rakhi didhu chhe */}
               </div>
             </ul>
           </nav>
