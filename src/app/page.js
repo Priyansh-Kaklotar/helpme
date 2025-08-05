@@ -2,7 +2,10 @@
 import Image from "next/image";
 import Navbar from "@/src/components/page";
 import { easeIn, easeOut, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+
 export default function Home() {
+  const router = useRouter();
   return (
     <>
       <Navbar />
@@ -19,10 +22,20 @@ export default function Home() {
             you need. Fast, reliable, and tailored to your requirements.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
-            <button className="px-8 py-3 bg-purple-600 text-white rounded-lg font-semibold shadow hover:bg-purple-700 transition cursor-pointer">
+            <button
+              className="px-8 py-3 bg-purple-600 text-white rounded-lg font-semibold shadow hover:bg-purple-700 transition cursor-pointer"
+              onClick={() => {
+                router.push("/login/customer");
+              }}
+            >
               Find a Provider
             </button>
-            <button className="px-8 py-3 bg-white dark:bg-gray-800 border border-purple-600 text-purple-700 dark:text-purple-400 rounded-lg font-semibold shadow hover:bg-purple-50 dark:hover:bg-gray-700 transition cursor-pointer">
+            <button
+              className="px-8 py-3 bg-white dark:bg-gray-800 border border-purple-600 text-purple-700 dark:text-purple-400 rounded-lg font-semibold shadow hover:bg-purple-50 dark:hover:bg-gray-700 transition cursor-pointer"
+              onClick={() => {
+                router.push("/login/provider");
+              }}
+            >
               Become a Provider
             </button>
           </div>
@@ -52,7 +65,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             <motion.div
               viewport={{ once: true }}
-              initial={{ opacity: 0, x: -300, y: 0 }}
+              initial={{ opacity: 0, x: -200, y: 0 }}
               whileInView={{ opacity: 1, x: 0, y: 0 }}
               transition={{ ease: easeIn, duration: 0.5 }}
               className="bg-purple-50 dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-lg transition"
@@ -69,7 +82,7 @@ export default function Home() {
               </p>
             </motion.div>
             <motion.div
-              initial={{ opacity: 0, x: 0, y: 300 }}
+              initial={{ opacity: 0, x: 0, y: 200 }}
               viewport={{ once: true }}
               whileInView={{ opacity: 1, x: 0, y: 0 }}
               transition={{ ease: easeIn, duration: 0.5, delay: 0.5 }}
@@ -88,7 +101,7 @@ export default function Home() {
             </motion.div>
             <motion.div
               viewport={{ once: true }}
-              initial={{ opacity: 0, x: 300, y: 0 }}
+              initial={{ opacity: 0, x: 200, y: 0 }}
               whileInView={{ opacity: 1, x: 0, y: 0 }}
               transition={{ ease: easeIn, duration: 0.5, delay: 1 }}
               className="bg-purple-50 dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-lg transition"
@@ -117,7 +130,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <motion.div
               className="flex items-start gap-4"
-              initial={{ opacity: 0, y: 0, x: -300 }}
+              initial={{ opacity: 0, y: 0, x: -200 }}
               whileInView={{ opacity: 1, y: 0, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, ease: easeOut, delay: 1.0 }}
@@ -137,7 +150,7 @@ export default function Home() {
             </motion.div>
             <motion.div
               className="flex items-start gap-4"
-              initial={{ opacity: 0, y: 0, x: 300 }}
+              initial={{ opacity: 0, y: 0, x: 200 }}
               whileInView={{ opacity: 1, y: 0, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, ease: easeOut, delay: 1.5 }}
@@ -156,7 +169,7 @@ export default function Home() {
             </motion.div>
             <motion.div
               className="flex items-start gap-4"
-              initial={{ opacity: 0, y: 0, x: -300 }}
+              initial={{ opacity: 0, y: 0, x: -200 }}
               viewport={{ once: true }}
               whileInView={{ opacity: 1, y: 0, x: 0 }}
               transition={{ duration: 0.5, ease: easeOut, delay: 1.0 }}
@@ -176,7 +189,7 @@ export default function Home() {
             <motion.div
               className="flex items-start gap-4"
               viewport={{ once: true }}
-              initial={{ opacity: 0, y: 0, x: 300 }}
+              initial={{ opacity: 0, y: 0, x: 200 }}
               whileInView={{ opacity: 1, y: 0, x: 0 }}
               transition={{ duration: 0.5, ease: easeOut, delay: 1.5 }}
             >
