@@ -4,13 +4,15 @@ import Image from "next/image";
 import Navbar from "@/src/components/page";
 import Counter from "@/src/components/ui/Counter";
 import { motion } from "framer-motion";
-
+import FlipLink from "@/src/components/ui/text-effect-flipper";
 function Page() {
   const founders = [
     {
       name: "Sharad vyas",
       role: "Co-Founder",
       image: "/sharad-pic.jpg", // Add your image to public folder
+      linkedin: "https://www.linkedin.com/in/sharad-vyas-270310324/",
+      github: "https://github.com/sharadvyas123",
       description:
         "I am Web Developer and Ml Enthusiast. I love to create innovative solutions using technology.",
     },
@@ -18,6 +20,8 @@ function Page() {
       name: "Priyansh Kaklotar",
       role: "Co-Founder",
       image: "/priyansh-pic.png", // Add your friend's image to public folder
+      linkedin: "https://www.linkedin.com/in/priyansh-kaklotar-464725333/",
+      github: "https://github.com/Priyansh-Kaklotar",
       description:
         "Passionate developer dedicated to building smart, user-focused digital solutions with creativity and precision.",
     },
@@ -119,6 +123,8 @@ function Page() {
           </motion.div>
         </div>
 
+        <section></section>
+
         <section className="container mx-auto px-6 mb-12">
           <div className="rounded-xl  p-8 text-center">
             <h2 className="text-3xl font-bold mb-3 text-indigo-700 dark:text-indigo-300">
@@ -202,12 +208,16 @@ function Page() {
               transition={{ duration: 0.7, delay: index * 0.2 }}
             >
               <div className="mb-6 flex justify-center">
+                <div className="scale-45 xl:-translate-x-35 -translate-x-10">
+                  <FlipLink href={founder.linkedin}>LinkedIn</FlipLink>
+                  <FlipLink href={founder.github}>GitHub</FlipLink>
+                </div>
                 <Image
                   src={founder.image}
                   alt={founder.name}
                   width={160}
                   height={160}
-                  className="rounded-full border-4 border-indigo-400 shadow-lg"
+                  className="rounded-full border-4 border-indigo-400 shadow-lg xl:-translate-x-55 -translate-x-20"
                 />
               </div>
               <h3 className="text-2xl font-semibold text-white mb-1">
@@ -219,6 +229,14 @@ function Page() {
           ))}
         </div>
       </section>
+      {/* www.linkedin.com/in/priyansh-kaklotar-464725333 */}
+      {/* <section>
+        <div>
+          <FlipLink href="https://www.linkedin.com/in/priyansh-kaklotar-464725333/">
+            LinkedIn
+          </FlipLink>
+        </div>
+      </section> */}
 
       {/* Add Contact Form Section */}
       <section id="contact" className="py-16 bg-gray-50 dark:bg-black">
