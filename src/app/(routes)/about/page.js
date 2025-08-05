@@ -114,7 +114,7 @@ function Page() {
         <section className="container mx-auto px-6 mb-12">
         <div className="rounded-xl  p-8 text-center">
           <h2 className="text-3xl font-bold mb-3 text-indigo-700 dark:text-indigo-300">Our Mission</h2>
-          <p className="text-lg text-gray-700 dark:text-gray-200">
+          <p className="text-lg text-white dark:text-gray-200">
             Describe your project's mission and goals here. What problems are you solving?
           </p>
         </div>
