@@ -126,15 +126,6 @@ function Page() {
         <section></section>
 
         <section className="container mx-auto px-6 mb-12">
-<<<<<<< HEAD
-        <div className="rounded-xl  p-8 text-center">
-          <h2 className="text-3xl font-bold mb-3 text-indigo-700 dark:text-indigo-300">Our Mission</h2>
-          <p className="text-lg text-white dark:text-gray-200">
-            Describe your project's mission and goals here. What problems are you solving?
-          </p>
-        </div>
-      </section>
-=======
           <div className="rounded-xl  p-8 text-center">
             <h2 className="text-3xl font-bold mb-3 text-indigo-700 dark:text-indigo-300">
               Our Mission
@@ -149,7 +140,6 @@ function Page() {
             </p>
           </div>
         </section>
->>>>>>> 5225e6de0e3345a76828956c64fcd741135ee2e2
 
         {/* Improved Wave SVG */}
         <svg

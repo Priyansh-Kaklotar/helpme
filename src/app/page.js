@@ -25,7 +25,7 @@ export default function Home() {
             <button
               className="px-8 py-3 bg-purple-600 text-white rounded-lg font-semibold shadow hover:bg-purple-700 transition cursor-pointer"
               onClick={() => {
-                router.push("/login/customer");
+                router.push("/signin/customer");
               }}
             >
               Find a Provider
@@ -33,7 +33,7 @@ export default function Home() {
             <button
               className="px-8 py-3 bg-white dark:bg-gray-800 border border-purple-600 text-purple-700 dark:text-purple-400 rounded-lg font-semibold shadow hover:bg-purple-50 dark:hover:bg-gray-700 transition cursor-pointer"
               onClick={() => {
-                router.push("/login/provider");
+                router.push("/signin/provider");
               }}
             >
               Become a Provider
