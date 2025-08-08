@@ -38,7 +38,7 @@ function Page() {
         <div className="relative z-10 container mx-auto px-6 py-20 h-full flex flex-col justify-center items-center">
           {/* Hero Content */}
           <motion.h1
-            className="text-6xl md:text-7xl font-extrabold mb-6 text-center leading-tight drop-shadow-xl"
+            className='text-6xl md:text-7xl font-extrabold mb-6 text-center leading-tight drop-shadow-xl1'
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -126,30 +126,13 @@ function Page() {
         <section></section>
 
         <section className="container mx-auto px-6 mb-12">
-<<<<<<< HEAD
-        <div className="rounded-xl  p-8 text-center">
-          <h2 className="text-3xl font-bold mb-3 text-indigo-700 dark:text-indigo-300">Our Mission</h2>
-          <p className="text-lg text-white dark:text-gray-200">
-            Describe your project's mission and goals here. What problems are you solving?
-          </p>
-        </div>
-      </section>
-=======
           <div className="rounded-xl  p-8 text-center">
-            <h2 className="text-3xl font-bold mb-3 text-indigo-700 dark:text-indigo-300">
-              Our Mission
-            </h2>
-            <p className="text-lg text-indigo-100 dark:text-gray-200">
-              Our mission is to connect users with reliable and skilled service
-              providers quickly and effortlessly. We aim to solve the common
-              problems of service delays, lack of trust, and unclear
-              communication by offering a transparent, user-friendly platform
-              where customers can book services, track progress, and rate
-              experiences—all in one place.
+            <h2 className="text-3xl font-bold mb-3 text-indigo-700 dark:text-indigo-300">Our Mission</h2>
+            <p className="text-lg text-white dark:text-gray-200">
+              Describe your project's mission and goals here. What problems are you solving?
             </p>
           </div>
         </section>
->>>>>>> 5225e6de0e3345a76828956c64fcd741135ee2e2
 
         {/* Improved Wave SVG */}
         <svg
@@ -188,7 +171,7 @@ function Page() {
               <h3 className="text-xl font-semibold text-purple-700 dark:text-purple-400 mb-2">
                 Easy Search
               </h3>
-              <p className="text-lg text-gray-500 dark:text-white  mb-4">
+              <p className="text-lg text-slate-900 dark:text-white  mb-4">
                 Find the best service providers in your area with our
                 easy-to-use search feature.
               </p>
