@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { ThemeProvider } from "./ui/theme-provider";
+import { ThemeProvider } from "../ui/theme-provider";
 import ThemeToggleButton from "@/src/components/ui/theme-toggle-button";
 
 function Navbar() {

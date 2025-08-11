@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import Navbar from "@/src/components/page";
+import Navbar from "@/src/components/navbar/page";
 import Counter from "@/src/components/ui/Counter";
 import { motion } from "framer-motion";
 import FlipLink from "@/src/components/ui/text-effect-flipper";

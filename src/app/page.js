@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import Navbar from "@/src/components/page";
+import Navbar from "@/src/components/navbar/page";
 import { easeIn, easeOut, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
