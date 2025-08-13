@@ -25,7 +25,7 @@ export default function Home() {
             <button
               className="px-8 py-3 bg-purple-600 text-white rounded-lg font-semibold shadow hover:bg-purple-700 transition cursor-pointer"
               onClick={() => {
-                router.push("/signin/customer");
+                router.push("/find-provider");
               }}
             >
               Find a Provider
