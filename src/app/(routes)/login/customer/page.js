@@ -1,10 +1,259 @@
+// "use client";
+// import { motion } from "framer-motion";
+// import { useEffect, useState } from "react";
+// import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
+// import React from "react";
+// import ThemeToggleButton from "@/src/components/ui/theme-toggle-button";
+// import Image from "next/image";
+
+// function Page() {
+//   const topWave = "/svg (1).png";
+//   const bottomWave = "/svg (2).png";
+
+//   let [eyeOn, setEyeOn] = useState(true);
+//   function reverseEye() {
+//     setEyeOn((prev) => !prev);
+//   }
+
+//   return (
+//     <>
+//       <div className="absolute top-4 left-4 ">
+//         <ThemeToggleButton />
+//       </div>
+//       <div className="w-screen h-screen flex dark:text-white text-black items-center justify-around">
+//         <div className="w-[70%] h-7/10 dark:bg-white border-1 bg-black rounded-lg overflow-hidden">
+//           <Image
+//             src={topWave}
+//             alt="alternate"
+//             width={1000}
+//             height={70}
+//             className="ml-18.5 -mt-5 overflow-hidden rounded-lg"
+//           />
+
+//           {/* Left Form Section */}
+//           <div className="w-full flex justify-center items-center">
+//             <div className="w-full mr-96 -mt-55 md:w-1/2 p-10 flex flex-col justify-center">
+//               <h2 className="text-3xl font-bold text-gray-300 dark:text-black">
+//                 Hello!
+//               </h2>
+//               <p className="text-gray-700 dark:text-gray-300 mb-6">
+//                 Sign in to your account
+//               </p>
+
+//               {/* Email */}
+//               <div className="flex items-center bg-white dark:bg-gray-700 shadow-lg rounded-full px-4 py-3 mb-4">
+//                 <span className="text-purple-500 mr-3">📧</span>
+//                 <input
+//                   type="email"
+//                   placeholder="E-mail"
+//                   className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-200"
+//                 />
+//               </div>
+
+//               {/* Password */}
+//               <div className="flex items-center bg-white dark:bg-gray-700 shadow-lg rounded-full px-4 py-3 mb-2">
+//                 <span className="text-purple-500 mr-3">🔒</span>
+//                 <input
+//                   type={eyeOn ? "text" : "password"}
+//                   placeholder="Password"
+//                   className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-200"
+//                 />
+//                 {eyeOn == true ? (
+//                   <span
+//                     className="text-purple-400 cursor-pointer"
+//                     onClick={reverseEye}
+//                   >
+//                     👁
+//                   </span>
+//                 ) : (
+//                   <span
+//                     className="text-purple-400 align-center text-md cursor-pointer"
+//                     onClick={reverseEye}
+//                   >
+//                     ◡
+//                   </span>
+//                 )}
+//               </div>
+
+//               {/* Remember + Forgot */}
+//               <div className="flex justify-between items-center mb-6 text-sm">
+//                 <label className="flex items-center text-gray-500 dark:text-gray-400">
+//                   <input type="checkbox" className="mr-2 accent-purple-500" />{" "}
+//                   Remember me
+//                 </label>
+//                 <a href="#" className="text-purple-500 hover:underline">
+//                   Forgot password?
+//                 </a>
+//               </div>
+
+//               {/* Sign in Button */}
+//               <button className="w-full py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-full hover:scale-105 transition-transform">
+//                 SIGN IN
+//               </button>
+
+//               {/* Create account */}
+//               <p className="text-center mt-4 text-gray-500 dark:text-gray-500">
+//                 Don’t have an account?{" "}
+//                 <a href="#" className="text-purple-500 hover:underline">
+//                   Create Account
+//                 </a>
+//               </p>
+//             </div>
+//             <div className="-mt-56 -ml-24">
+//               <h1 className="text-red-600 text-4xl -ml-40">Welcome Back,</h1>
+//               <p className="mt-4 -ml-40 dark:text-gray-500 text-white">
+//                 Welcome to our Website, let's Help Others
+//               </p>
+//             </div>
+//           </div>
+
+//           <Image
+//             src={bottomWave}
+//             alt="alternate"
+//             width={1000}
+//             height={60}
+//             className="ml-18.5 -mt-44 overflow-hidden rounded-lg"
+//           />
+//         </div>
+//       </div>
+//     </>
+//   );
+// }
+// export default Page;
+
 "use client";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
 import React from "react";
 import ThemeToggleButton from "@/src/components/ui/theme-toggle-button";
 import Image from "next/image";
+import Link from "next/link";
+
+function Page() {
+  const topWave = "/svg (1).png";
+  const bottomWave = "/svg (2).png";
+
+  let [eyeOn, setEyeOn] = useState(true);
+  function reverseEye() {
+    setEyeOn((prev) => !prev);
+  }
+
+  return (
+    <>
+      <div className="absolute top-0 left-4">
+        <ThemeToggleButton />
+      </div>
+      <div className="w-screen h-screen flex flex-col lg:flex-row dark:text-white text-black items-center justify-center lg:justify-around p-4">
+        <div className="w-full lg:w-[70%] h-auto lg:h-7/10 dark:bg-white border-1 bg-black rounded-lg overflow-hidden">
+          {/* Top Wave */}
+          <Image
+            src={topWave}
+            alt="alternate"
+            width={1000}
+            height={70}
+            className="ml-0 lg:ml-18.5 -mt-5 overflow-hidden rounded-lg"
+          />
+
+          {/* Form + Welcome Section */}
+          <div className="w-full flex flex-col lg:flex-row justify-center items-center px-4">
+            <div className="w-full lg:mr-96 lg:-mt-55 md:w-1/2 p-6 sm:p-8 flex flex-col justify-center">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-300 dark:text-black">
+                Hello!
+              </h2>
+              <p className="text-gray-700 dark:text-gray-500 mb-6 text-sm sm:text-base">
+                Sign in to your account
+              </p>
+
+              {/* Email */}
+              <div className="flex items-center bg-white dark:bg-gray-700 shadow-lg rounded-full px-4 py-3 mb-4">
+                <span className="text-purple-500 mr-3">📧</span>
+                <input
+                  type="email"
+                  placeholder="E-mail"
+                  className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-200 text-sm sm:text-base"
+                />
+              </div>
+
+              {/* Password */}
+              <div className="flex items-center bg-white dark:bg-gray-700 shadow-lg rounded-full px-4 py-3 mb-2">
+                <span className="text-purple-500 mr-3">🔒</span>
+                <input
+                  type={eyeOn ? "text" : "password"}
+                  placeholder="Password"
+                  className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-200 text-sm sm:text-base"
+                />
+                {eyeOn ? (
+                  <span
+                    className="text-purple-400 cursor-pointer"
+                    onClick={reverseEye}
+                  >
+                    👁
+                  </span>
+                ) : (
+                  <span
+                    className="text-purple-400 align-center text-md cursor-pointer"
+                    onClick={reverseEye}
+                  >
+                    ◡
+                  </span>
+                )}
+              </div>
+
+              {/* Remember + Forgot */}
+              <div className="flex flex-row justify-between items-center mb-6 text-xs sm:text-sm gap-2">
+                <label className="flex items-center text-gray-500 dark:text-gray-400">
+                  <input type="checkbox" className="mr-2 accent-purple-500" />{" "}
+                  Remember me
+                </label>
+                <a href="#" className="text-purple-500 hover:underline">
+                  Forgot password?
+                </a>
+              </div>
+
+              {/* Sign in Button */}
+              <button className="w-full py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-full hover:scale-105 transition-transform text-sm sm:text-base">
+                SIGN IN
+              </button>
+
+              {/* Create account */}
+              <p className="text-center mt-4 text-gray-500 dark:text-gray-500 text-sm sm:text-base">
+                Don’t have an account?{" "}
+                <Link
+                  href="/signin/customer"
+                  className="text-purple-500 hover:underline cursor-pointer lg:"
+                >
+                  Create Account
+                </Link>
+              </p>
+            </div>
+
+            {/* Right Welcome Text */}
+            <div className="hidden lg:block md-block xl-block mt-10 lg:-mt-56 lg:-ml-24 text-center lg:text-left">
+              <h1 className="text-red-600 text-2xl sm:text-3xl lg:text-4xl lg:-ml-48">
+                Welcome Back,
+              </h1>
+              <p className="mt-2 lg:-ml-48 dark:text-gray-500 text-white text-sm sm:text-base">
+                Welcome to our Website, let's Help Others
+              </p>
+            </div>
+          </div>
+
+          {/* Bottom Wave */}
+          <Image
+            src={bottomWave}
+            alt="alternate"
+            width={1000}
+            height={60}
+            className="ml-0 lg:ml-18.5 -mt-7 lg:-mt-44 overflow-hidden rounded-lg"
+          />
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default Page;
 
 // function page() {
 //   return (
@@ -115,99 +364,3 @@ import Image from "next/image";
 //   );
 // }
 // export default page;
-
-function page() {
-  const topWave = "/svg (1).png";
-  const bottomWave = "/svg (2).png";
-
-  return (
-    <>
-      {/* <div className="absolute top-4 left-4">
-        <ThemeToggleButton />
-      </div> */}
-      <div className=" border-2 border-black w-screen h-screen flex bg-black items-center justify-around">
-        <div className="w-[70%] h-7/10 bg-white rounded-lg overflow-hidden">
-          <Image
-            src={topWave}
-            alt="alternate"
-            width={1000}
-            height={70}
-            className="ml-18.5 -mt-5 overflow-hidden rounded-lg"
-          />
-
-          {/* Left Form Section */}
-          <div className="w-full flex justify-center items-center">
-            <div className="w-full mr-96 -mt-55 md:w-1/2 p-10 flex flex-col justify-center">
-              <h2 className="text-3xl font-bold text-gray-800 dark:text-white">
-                Hello!
-              </h2>
-              <p className="text-gray-500 dark:text-gray-300 mb-6">
-                Sign in to your account
-              </p>
-
-              {/* Email */}
-              <div className="flex items-center bg-white dark:bg-gray-700 shadow-lg rounded-full px-4 py-3 mb-4">
-                <span className="text-purple-500 mr-3">📧</span>
-                <input
-                  type="email"
-                  placeholder="E-mail"
-                  className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-200"
-                />
-              </div>
-
-              {/* Password */}
-              <div className="flex items-center bg-white dark:bg-gray-700 shadow-lg rounded-full px-4 py-3 mb-2">
-                <span className="text-purple-500 mr-3">🔒</span>
-                <input
-                  type="password"
-                  placeholder="Password"
-                  className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-200"
-                />
-                <span className="text-purple-400 cursor-pointer">👁</span>
-              </div>
-
-              {/* Remember + Forgot */}
-              <div className="flex justify-between items-center mb-6 text-sm">
-                <label className="flex items-center text-gray-500 dark:text-gray-300">
-                  <input type="checkbox" className="mr-2 accent-purple-500" />{" "}
-                  Remember me
-                </label>
-                <a href="#" className="text-purple-500 hover:underline">
-                  Forgot password?
-                </a>
-              </div>
-
-              {/* Sign in Button */}
-              <button className="w-full py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-full hover:scale-105 transition-transform">
-                SIGN IN
-              </button>
-
-              {/* Create account */}
-              <p className="text-center mt-4 text-gray-500 dark:text-gray-300">
-                Don’t have an account?{" "}
-                <a href="#" className="text-purple-500 hover:underline">
-                  Create
-                </a>
-              </p>
-            </div>
-            <div className="-mt-56 -ml-24">
-              <h1 className="text-red-600 text-4xl -ml-40">Welcome Back,</h1>
-              <p className="mt-4 -ml-40 ">
-                Welcome to our Website, let's Help Others
-              </p>
-            </div>
-          </div>
-
-          <Image
-            src={bottomWave}
-            alt="alternate"
-            width={1000}
-            height={60}
-            className="ml-18.5 -mt-45 overflow-hidden rounded-lg"
-          />
-        </div>
-      </div>
-    </>
-  );
-}
-export default page;
