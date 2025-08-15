@@ -131,6 +131,10 @@ import Link from "next/link";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { toast, ToastContainer } from 'react-toastify';
+import { useRouter } from "next/navigation";
+import { Bounce } from "react-toastify";
 
 const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -148,22 +152,52 @@ function Page() {
   const topWave = "/svg_(1).png";
   const bottomWave = "/svg_(2).png";
 
-  let [eyeOn, setEyeOn] = useState(true);
+  let [eyeOn, setEyeOn] = useState(false);
   function reverseEye() {
     setEyeOn((prev) => !prev);
   }
+
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors , isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data) => {
-    console.log(data);
+  const onSubmit = async (d) => {
+    console.log(d);
+    try {
+      const res = await axios.post("/auth/login", {
+        name: d.name,
+        password: d.password,
+        usertype: "Customer",
+      });
+      const data = await res.data;
+      console.log(data.success);
+      if (data.success) {
+        toast.success('✅ Signin Successful', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+          onClose: () => router.push("/customer/dashboard"),
+        });
+        reset();
+      } else {
+        toast.error(data.message || "Login failed!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
 
@@ -216,6 +250,7 @@ function Page() {
                     {...register("password")}
                     type={eyeOn ? "text" : "password"}
                     placeholder="Password"
+                    autoComplete="off"
                     className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-200 text-sm sm:text-base"
                   />
                   {eyeOn ? (

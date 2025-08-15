@@ -62,33 +62,24 @@ const Signin = () => {
         password: data.password,
       });
 
-      const d = response.data;
+      const d = await response.data;
       console.log("response = ", d);
-      if (d.token) {
-        localStorage.setItem("token", d.token);
-        localStorage.setItem("username", d.username);
-        localStorage.setItem("userId", d._id);
+      if (d.success) {
         toast.success("✅ Signin Successful");
-        navigate("/dashboard");
+        navigate.push("/");
       } else {
         console.log("Signin failed:", d.message);
+        toast.error("❌ Signin failed. Try again.");
       }
       reset();
     } catch (error) {
       console.error("Signin Error:", error);
-      toast.error("❌ Signup failed. Try again.");
+      toast.error("❌ An error occurred. Please try again.");
     }
   };
 
   return (
     <div className="w-full h-dvh flex justify-center items-center bg-gradient-to-br from-[#1e3a8a] via-purple-600 to-[#9333ea] text-white relative overflow-hidden px-4">
-      {/* Toasts */}
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        transition={Bounce}
-      />
-
       {/* Twinkle Particle Background */}
       <div className="pointer-events-none absolute w-full h-full overflow-hidden z-0">
         {[...Array(60)].map((_, i) => (
@@ -127,7 +118,7 @@ const Signin = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ type: "spring", stiffness: 120 }}
         >
-          🚀 Create Your Account
+          🚀 Create Your Customer Account
         </motion.h1>
 
         <motion.form
@@ -140,7 +131,7 @@ const Signin = () => {
           <motion.input
             variants={itemVariants}
             {...register("username")}
-            placeholder="Username"
+            placeholder="name"
             className="bg-white text-black rounded-lg p-2"
           />
           <p className="text-red-300 text-sm">{errors.username?.message}</p>
@@ -162,6 +153,7 @@ const Signin = () => {
               {...register("password")}
               type={eyeon ? "text" : "password"}
               placeholder="Password"
+              autoComplete="off"
               className="bg-white text-black rounded-lg p-2 w-full pr-10"
             />
             <span

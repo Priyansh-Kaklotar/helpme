@@ -3,6 +3,7 @@ import Image from "next/image";
 import Navbar from "@/src/components/navbar/page";
 import { easeIn, easeOut, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function Home() {
   const router = useRouter();
@@ -206,6 +207,14 @@ export default function Home() {
               </div>
             </motion.div>
           </div>
+        </div>
+        <div className="flex justify-center mt-8 p-5">
+          <button className="px-4 py-2 bg-red-500 text-white rounded-lg font-semibold shadow hover:bg-red-600 transition cursor-pointer"
+           onClick={async () =>{
+            const res = await axios.get('/api/clear-cookie');
+          }}>
+            clear cookies
+          </button>
         </div>
       </section>
     </>

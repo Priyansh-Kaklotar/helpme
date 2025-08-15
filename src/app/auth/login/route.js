@@ -11,11 +11,12 @@ dotenv.config();
 
 export async function POST(req) {
   try {
-    const { name, password } = await req.json();
+    const { name, password , usertype } = await req.json();
     await connectToDatabase();
     const cookieStore = cookies();
-    let userType = (await cookieStore).get("type")?.value;
+    let userType = usertype || (await cookieStore).get("type")?.value;
     let userId = (await cookieStore).get("userId")?.value;
+
 
     //aa code comment ma reva deje...
     // console.log("id = ", userId);
