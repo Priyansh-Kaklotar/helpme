@@ -131,8 +131,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 function Page() {
-  const topWave = "/svg (1).png";
-  const bottomWave = "/svg (2).png";
+  const topWave = "/svg_(1).png";
+  const bottomWave = "/svg_(2).png";
 
   let [eyeOn, setEyeOn] = useState(true);
   function reverseEye() {
@@ -141,13 +141,15 @@ function Page() {
 
   return (
     <>
-      <div className="absolute top-0 left-4">
+      <div className="absolute top-4 left-4 z-10">
         <ThemeToggleButton />
       </div>
       <div className="w-screen h-screen flex flex-col lg:flex-row dark:text-white text-black items-center justify-center lg:justify-around p-4">
-        <div className="w-full lg:w-[70%] h-auto lg:h-7/10 dark:bg-white border-1 bg-black rounded-lg overflow-hidden">
+        <div className="w-full lg:w-[70%] h-auto lg:h-7/10 dark:bg-white border-1 bg-black rounded-3xl overflow-hidden">
           {/* Top Wave */}
           <Image
+            draggable = {false}
+            onDragStart={(e) => e.preventDefault()}
             src={topWave}
             alt="alternate"
             width={1000}
@@ -201,18 +203,19 @@ function Page() {
               </div>
 
               {/* Remember + Forgot */}
-              <div className="flex flex-row justify-between items-center mb-6 text-xs sm:text-sm gap-2">
+              <div className="flex flex-row justify-between items-center mb-6 text-xs sm:text-sm gap-2  relative z-10">
                 <label className="flex items-center text-gray-500 dark:text-gray-400">
                   <input type="checkbox" className="mr-2 accent-purple-500" />{" "}
                   Remember me
                 </label>
-                <a href="#" className="text-purple-500 hover:underline">
+                <Link href="#" className="text-purple-500 hover:underline">
                   Forgot password?
-                </a>
+                </Link>
               </div>
 
               {/* Sign in Button */}
-              <button className="w-full py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-full hover:scale-105 transition-transform text-sm sm:text-base">
+              <button
+              className="w-full py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-full hover:scale-105 transition-transform text-sm sm:text-base relative z-10">
                 SIGN IN
               </button>
 
