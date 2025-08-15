@@ -221,7 +221,7 @@ function Page() {
                 Don’t have an account?{" "}
                 <Link
                   href="/signin/customer"
-                  className="text-purple-500 hover:underline cursor-pointer lg:"
+                  className="text-purple-500 hover:underline cursor-pointer z-20"
                 >
                   Create Account
                 </Link>
@@ -245,7 +245,7 @@ function Page() {
             alt="alternate"
             width={1000}
             height={60}
-            className="ml-0 lg:ml-18.5 -mt-7 lg:-mt-44 overflow-hidden rounded-lg"
+            className="ml-0 lg:ml-18.5 -mt-7 lg:-mt-44 overflow-hidden rounded-lg pointer-events-none"
           />
         </div>
       </div>
