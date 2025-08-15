@@ -49,7 +49,7 @@ const Signin = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors , isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -194,6 +194,7 @@ const Signin = () => {
               transition: { type: "spring", stiffness: 300 },
             }}
             type="submit"
+            disabled={isSubmitting}
             className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 rounded-xl shadow-md mt-4"
           >
             Sign In

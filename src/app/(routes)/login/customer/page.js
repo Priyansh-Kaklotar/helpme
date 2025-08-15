@@ -123,12 +123,26 @@
 
 "use client";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
 import React from "react";
 import ThemeToggleButton from "@/src/components/ui/theme-toggle-button";
 import Image from "next/image";
 import Link from "next/link";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+
+const schema = yup.object().shape({
+  name: yup.string().required("Name is required"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+      "PASSWORD is not STRONG!!"
+    )
+})
+
 
 function Page() {
   const topWave = "/svg_(1).png";
@@ -139,7 +153,20 @@ function Page() {
     setEyeOn((prev) => !prev);
   }
 
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors , isSubmitting },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = async (data) => {
+    console.log(data);
+  }
   return (
+
     <>
       <div className="absolute top-4 left-4 z-10">
         <ThemeToggleButton />
@@ -148,7 +175,7 @@ function Page() {
         <div className="w-full lg:w-[70%] h-auto lg:h-7/10 dark:bg-white border-1 bg-black rounded-3xl overflow-hidden">
           {/* Top Wave */}
           <Image
-            draggable = {false}
+            draggable={false}
             onDragStart={(e) => e.preventDefault()}
             src={topWave}
             alt="alternate"
@@ -167,57 +194,66 @@ function Page() {
                 Sign in to your account
               </p>
 
-              {/* Email */}
-              <div className="flex items-center bg-white dark:bg-gray-700 shadow-lg rounded-full px-4 py-3 mb-4">
-                <span className="text-purple-500 mr-3">📧</span>
-                <input
-                  type="email"
-                  placeholder="E-mail"
-                  className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-200 text-sm sm:text-base"
-                />
-              </div>
+              {/* form */}
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+              >
 
-              {/* Password */}
-              <div className="flex items-center bg-white dark:bg-gray-700 shadow-lg rounded-full px-4 py-3 mb-2">
-                <span className="text-purple-500 mr-3">🔒</span>
-                <input
-                  type={eyeOn ? "text" : "password"}
-                  placeholder="Password"
-                  className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-200 text-sm sm:text-base"
-                />
-                {eyeOn ? (
-                  <span
-                    className="text-purple-400 cursor-pointer"
-                    onClick={reverseEye}
-                  >
-                    👁
-                  </span>
-                ) : (
-                  <span
-                    className="text-purple-400 align-center text-md cursor-pointer"
-                    onClick={reverseEye}
-                  >
-                    ◡
-                  </span>
-                )}
-              </div>
+                <div className="flex items-center bg-white dark:bg-gray-700 shadow-lg rounded-full px-4 py-3 mb-4">
+                  <span className="text-purple-500 mr-3">📧</span>
+                  <input
+                    type="text"
+                    {...register("name")}
+                    placeholder="Name"
+                    className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-200 text-sm sm:text-base"
+                  />
+                </div>
 
-              {/* Remember + Forgot */}
-              <div className="flex flex-row justify-between items-center mb-6 text-xs sm:text-sm gap-2  relative z-10">
-                <label className="flex items-center text-gray-500 dark:text-gray-400">
-                  <input type="checkbox" className="mr-2 accent-purple-500" />{" "}
-                  Remember me
-                </label>
-                <Link href="#" className="text-purple-500 hover:underline">
-                  Forgot password?
-                </Link>
-              </div>
+                {/* Password */}
+                <div className="flex items-center bg-white dark:bg-gray-700 shadow-lg rounded-full px-4 py-3 mb-2">
+                  <span className="text-purple-500 mr-3">🔒</span>
+                  <input
+                    {...register("password")}
+                    type={eyeOn ? "text" : "password"}
+                    placeholder="Password"
+                    className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-200 text-sm sm:text-base"
+                  />
+                  {eyeOn ? (
+                    <span
+                      className="text-purple-400 cursor-pointer"
+                      onClick={reverseEye}
+                    >
+                      👁
+                    </span>
+                  ) : (
+                    <span
+                      className="text-purple-400 align-center text-md cursor-pointer"
+                      onClick={reverseEye}
+                    >
+                      ◡
+                    </span>
+                  )}
+                </div>
 
-              {/* Sign in Button */}
-              <button
-              className="w-full py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-full hover:scale-105 transition-transform text-sm sm:text-base relative z-10">
-                SIGN IN
-              </button>
+                {/* Remember + Forgot */}
+                <div className="flex flex-row justify-between items-center mb-6 text-xs sm:text-sm gap-2  relative z-10">
+                  <label className="flex items-center text-gray-500 dark:text-gray-400">
+                    <input type="checkbox" className="mr-2 accent-purple-500" />{" "}
+                    Remember me
+                  </label>
+                  <Link href="#" className="text-purple-500 hover:underline">
+                    Forgot password?
+                  </Link>
+                </div>
+
+                {/* Sign in Button */}
+                <button
+                  disabled={isSubmitting}
+                  type="submit"
+                  className="w-full py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-full hover:scale-105 transition-transform text-sm sm:text-base relative z-10">
+                  SIGN IN
+                </button>
+              </form>
 
               {/* Create account */}
               <p className="text-center mt-4 text-gray-500 dark:text-gray-500 text-sm sm:text-base">
