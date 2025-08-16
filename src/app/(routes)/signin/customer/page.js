@@ -8,6 +8,8 @@ import * as yup from "yup";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import { motion } from "framer-motion";
+import Loader from "@/src/components/Loader/page";
+
 
 const schema = yup.object().shape({
   username: yup.string().required("Username is required"),
@@ -44,6 +46,7 @@ const itemVariants = {
 const Signin = () => {
   const navigate = useRouter();
   const [eyeon, setEyeon] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -55,6 +58,7 @@ const Signin = () => {
   });
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       const response = await axios.post("/auth/register/user", {
         name: data.username,
@@ -66,7 +70,7 @@ const Signin = () => {
       console.log("response = ", d);
       if (d.success) {
         toast.success("✅ Signin Successful");
-        navigate.push("/");
+        navigate.push("/verify-otp");
       } else {
         console.log("Signin failed:", d.message);
         toast.error("❌ Signin failed. Try again.");
@@ -75,6 +79,8 @@ const Signin = () => {
     } catch (error) {
       console.error("Signin Error:", error);
       toast.error("❌ An error occurred. Please try again.");
+    }finally{
+      setLoading(true);
     }
   };
 
@@ -208,6 +214,9 @@ const Signin = () => {
           </a>
         </motion.div>
       </motion.div>
+      {
+        loading && <Loader/>
+      }
     </div>
   );
 };
