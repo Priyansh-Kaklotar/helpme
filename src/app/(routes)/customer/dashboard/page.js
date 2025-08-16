@@ -9,9 +9,9 @@ import {
     RiSettings4Fill,
     RiCustomerService2Fill,
 } from "react-icons/ri";
-import ThemeToggleButton from "@/src/components/ui/theme-toggle-button";
 
 const Page = () => {
+
     const [name, setName] = useState("");
 
     useEffect(() => {
@@ -28,8 +28,11 @@ const Page = () => {
                 console.error("Request failed:", err);
             }
         }
-        fetchName();
-    }, []);
+        if (name === "")  // Fetch name only if not already set
+        {
+            fetchName();
+        }
+    }, [name , setName]);
 
     const cardVariants = {
         hidden: { opacity: 0, y: 40, scale: 0.9 },
@@ -39,7 +42,7 @@ const Page = () => {
     return (
         <section className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-100 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900 px-4 py-16">
             <div className="absolute top-4 left-4 z-50">
-            <ThemeToggleButton/>
+                {/* <ThemeToggleButton /> */}
             </div>
             {/* Welcome Message */}
             <motion.h1

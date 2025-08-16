@@ -189,7 +189,7 @@ function Page() {
           progress: undefined,
           theme: "light",
           transition: Bounce,
-          onClose: () => router.push("/customer/dashboard"),
+          onClose: () => router.push("/"),
         });
         reset();
       } else {
