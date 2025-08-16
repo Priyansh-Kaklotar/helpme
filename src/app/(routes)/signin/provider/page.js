@@ -1,3 +1,5 @@
+
+
 "use client";
 import React, { useState } from "react";
 import { EyeIcon, ViewOffIcon } from "hugeicons-react";
@@ -8,10 +10,17 @@ import * as yup from "yup";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import { motion } from "framer-motion";
+import Loader from "@/src/components/Loader/page";
+
 
 const schema = yup.object().shape({
-  name: yup.string().required("name is required"),
+  name: yup.string().required("Name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
+  address: yup.string().required("Address is required"),
+  pincode: yup
+    .string()
+    .matches(/^[0-9]{6}$/, "Pincode must be 6 digits")
+    .required("Pincode Must be 6 digits"),  
   password: yup
     .string()
     .required("Password is required")
@@ -44,6 +53,7 @@ const itemVariants = {
 const Signin = () => {
   const navigate = useRouter();
   const [eyeon, setEyeon] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -55,44 +65,38 @@ const Signin = () => {
   });
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
-        console.log(data);
+      console.log(data);
       const response = await axios.post("/auth/register/provider", {
         name: data.name,
         email: data.email,
+        address: data.address,
+        pincode: data.pincode,
         password: data.password,
       });
 
       const d = response.data;
-      console.log("response = ", d , d.success);
-      if(d.success  == true){
-          toast.success("✅ Signin Successful");
-          navigate.push("/verify-otp");
+      console.log("response = ", d, d.success);
+      if (d.success == true) {
+        toast.success("✅ Signin Successful");
+        navigate.push("/verify-otp");
       }
-    //   if (d.token) {
-    //     localStorage.setItem("token", d.token);
-    //     localStorage.setItem("username", d.username);
-    //     localStorage.setItem("userId", d._id);
-    //   } else {
-    //     console.log("Signin failed:", d.message);
-    //   }
       reset();
     } catch (error) {
       console.error("Signin Error:", error);
       toast.error("❌ Signup failed. Try again.");
+    }finally{
+      setLoading(false);
     }
   };
 
   return (
     <div className="w-full h-dvh flex justify-center items-center bg-gradient-to-br from-[#1e3a8a] via-purple-600 to-[#9333ea] text-white relative overflow-hidden px-4">
       {/* Toasts */}
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        transition={Bounce}
-      />
+      <ToastContainer position="top-right" autoClose={5000} transition={Bounce} />
 
-      {/* Twinkle Particle Background */}
+      {/* Background particles */}
       <div className="pointer-events-none absolute w-full h-full overflow-hidden z-0">
         {[...Array(60)].map((_, i) => (
           <motion.span
@@ -116,7 +120,7 @@ const Signin = () => {
         ))}
       </div>
 
-      {/* Main Animated Form Card */}
+      {/* Form */}
       <motion.div
         className="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl shadow-2xl w-full max-w-md z-10"
         initial={{ scale: 0.9, opacity: 0 }}
@@ -130,7 +134,7 @@ const Signin = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ type: "spring", stiffness: 120 }}
         >
-          🚀 Create Your Account
+          🚀 Create Provider Account
         </motion.h1>
 
         <motion.form
@@ -143,7 +147,7 @@ const Signin = () => {
           <motion.input
             variants={itemVariants}
             {...register("name")}
-            placeholder="name"
+            placeholder="Name"
             className="bg-white text-black rounded-lg p-2"
           />
           <p className="text-red-300 text-sm">{errors.name?.message}</p>
@@ -157,6 +161,26 @@ const Signin = () => {
           />
           <p className="text-red-300 text-sm">{errors.email?.message}</p>
 
+          {/* Address */}
+          <motion.input
+            variants={itemVariants}
+            {...register("address")}
+            placeholder="Address"
+            className="bg-white text-black rounded-lg p-2"
+          />
+          <p className="text-red-300 text-sm">{errors.address?.message}</p>
+
+          {/* Pincode */}
+          <motion.input
+            variants={itemVariants}
+            {...register("pincode")}
+            type="text"
+            placeholder="Pincode"
+            className="bg-white text-black rounded-lg p-2"
+          />
+          <p className="text-red-300 text-sm">{errors.pincode?.message}</p>
+
+          {/* Password */}
           <motion.div
             variants={itemVariants}
             className="relative flex items-center"
@@ -176,6 +200,7 @@ const Signin = () => {
           </motion.div>
           <p className="text-red-300 text-sm">{errors.password?.message}</p>
 
+          {/* Confirm Password */}
           <motion.input
             variants={itemVariants}
             {...register("repassword")}
@@ -187,10 +212,7 @@ const Signin = () => {
 
           <motion.button
             variants={itemVariants}
-            whileHover={{
-              scale: 1.05,
-              boxShadow: "0 0 12px #facc15",
-            }}
+            whileHover={{ scale: 1.05, boxShadow: "0 0 12px #facc15" }}
             whileTap={{
               scale: 0.9,
               rotate: -1,
@@ -218,6 +240,8 @@ const Signin = () => {
           </a>
         </motion.div>
       </motion.div>
+      {loading && <Loader />}
+
     </div>
   );
 };

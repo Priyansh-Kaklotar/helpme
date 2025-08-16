@@ -6,9 +6,11 @@ import { useEffect, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { Bounce } from 'react-toastify';
+import Loader from "@/src/components/Loader/page"
 
 const page = () => {
   const [Email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function GetEmail() {
@@ -25,6 +27,7 @@ const page = () => {
   }, [])
   const navigate = useRouter();
   const handleOtpComplete = async (otp) => {
+    setLoading(true);
     console.log("OTP entered:", otp);
     try {
       const response = await axios.post('/auth/verifyotp', {
@@ -41,6 +44,8 @@ const page = () => {
     } catch (error) {
       const errormessage = await error.response.data;
       toast.error(errormessage.message);
+    }finally{
+      setLoading(false);
     }
   };
   return (
@@ -76,6 +81,10 @@ const page = () => {
           </div>
         </div>
       </div>
+
+    {
+      loading && <Loader/>
+    }
     </>
   )
 }
