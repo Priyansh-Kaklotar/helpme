@@ -18,46 +18,34 @@
     "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-<<<<<<< HEAD
     "dotenv": "^17.2.1",
-=======
     "dotenv": "^17.2.0",
->>>>>>> b0bdd6306b8e60ab80071491dbc482848e8b6a1d
     "framer-motion": "^12.23.12",
     "heroicons": "^2.2.0",
     "hugeicons-react": "^0.3.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.535.0",
-<<<<<<< HEAD
     "mongoose": "^8.17.1",
     "motion": "^12.23.12",
     "multer": "^2.0.2",
     "next": "^15.4.1",
-=======
     "mongoose": "^8.16.4",
     "motion": "^12.23.12",
     "multer": "^2.0.2",
     "next": "15.4.1",
->>>>>>> b0bdd6306b8e60ab80071491dbc482848e8b6a1d
     "next-themes": "^0.4.6",
     "nodemailer": "^7.0.5",
     "nookies": "^2.5.2",
     "otplib": "^12.0.1",
-<<<<<<< HEAD
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-=======
     "react": "19.1.0",
     "react-dom": "19.1.0",
->>>>>>> b0bdd6306b8e60ab80071491dbc482848e8b6a1d
     "react-hook-form": "^7.62.0",
     "react-icons": "^5.5.0",
     "react-redux": "^9.2.0",
     "react-toastify": "^11.0.5",
-<<<<<<< HEAD
     "tailwind": "^4.0.0",
-=======
->>>>>>> b0bdd6306b8e60ab80071491dbc482848e8b6a1d
     "tailwind-merge": "^3.3.1",
     "yup": "^1.7.0"
   },
