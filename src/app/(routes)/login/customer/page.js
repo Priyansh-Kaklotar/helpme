@@ -1,126 +1,3 @@
-// "use client";
-// import { motion } from "framer-motion";
-// import { useEffect, useState } from "react";
-// import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
-// import React from "react";
-// import ThemeToggleButton from "@/src/components/ui/theme-toggle-button";
-// import Image from "next/image";
-
-// function Page() {
-//   const topWave = "/svg (1).png";
-//   const bottomWave = "/svg (2).png";
-
-//   let [eyeOn, setEyeOn] = useState(true);
-//   function reverseEye() {
-//     setEyeOn((prev) => !prev);
-//   }
-
-//   return (
-//     <>
-//       <div className="absolute top-4 left-4 ">
-//         <ThemeToggleButton />
-//       </div>
-//       <div className="w-screen h-screen flex dark:text-white text-black items-center justify-around">
-//         <div className="w-[70%] h-7/10 dark:bg-white border-1 bg-black rounded-lg overflow-hidden">
-//           <Image
-//             src={topWave}
-//             alt="alternate"
-//             width={1000}
-//             height={70}
-//             className="ml-18.5 -mt-5 overflow-hidden rounded-lg"
-//           />
-
-//           {/* Left Form Section */}
-//           <div className="w-full flex justify-center items-center">
-//             <div className="w-full mr-96 -mt-55 md:w-1/2 p-10 flex flex-col justify-center">
-//               <h2 className="text-3xl font-bold text-gray-300 dark:text-black">
-//                 Hello!
-//               </h2>
-//               <p className="text-gray-700 dark:text-gray-300 mb-6">
-//                 Sign in to your account
-//               </p>
-
-//               {/* Email */}
-//               <div className="flex items-center bg-white dark:bg-gray-700 shadow-lg rounded-full px-4 py-3 mb-4">
-//                 <span className="text-purple-500 mr-3">📧</span>
-//                 <input
-//                   type="email"
-//                   placeholder="E-mail"
-//                   className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-200"
-//                 />
-//               </div>
-
-//               {/* Password */}
-//               <div className="flex items-center bg-white dark:bg-gray-700 shadow-lg rounded-full px-4 py-3 mb-2">
-//                 <span className="text-purple-500 mr-3">🔒</span>
-//                 <input
-//                   type={eyeOn ? "text" : "password"}
-//                   placeholder="Password"
-//                   className="bg-transparent outline-none flex-1 text-gray-700 dark:text-gray-200"
-//                 />
-//                 {eyeOn == true ? (
-//                   <span
-//                     className="text-purple-400 cursor-pointer"
-//                     onClick={reverseEye}
-//                   >
-//                     👁
-//                   </span>
-//                 ) : (
-//                   <span
-//                     className="text-purple-400 align-center text-md cursor-pointer"
-//                     onClick={reverseEye}
-//                   >
-//                     ◡
-//                   </span>
-//                 )}
-//               </div>
-
-//               {/* Remember + Forgot */}
-//               <div className="flex justify-between items-center mb-6 text-sm">
-//                 <label className="flex items-center text-gray-500 dark:text-gray-400">
-//                   <input type="checkbox" className="mr-2 accent-purple-500" />{" "}
-//                   Remember me
-//                 </label>
-//                 <a href="#" className="text-purple-500 hover:underline">
-//                   Forgot password?
-//                 </a>
-//               </div>
-
-//               {/* Sign in Button */}
-//               <button className="w-full py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-full hover:scale-105 transition-transform">
-//                 SIGN IN
-//               </button>
-
-//               {/* Create account */}
-//               <p className="text-center mt-4 text-gray-500 dark:text-gray-500">
-//                 Don’t have an account?{" "}
-//                 <a href="#" className="text-purple-500 hover:underline">
-//                   Create Account
-//                 </a>
-//               </p>
-//             </div>
-//             <div className="-mt-56 -ml-24">
-//               <h1 className="text-red-600 text-4xl -ml-40">Welcome Back,</h1>
-//               <p className="mt-4 -ml-40 dark:text-gray-500 text-white">
-//                 Welcome to our Website, let's Help Others
-//               </p>
-//             </div>
-//           </div>
-
-//           <Image
-//             src={bottomWave}
-//             alt="alternate"
-//             width={1000}
-//             height={60}
-//             className="ml-18.5 -mt-44 overflow-hidden rounded-lg"
-//           />
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
-// export default Page;
-
 "use client";
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -135,6 +12,8 @@ import axios from "axios";
 import { toast, ToastContainer } from 'react-toastify';
 import { useRouter } from "next/navigation";
 import { Bounce } from "react-toastify";
+import Loader from "@/src/components/Loader/page";
+
 
 const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -157,7 +36,7 @@ function Page() {
     setEyeOn((prev) => !prev);
   }
 
-  const router = useRouter();
+  const navigate = useRouter();
 
   const {
     register,
@@ -168,8 +47,11 @@ function Page() {
     resolver: yupResolver(schema),
   });
 
+  const [loading, setLoading] = useState(false);
+
   const onSubmit = async (d) => {
     console.log(d);
+    setLoading(true);
     try {
       const res = await axios.post("/auth/login", {
         name: d.name,
@@ -189,14 +71,17 @@ function Page() {
           progress: undefined,
           theme: "light",
           transition: Bounce,
-          onClose: () => router.push("/"),
+          onClose: () => navigate.push("/"),
         });
         reset();
+        navigate.push("/customer/dashboard");
       } else {
         toast.error(data.message || "Login failed!");
       }
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false);
     }
   }
   return (
@@ -323,6 +208,9 @@ function Page() {
           />
         </div>
       </div>
+      {
+        loading && <Loader/>
+      }
     </>
   );
 }

@@ -76,13 +76,13 @@ const Page = () => {
                         icon: <RiListCheck2 />,
                         title: "My Services",
                         text: "Track and manage your service requests.",
-                        color: "green",
+                        color: "red",
                     },
                     {
                         icon: <RiWallet3Fill />,
                         title: "Wallet",
                         text: "Check your balance and payment history.",
-                        color: "yellow",
+                        color: "blue",
                     },
                 ].map((card, i) => (
                     <motion.div
