@@ -82,13 +82,15 @@ const Page = () => {
     .toUpperCase();
 
   const updateProfile = async (field) => {
-    if (pincode.length !== 6) {
-      alert("Pincode Must be Exactly 6 Digits");
-      return;
-    }
     setLoading(true);
     try {
       const payload = field === "address" ? { address } : { pincode };
+      if (payload === "pincode") {
+        if (pincode.length !== 6) {
+          alert("Pincode Must be Exactly 6 Digits");
+          return;
+        }
+      }
       const res = await axios.patch("/api/customer/profile", payload);
 
       if (res.data.success) {
