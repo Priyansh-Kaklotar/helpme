@@ -29,7 +29,7 @@ export default function Home() {
                 router.push("/customer/find-provider");
               }}
             >
-              Find a Provider
+              Find a Service
             </button>
             <button
               className="px-8 py-3 bg-white dark:bg-gray-800 border border-purple-600 text-purple-700 dark:text-purple-400 rounded-lg font-semibold shadow hover:bg-purple-50 dark:hover:bg-gray-700 transition cursor-pointer"
@@ -209,10 +209,12 @@ export default function Home() {
           </div>
         </div>
         <div className="flex justify-center mt-8 p-5">
-          <button className="px-4 py-2 bg-red-500 text-white rounded-lg font-semibold shadow hover:bg-red-600 transition cursor-pointer"
-           onClick={async () =>{
-            const res = await axios.get('/api/clear-cookie');
-          }}>
+          <button
+            className="px-4 py-2 bg-red-500 text-white rounded-lg font-semibold shadow hover:bg-red-600 transition cursor-pointer"
+            onClick={async () => {
+              const res = await axios.get("/api/clear-cookie");
+            }}
+          >
             clear cookies
           </button>
         </div>

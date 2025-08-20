@@ -85,9 +85,11 @@ const Page = () => {
     setLoading(true);
     try {
       const payload = field === "address" ? { address } : { pincode };
-      if (payload === "pincode") {
-        if (pincode.length !== 6) {
-          alert("Pincode Must be Exactly 6 Digits");
+
+      if (field === "pincode") {
+        if (pincode.toString().length !== 6) {
+          alert("Pincode must be exactly 6 digits");
+          setLoading(false);
           return;
         }
       }
