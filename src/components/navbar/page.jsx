@@ -32,14 +32,23 @@ function Navbar() {
               <ThemeToggleButton />
             </div>
             <div className="flex gap-12 mx-4">
-              <li>
-                <Link href={"/"}>Home</Link>
+              <li className="relative group">
+                <Link href={"/"} className="hover:text-blue-400">
+                  Home
+                </Link>
+                <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
               </li>
-              <li>
-                <Link href="/about">About</Link>
+              <li className="relative group">
+                <Link href="/about" className="hover:text-blue-400">
+                  About
+                </Link>
+                <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
               </li>
-              <li>
-                <Link href={"/contact"}>Contact</Link>
+              <li className="relative group">
+                <Link href={"/contact"} className="hover:text-blue-400">
+                  Contact
+                </Link>
+                <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
               </li>{" "}
               {/* ahiya kak biju rakhshu contact ne About page ma rakhi didhu chhe */}
             </div>

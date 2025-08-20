@@ -19,7 +19,15 @@ const UserSchema = new mongoose.Schema({
   },
   pincode: {
     type: Number,
-    length: 6,
+    required: true,
+    validate: {
+      validator: function (v) {
+        // Check if number is between 100000 and 999999 (6 digits)
+        return v >= 100000 && v <= 999999;
+      },
+      message: (props) =>
+        `${props.value} is not valid! Pincode must be exactly 6 digits.`,
+    },
   },
   booking: [
     {
