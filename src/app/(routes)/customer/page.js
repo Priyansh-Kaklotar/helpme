@@ -1,9 +1,27 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Home = () => {
   const [name, setName] = useState("");
+  const [popularServices, setPopularServices] = useState([]);
+
+  useEffect(() => {
+    async function fetchServices() {
+      try {
+        const res = await axios.get("/api/services");
+        const data = res.data;
+        if (data.success) {
+          setPopularServices(data.data);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+    fetchServices();
+  }, []);
+
   useEffect(() => {
     async function fetchName() {
       try {
@@ -59,6 +77,20 @@ const Home = () => {
     },
   ];
 
+  const scrollRef = useRef(null);
+  const scrollRight = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: 300, behavior: "smooth" });
+    }
+  };
+  const scrollLeft = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -300, behavior: "smooth" });
+    }
+  };
+
+  console.log(popularServices);
+  const service = popularServices[0];
   return (
     <div>
       {/* Top Part  */}
@@ -169,8 +201,46 @@ const Home = () => {
       </div>
 
       {/* Popular Services0 */}
-      <div className="ml-10 text-2xl font-semibold">
+      <div className="ml-10 text-2xl font-semibold mt-5">
         <h1>Popular Services</h1>
+        <button
+          onClick={scrollLeft}
+          className="absolute top-1/2 left-2 -translate-y-1/2 bg-gray-400 dark:text-black mt-40 shadow-md rounded-full p-2 z-10"
+        >
+          <ChevronLeft />
+        </button>
+        <div
+          ref={scrollRef}
+          className="flex gap-4 overflow-x-scroll scrollbar-hide scroll-smooth mt-3 scrollbar-hidden"
+        >
+          {popularServices.map((service) => (
+            <div
+              key={service._id}
+              className="min-w-[250px] bg-white dark:text-black rounded-xl shadow-md p-3 flex-shrink-0"
+            >
+              <img
+                src="https://static.vecteezy.com/system/resources/thumbnails/054/039/938/small_2x/two-workers-in-blue-uniforms-converse-in-front-of-a-house-surrounded-by-containers-emphasizing-home-service-and-maintenance-png.png"
+                alt={service.name}
+                className="w-full h-40 object-cover rounded-lg"
+              />
+              <h3 className="mt-2 font-semibold">{service.title}</h3>
+              <p className="font-bold">{service.price}</p>
+              <button
+                className="bg-gray-200 text-red-400 border border-gray-400 border-b-4 mt-2 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group"
+                onClick={() => console.log("service is = ", service._id)}
+              >
+                <span className="bg-red-400 shadow-red-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
+                Book Nows
+              </button>
+            </div>
+          ))}
+        </div>
+        <button
+          onClick={scrollRight}
+          className="absolute top-1/2 right-2 mt-38 -translate-y-1/2 bg-gray-400 dark:text-black shadow-md rounded-full p-2"
+        >
+          <ChevronRight />
+        </button>
       </div>
     </div>
   );

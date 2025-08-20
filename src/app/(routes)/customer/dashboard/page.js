@@ -11,7 +11,6 @@ import {
 } from "react-icons/ri";
 import { useRouter } from "next/navigation";
 import Loader from "@/src/components/Loader/page";
-
 const Page = () => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
