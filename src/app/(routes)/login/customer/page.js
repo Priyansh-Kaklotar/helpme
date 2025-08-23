@@ -71,7 +71,6 @@ function Page() {
           progress: undefined,
           theme: "light",
           transition: Bounce,
-          onClose: () => navigate.push("/"),
         });
         reset();
         navigate.push("/customer/dashboard");

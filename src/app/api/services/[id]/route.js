@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(req , {params}) {
     try {
-        const {id} =  params;
+        const {id} = await params;
         await connectToDatabase();
         const Service = await ServiceModel.findById(id);
         return NextResponse.json(Service);
