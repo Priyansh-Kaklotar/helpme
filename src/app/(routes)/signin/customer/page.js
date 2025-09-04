@@ -10,7 +10,6 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 import { motion } from "framer-motion";
 import Loader from "@/src/components/Loader/page";
 
-
 const schema = yup.object().shape({
   username: yup.string().required("Username is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -25,6 +24,10 @@ const schema = yup.object().shape({
     .string()
     .oneOf([yup.ref("password")], "Passwords must match")
     .required("Please confirm your password"),
+  pincode: yup
+    .string()
+    .matches(/^[0-9]{6}$/, "Pincode must be 6 digits")
+    .required("Pincode is required"),
 });
 
 const containerVariants = {
@@ -52,7 +55,7 @@ const Signin = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors , isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -74,12 +77,13 @@ const Signin = () => {
       } else {
         console.log("Signin failed:", d.message);
         toast.error("❌ Signin failed. Try again.");
+        setLoading(false);
       }
       reset();
     } catch (error) {
       console.error("Signin Error:", error);
       toast.error("❌ An error occurred. Please try again.");
-    }finally{
+    } finally {
       setLoading(true);
     }
   };
@@ -180,6 +184,14 @@ const Signin = () => {
           />
           <p className="text-red-300 text-sm">{errors.repassword?.message}</p>
 
+          <motion.input
+            variants={itemVariants}
+            {...register("pincode")}
+            placeholder="Pincode"
+            className="bg-white text-black rounded-lg p-2"
+          />
+          <p className="text-red-300 text-sm">{errors.pincode?.message}</p>
+
           <motion.button
             variants={itemVariants}
             whileHover={{
@@ -214,9 +226,7 @@ const Signin = () => {
           </a>
         </motion.div>
       </motion.div>
-      {
-        loading && <Loader/>
-      }
+      {loading && <Loader />}
     </div>
   );
 };

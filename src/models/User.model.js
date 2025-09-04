@@ -19,7 +19,6 @@ const UserSchema = new mongoose.Schema({
   },
   pincode: {
     type: Number,
-    required: true,
     validate: {
       validator: function (v) {
         // Check if number is between 100000 and 999999 (6 digits)
