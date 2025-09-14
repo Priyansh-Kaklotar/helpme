@@ -67,6 +67,7 @@ const Signin = () => {
         name: data.username,
         email: data.email,
         password: data.password,
+        pincode: data.pincode,
       });
 
       const d = await response.data;
