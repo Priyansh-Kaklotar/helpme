@@ -1,5 +1,3 @@
-
-
 "use client";
 import React, { useState } from "react";
 import { EyeIcon, ViewOffIcon } from "hugeicons-react";
@@ -12,7 +10,6 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 import { motion } from "framer-motion";
 import Loader from "@/src/components/Loader/page";
 
-
 const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -20,7 +17,7 @@ const schema = yup.object().shape({
   pincode: yup
     .string()
     .matches(/^[0-9]{6}$/, "Pincode must be 6 digits")
-    .required("Pincode Must be 6 digits"),  
+    .required("Pincode Must be 6 digits"),
   password: yup
     .string()
     .required("Password is required")
@@ -86,7 +83,7 @@ const Signin = () => {
     } catch (error) {
       console.error("Signin Error:", error);
       toast.error("❌ Signup failed. Try again.");
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -94,7 +91,11 @@ const Signin = () => {
   return (
     <div className="w-full h-dvh flex justify-center items-center bg-gradient-to-br from-[#1e3a8a] via-purple-600 to-[#9333ea] text-white relative overflow-hidden px-4">
       {/* Toasts */}
-      <ToastContainer position="top-right" autoClose={5000} transition={Bounce} />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        transition={Bounce}
+      />
 
       {/* Background particles */}
       <div className="pointer-events-none absolute w-full h-full overflow-hidden z-0">
@@ -233,7 +234,7 @@ const Signin = () => {
         >
           Already have an account?
           <a
-            href="/login/customer"
+            href="/login/provider"
             className="text-yellow-300 font-semibold px-2 hover:text-yellow-400"
           >
             Login
@@ -241,7 +242,6 @@ const Signin = () => {
         </motion.div>
       </motion.div>
       {loading && <Loader />}
-
     </div>
   );
 };
