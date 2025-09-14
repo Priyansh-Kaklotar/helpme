@@ -4,9 +4,20 @@ import Navbar from "@/src/components/navbar/page";
 import { easeIn, easeOut, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Cookies from "js-cookie";
+import { useState, useEffect } from "react";
 
 export default function Home() {
+  const [userType, setUserType] = useState("");
+  const [token, setToken] = useState("");
   const router = useRouter();
+  useEffect(() => {
+    const typeCookie = Cookies.get("type");
+    const tokenCookie = Cookies.get("token");
+
+    if (typeCookie) setUserType(typeCookie);
+    if (tokenCookie) setToken(tokenCookie);
+  }, []);
   return (
     <>
       <Navbar />
@@ -26,7 +37,13 @@ export default function Home() {
             <button
               className="px-8 py-3 bg-purple-600 text-white rounded-lg font-semibold shadow hover:bg-purple-700 transition cursor-pointer"
               onClick={() => {
-                router.push("/customer/find-provider");
+                console.log("user type = ", userType);
+                console.log("token = ", token);
+                if (userType == "Customer" && token) {
+                  router.push("/customer");
+                } else {
+                  router.push("/signin/customer");
+                }
               }}
             >
               Find a Service
@@ -34,7 +51,13 @@ export default function Home() {
             <button
               className="px-8 py-3 bg-white dark:bg-gray-800 border border-purple-600 text-purple-700 dark:text-purple-400 rounded-lg font-semibold shadow hover:bg-purple-50 dark:hover:bg-gray-700 transition cursor-pointer"
               onClick={() => {
-                router.push("/signin/provider");
+                console.log("user type = ", userType);
+                console.log("token = ", token);
+                if (userType == "serviceProvider" && token) {
+                  router.push("/provider/dashboard");
+                } else {
+                  router.push("/signin/provider");
+                }
               }}
             >
               Become a Provider

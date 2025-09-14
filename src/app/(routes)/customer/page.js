@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-const Home = () => {
+export default function Home(){
   const [name, setName] = useState("");
   const [popularServices, setPopularServices] = useState([]);
   const Router = useRouter();
@@ -39,7 +39,6 @@ const Home = () => {
       }
     }
     if (name === "") {
-      // Fetch name only if not already set
       fetchName();
     }
   }, [name, setName]);
@@ -91,161 +90,115 @@ const Home = () => {
     }
   };
 
-  console.log(popularServices);
-  const service = popularServices[0];
   return (
-    <div>
-      {/* Top Part  */}
-      <div className="flex justify-between w-full items-center">
-        <h1 className="ml-10 text-center text-2xl font-serif">
+    <div className="min-h-screen px-4 md:px-8 lg:px-10">
+      {/* Search Box - Top on mobile, side on desktop */}
+      <div className="w-full md:hidden mb-4">
+        <div className="flex items-center justify-between gap-2 bg-[#2f3640] rounded-full relative">
+          <input
+            type="text"
+            placeholder="Search Service Here...."
+            className="border-none bg-transparent outline-none text-white text-sm px-6 py-3 pr-12 placeholder-white w-full"
+          />
+          <button className="absolute right-2 w-10 h-10 rounded-full border-0 bg-gradient-to-r from-[#2AF598] to-[#009EFD] flex items-center justify-center text-white hover:shadow-lg transition-all duration-300">
+            <Search size={18} />
+          </button>
+        </div>
+      </div>
+
+      {/* Top Part */}
+      <div className="flex flex-col md:flex-row justify-between w-full items-start md:items-center gap-4 py-4">
+        <h1 className="text-xl md:text-2xl lg:text-3xl font-serif">
           Hello, {name} 👋
         </h1>
-        {/* search box  */}
-        <div className="w-5/10 mt-2 ">
-          <div className="flex max-w-95/100 items-center justify-between gap-2 bg-[#2f3640] rounded-full relative">
+        
+        {/* Search box for desktop */}
+        <div className="hidden md:block w-full md:w-auto max-w-md">
+          <div className="flex items-center justify-between gap-2 bg-[#2f3640] rounded-full relative">
             <input
               type="text"
               placeholder="Search Service Here...."
-              className="border-none bg-transparent outline-none text-white text-sm px-6 py-6 pr-12 placeholder-white"
+              className="border-none bg-transparent outline-none text-white text-sm px-6 py-3 pr-12 placeholder-white w-full"
             />
-            <button className="absolute right-2 w-12 h-12 rounded-full border-0 bg-gradient-to-r from-[#2AF598] to-[#009EFD] flex items-center justify-center text-white transition-all duration-300 ease-[cubic-bezier(.23,1,0.32,1)] hover:bg-[#1A1A1A] hover:shadow-[0_10px_20px_rgba(0,0,0,0.5)] hover:-translate-y-[3px] active:shadow-none active:translate-y-0">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="29"
-                height="29"
-                viewBox="0 0 29 29"
-                fill="none"
-              >
-                <g clipPath="url(#clip0_2_17)">
-                  <g filter="url(#filter0_d_2_17)">
-                    <path
-                      d="M23.7953 23.9182L19.0585 19.1814M19.0585 19.1814C19.8188 18.4211 20.4219 17.5185 20.8333 16.5251C21.2448 15.5318 21.4566 14.4671 21.4566 13.3919C21.4566 12.3167 21.2448 11.252 20.8333 10.2587C20.4219 9.2653 19.8188 8.36271 19.0585 7.60242C18.2982 6.84214 17.3956 6.23905 16.4022 5.82759C15.4089 5.41612 14.3442 5.20435 13.269 5.20435C12.1938 5.20435 11.1291 5.41612 10.1358 5.82759C9.1424 6.23905 8.23981 6.84214 7.47953 7.60242C5.94407 9.13789 5.08145 11.2204 5.08145 13.3919C5.08145 15.5634 5.94407 17.6459 7.47953 19.1814C9.01499 20.7168 11.0975 21.5794 13.269 21.5794C15.4405 21.5794 17.523 20.7168 19.0585 19.1814Z"
-                      stroke="white"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      shapeRendering="crispEdges"
-                    ></path>
-                  </g>
-                </g>
-                <defs>
-                  <filter
-                    id="filter0_d_2_17"
-                    x="-0.418549"
-                    y="3.70435"
-                    width="29.7139"
-                    height="29.7139"
-                    filterUnits="userSpaceOnUse"
-                    colorInterpolationFilters="sRGB"
-                  >
-                    <feFlood
-                      floodOpacity="0"
-                      result="BackgroundImageFix"
-                    ></feFlood>
-                    <feColorMatrix
-                      in="SourceAlpha"
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                      result="hardAlpha"
-                    ></feColorMatrix>
-                    <feOffset dy="4"></feOffset>
-                    <feGaussianBlur stdDeviation="2"></feGaussianBlur>
-                    <feComposite in2="hardAlpha" operator="out"></feComposite>
-                    <feColorMatrix
-                      type="matrix"
-                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-                    ></feColorMatrix>
-                    <feBlend
-                      mode="normal"
-                      in2="BackgroundImageFix"
-                      result="effect1_dropShadow_2_17"
-                    ></feBlend>
-                    <feBlend
-                      mode="normal"
-                      in="SourceGraphic"
-                      in2="effect1_dropShadow_2_17"
-                      result="shape"
-                    ></feBlend>
-                  </filter>
-                  <clipPath id="clip0_2_17">
-                    <rect
-                      width="28.0702"
-                      height="28.0702"
-                      fill="white"
-                      transform="translate(0.403503 0.526367)"
-                    ></rect>
-                  </clipPath>
-                </defs>
-              </svg>
+            <button className="absolute right-2 w-10 h-10 rounded-full border-0 bg-gradient-to-r from-[#2AF598] to-[#009EFD] flex items-center justify-center text-white hover:shadow-lg transition-all duration-300">
+              <Search size={18} />
             </button>
           </div>
         </div>
       </div>
 
       {/* Category Grid Section */}
-      <div className="mt-5 ml-10 font-semibold">
-        <h1 className="text-2xl">Categories</h1>
-        <div className="grid grid-cols-8 gap-6 p-4">
+      <div className="mt-6 font-semibold">
+        <h1 className="text-xl md:text-2xl mb-4">Categories</h1>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 md:gap-4 lg:gap-6">
           {categories.map((cat, index) => (
             <div
               key={index}
-              className="flex flex-col items-center p-4 
+              className="flex flex-col items-center p-3 md:p-4 
                  bg-white text-black 
                  dark:bg-gray-800 dark:text-white 
                  shadow-md dark:shadow-[0_4px_10px_rgba(255,255,255,0.2)] 
-                 rounded-xl hover:shadow-2xl cursor-pointer transition"
+                 rounded-xl hover:shadow-2xl cursor-pointer transition-all duration-200
+                 hover:scale-105 active:scale-95"
             >
-              <img src={cat.image} alt={cat.name} className="w-16 h-16 mb-2" />
-              <span className="text-sm font-medium">{cat.name}</span>
+              <img src={cat.image} alt={cat.name} className="w-12 h-12 md:w-16 md:h-16 mb-2" />
+              <span className="text-xs md:text-sm font-medium text-center leading-tight">{cat.name}</span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Popular Services0 */}
-      <div className="ml-10 text-2xl font-semibold mt-5">
-        <h1>Popular Services</h1>
+      {/* Popular Services */}
+      <div className="text-xl md:text-2xl font-semibold mt-8 relative">
+        <h1 className="mb-4">Popular Services</h1>
+        
+        {/* Left scroll button */}
         <button
           onClick={scrollLeft}
-          className="absolute top-1/2 left-2 -translate-y-1/2 bg-gray-400 dark:text-black mt-40 shadow-md rounded-full p-2 z-10"
+          className="hidden md:block absolute top-1/2 left-2 transform -translate-y-1/2 bg-white dark:bg-gray-700 text-gray-600 dark:text-white shadow-lg rounded-full p-2 z-10 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
         >
-          <ChevronLeft />
+          <ChevronLeft size={20} />
         </button>
+        
         <div
           ref={scrollRef}
-          className="flex gap-4 overflow-x-scroll scrollbar-hide scroll-smooth mt-3 scrollbar-hidden"
+          className="flex gap-3 md:gap-4 overflow-x-auto scroll-smooth pb-4"
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none'
+          }}
         >
           {popularServices.map((service) => (
             <div
               key={service._id}
-              className="min-w-[250px] bg-white dark:text-black rounded-xl shadow-md p-3 flex-shrink-0"
+              className="min-w-[200px] sm:min-w-[220px] md:min-w-[250px] bg-white dark:bg-gray-800 dark:text-white rounded-xl shadow-md p-3 flex-shrink-0 hover:shadow-lg transition-shadow"
             >
               <img
                 src="https://static.vecteezy.com/system/resources/thumbnails/054/039/938/small_2x/two-workers-in-blue-uniforms-converse-in-front-of-a-house-surrounded-by-containers-emphasizing-home-service-and-maintenance-png.png"
                 alt={service.name}
-                className="w-full h-40 object-cover rounded-lg"
+                className="w-full h-32 md:h-40 object-cover rounded-lg"
               />
-              <h3 className="mt-2 font-semibold">{service.title}</h3>
-              <p className="font-bold">{service.price}</p>
+              <h3 className="mt-2 font-semibold text-sm md:text-base overflow-hidden text-ellipsis whitespace-nowrap">{service.title}</h3>
+              <p className="font-bold text-sm md:text-base text-green-600 dark:text-green-400">{service.price}</p>
               <button
-                className="bg-gray-200 text-red-400 border border-gray-400 border-b-4 mt-2 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group"
+                className="w-full bg-gray-200 dark:bg-gray-700 text-red-400 border border-gray-400 border-b-4 mt-2 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group text-sm md:text-base"
                 onClick={() => Router.push(`/customer/services/${service._id}`)}
               >
                 <span className="bg-red-400 shadow-red-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
-                Book Nows
+                Book Now
               </button>
             </div>
           ))}
         </div>
+        
+        {/* Right scroll button */}
         <button
           onClick={scrollRight}
-          className="absolute top-1/2 right-2 mt-38 -translate-y-1/2 bg-gray-400 dark:text-black shadow-md rounded-full p-2"
+          className="hidden md:block absolute top-1/2 right-2 transform -translate-y-1/2 bg-white dark:bg-gray-700 text-gray-600 dark:text-white shadow-lg rounded-full p-2 z-10 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
         >
-          <ChevronRight />
+          <ChevronRight size={20} />
         </button>
       </div>
     </div>
   );
 };
-
-export default Home;

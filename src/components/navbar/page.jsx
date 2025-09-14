@@ -44,12 +44,7 @@ function Navbar() {
                 </Link>
                 <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
               </li>
-              <li className="relative group">
-                <Link href={"/contact"} className="hover:text-blue-400">
-                  Contact
-                </Link>
-                <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
-              </li>{" "}
+              {" "}
               {/* ahiya kak biju rakhshu contact ne About page ma rakhi didhu chhe */}
             </div>
           </ul>

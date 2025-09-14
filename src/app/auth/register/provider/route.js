@@ -60,12 +60,13 @@ export async function POST(req) {
     });
 
     response.cookies.set("type", "serviceProvider", {
-      httpOnly: true,
+      httpOnly: false, // allow js-cookie to read
       path: "/",
-      sameSite: "strict",
+      // path: "/",
+      // sameSite: "strict",
       secure: process.env.NODE_ENV === "production",
     });
-
+    // response.cookies.set("type", "serviceProvider");
     //set JWT Token also as a cookie
     response.cookies.set("token", token);
 
