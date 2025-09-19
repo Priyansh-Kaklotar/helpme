@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import ServiceProviderModel from "./ServiceProvider.model";
 
 const ServiceSchema = new mongoose.Schema({
   title: {

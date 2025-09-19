@@ -41,6 +41,12 @@ const UserSchema = new mongoose.Schema({
       ref: "Booking",
     },
   ],
+  wishList: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Service",
+    },
+  ],
 });
 
 UserSchema.pre("save", async function (next) {

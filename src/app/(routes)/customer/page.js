@@ -4,7 +4,7 @@ import axios from "axios";
 import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-export default function Home(){
+export default function Home() {
   const [name, setName] = useState("");
   const [popularServices, setPopularServices] = useState([]);
   const Router = useRouter();
@@ -111,7 +111,7 @@ export default function Home(){
         <h1 className="text-xl md:text-2xl lg:text-3xl font-serif">
           Hello, {name} 👋
         </h1>
-        
+
         {/* Search box for desktop */}
         <div className="hidden md:block w-full md:w-auto max-w-md">
           <div className="flex items-center justify-between gap-2 bg-[#2f3640] rounded-full relative">
@@ -141,8 +141,14 @@ export default function Home(){
                  rounded-xl hover:shadow-2xl cursor-pointer transition-all duration-200
                  hover:scale-105 active:scale-95"
             >
-              <img src={cat.image} alt={cat.name} className="w-12 h-12 md:w-16 md:h-16 mb-2" />
-              <span className="text-xs md:text-sm font-medium text-center leading-tight">{cat.name}</span>
+              <img
+                src={cat.image}
+                alt={cat.name}
+                className="w-12 h-12 md:w-16 md:h-16 mb-2"
+              />
+              <span className="text-xs md:text-sm font-medium text-center leading-tight">
+                {cat.name}
+              </span>
             </div>
           ))}
         </div>
@@ -151,7 +157,7 @@ export default function Home(){
       {/* Popular Services */}
       <div className="text-xl md:text-2xl font-semibold mt-8 relative">
         <h1 className="mb-4">Popular Services</h1>
-        
+
         {/* Left scroll button */}
         <button
           onClick={scrollLeft}
@@ -159,27 +165,40 @@ export default function Home(){
         >
           <ChevronLeft size={20} />
         </button>
-        
+
         <div
           ref={scrollRef}
           className="flex gap-3 md:gap-4 overflow-x-auto scroll-smooth pb-4"
           style={{
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none'
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
           }}
         >
           {popularServices.map((service) => (
             <div
               key={service._id}
               className="min-w-[200px] sm:min-w-[220px] md:min-w-[250px] bg-white dark:bg-gray-800 dark:text-white rounded-xl shadow-md p-3 flex-shrink-0 hover:shadow-lg transition-shadow"
+              onClick={() => {
+                console.log(
+                  "clicked service is ",
+                  service,
+                  "id is ",
+                  service._id
+                );
+                Router.push(`/customer/services/${service._id}`);
+              }}
             >
               <img
                 src="https://static.vecteezy.com/system/resources/thumbnails/054/039/938/small_2x/two-workers-in-blue-uniforms-converse-in-front-of-a-house-surrounded-by-containers-emphasizing-home-service-and-maintenance-png.png"
                 alt={service.name}
                 className="w-full h-32 md:h-40 object-cover rounded-lg"
               />
-              <h3 className="mt-2 font-semibold text-sm md:text-base overflow-hidden text-ellipsis whitespace-nowrap">{service.title}</h3>
-              <p className="font-bold text-sm md:text-base text-green-600 dark:text-green-400">{service.price}</p>
+              <h3 className="mt-2 font-semibold text-sm md:text-base overflow-hidden text-ellipsis whitespace-nowrap">
+                {service.title}
+              </h3>
+              <p className="font-bold text-sm md:text-base text-green-600 dark:text-green-400">
+                {service.price}
+              </p>
               <button
                 className="w-full bg-gray-200 dark:bg-gray-700 text-red-400 border border-gray-400 border-b-4 mt-2 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group text-sm md:text-base"
                 onClick={() => Router.push(`/customer/services/${service._id}`)}
@@ -190,7 +209,7 @@ export default function Home(){
             </div>
           ))}
         </div>
-        
+
         {/* Right scroll button */}
         <button
           onClick={scrollRight}
@@ -201,4 +220,4 @@ export default function Home(){
       </div>
     </div>
   );
-};
+}
