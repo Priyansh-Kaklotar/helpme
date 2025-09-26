@@ -15,7 +15,6 @@ const Main_navbar = () => {
         <nav className="dark:bg-gray-900 bg-white border-b dark:border-gray-700 ">
           <div className="max-w-full mx-auto">
             <div className="flex justify-between items-center bg-gray-800 text-white p-4">
-
               {/* Left Side - Theme Toggle */}
               <div className="flex items-center space-x-4">
                 <ThemeToggleButton />
@@ -28,48 +27,60 @@ const Main_navbar = () => {
               >
                 {/* Top bar */}
                 <span
-                  className={`block w-6 h-0.5 bg-white transform transition-all duration-500 ease-in-out ${isOpen ? "rotate-45 translate-y-1.5" : "-translate-y-2"
-                    }`}
+                  className={`block w-6 h-0.5 bg-white transform transition-all duration-500 ease-in-out ${
+                    isOpen ? "rotate-45 translate-y-1.5" : "-translate-y-2"
+                  }`}
                 ></span>
 
                 {/* Middle bar */}
                 <span
-                  className={`block w-6 h-0.5 bg-white my-1 transition-all duration-500 ease-in-out ${isOpen ? "opacity-0" : "opacity-100"
-                    }`}
+                  className={`block w-6 h-0.5 bg-white my-1 transition-all duration-500 ease-in-out ${
+                    isOpen ? "opacity-0" : "opacity-100"
+                  }`}
                 ></span>
 
                 {/* Bottom bar */}
                 <span
-                  className={`block w-6 h-0.5 bg-white transform transition-all duration-500 ease-in-out ${isOpen ? "-rotate-45 -translate-y-1.5" : "translate-y-2"
-                    }`}
+                  className={`block w-6 h-0.5 bg-white transform transition-all duration-500 ease-in-out ${
+                    isOpen ? "-rotate-45 -translate-y-1.5" : "translate-y-2"
+                  }`}
                 ></span>
               </button>
-
-
-
 
               {/* Desktop Navbar */}
               <ul className="hidden lg:flex gap-12 mx-4">
                 <li className="relative group">
-                  <Link href="/customer" className="hover:text-gray-300 transition-colors">
+                  <Link
+                    href="/customer"
+                    className={`hover:text-gray-300 transition-colors`}
+                  >
                     Home
                   </Link>
                   <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
                 </li>
                 <li className="relative group">
-                  <Link href="/customer/dashboard" className="hover:text-gray-300 transition-colors">
+                  <Link
+                    href="/customer/dashboard"
+                    className="hover:text-gray-300 transition-colors"
+                  >
                     Dashboard
                   </Link>
                   <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
                 </li>
                 <li className="relative group">
-                  <Link href="/customer/find-provider" className="hover:text-gray-300 transition-colors">
-                    Find Provider
+                  <Link
+                    href="/customer/wishlist"
+                    className="hover:text-gray-300 transition-colors"
+                  >
+                    My Wishlist
                   </Link>
                   <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
                 </li>
                 <li className="relative group">
-                  <Link href="/customer/Profile" className="hover:text-gray-300 transition-colors">
+                  <Link
+                    href="/customer/Profile"
+                    className="hover:text-gray-300 transition-colors"
+                  >
                     Profile
                   </Link>
                   <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
@@ -78,25 +89,45 @@ const Main_navbar = () => {
             </div>
 
             {/* Mobile Navbar */}
-            <div className={`lg:hidden ${isOpen ? "block" : "hidden"} bg-gray-800 text-white`}>
+            <div
+              className={`lg:hidden ${
+                isOpen ? "block" : "hidden"
+              } bg-gray-800 text-white`}
+            >
               <ul className="flex flex-col items-end bg-gray-800 text-white p-4">
                 <li>
-                  <Link href="/customer" onClick={() => setIsOpen(false)} className="hover:text-gray-300 transition-colors">
+                  <Link
+                    href="/customer"
+                    onClick={() => setIsOpen(false)}
+                    className="hover:text-gray-300 transition-colors"
+                  >
                     Home
                   </Link>
                 </li>
                 <li>
-                  <Link href="/customer/dashboard" onClick={() => setIsOpen(false)} className="hover:text-gray-300 transition-colors">
+                  <Link
+                    href="/customer/dashboard"
+                    onClick={() => setIsOpen(false)}
+                    className="hover:text-gray-300 transition-colors"
+                  >
                     Dashboard
                   </Link>
                 </li>
                 <li>
-                  <Link href="/customer/find-provider" onClick={() => setIsOpen(false)} className="hover:text-gray-300 transition-colors">
-                    Find Provider
+                  <Link
+                    href="/customer/wishlist"
+                    onClick={() => setIsOpen(false)}
+                    className="hover:text-gray-300 transition-colors"
+                  >
+                    My Wishlist
                   </Link>
                 </li>
                 <li>
-                  <Link href="/customer/profile" onClick={() => setIsOpen(false)} className="hover:text-gray-300 transition-colors">
+                  <Link
+                    href="/customer/profile"
+                    onClick={() => setIsOpen(false)}
+                    className="hover:text-gray-300 transition-colors"
+                  >
                     Profile
                   </Link>
                 </li>

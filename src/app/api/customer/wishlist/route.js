@@ -2,6 +2,7 @@ import connectToDatabase from "@/src/lib/mongodb";
 import UserModel from "@/src/models/User.model";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import ServiceModel from "@/src/models/Service.model";
 
 export async function PATCH(req) {
   try {
@@ -71,7 +72,7 @@ export async function GET() {
     await connectToDatabase();
 
     if (userId) {
-      const user = await UserModel.findById(userId);
+      const user = await UserModel.findById(userId).populate("wishList");
       const wishList = user.wishList;
       console.log("wishlist = ", wishList);
       return NextResponse.json({
