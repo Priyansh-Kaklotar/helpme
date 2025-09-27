@@ -29,15 +29,6 @@ function WishlistPage() {
     fetchWishlist();
   }, []);
 
-  // const handleBookService = async (serviceId, serviceTitle) => {
-  //   try {
-  //     // booking logic here
-  //     console.log(`Booking service: ${serviceTitle} with ID: ${serviceId}`);
-  //   } catch (error) {
-  //     console.error("Error booking service:", error);
-  //   }
-  // };
-
   const handleBookService = (service) => {
     setSelectedService(service);
     setShowBookingForm(true);
