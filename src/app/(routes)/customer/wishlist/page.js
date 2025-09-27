@@ -3,10 +3,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Main_navbar from "@/src/components/main-navbar/page";
+import BookingForm from "@/src/components/bookingForm/page";
 
 function WishlistPage() {
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedService, setSelectedService] = useState(null);
+  const [showBookingForm, setShowBookingForm] = useState(false);
 
   useEffect(() => {
     async function fetchWishlist() {
@@ -26,13 +29,18 @@ function WishlistPage() {
     fetchWishlist();
   }, []);
 
-  const handleBookService = async (serviceId, serviceTitle) => {
-    try {
-      // booking logic here
-      console.log(`Booking service: ${serviceTitle} with ID: ${serviceId}`);
-    } catch (error) {
-      console.error("Error booking service:", error);
-    }
+  // const handleBookService = async (serviceId, serviceTitle) => {
+  //   try {
+  //     // booking logic here
+  //     console.log(`Booking service: ${serviceTitle} with ID: ${serviceId}`);
+  //   } catch (error) {
+  //     console.error("Error booking service:", error);
+  //   }
+  // };
+
+  const handleBookService = (service) => {
+    setSelectedService(service);
+    setShowBookingForm(true);
   };
 
   const handleRemoveFromWishlist = async (serviceId, serviceTitle) => {
@@ -112,6 +120,16 @@ function WishlistPage() {
           </div>
         )}
       </div>
+
+      {showBookingForm && selectedService && (
+        <BookingForm
+          service={selectedService}
+          onClose={() => {
+            setShowBookingForm(false);
+            setSelectedService(null);
+          }}
+        />
+      )}
     </div>
   );
 }

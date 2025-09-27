@@ -111,7 +111,7 @@ const Page = () => {
                   ? navigate.push("/customer/Profile")
                   : card.title === "Wallet"
                   ? navigate.push("/customer/my-wallet")
-                  : navigate.push("/customer/my-services");
+                  : navigate.push("/customer/bookservice");
                 setLoading(false);
               }}
             >

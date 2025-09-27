@@ -15,6 +15,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import Loader from "@/src/components/Loader/page";
+import BookingForm from "@/src/components/bookingForm/page";
 
 const page = () => {
   const params = useParams();
@@ -24,6 +25,8 @@ const page = () => {
   const [Service, setService] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [addToWish, setAddToWish] = useState(false);
+  const [selectedService, setSelectedService] = useState(null);
+  const [showBookingForm, setShowBookingForm] = useState(false);
 
   // Function to check if service is in wishlist
   const checkWishlistStatus = async () => {
@@ -31,10 +34,6 @@ const page = () => {
       const res = await axios.get(`/api/customer/wishlist`);
       const wishlistItems = res.data;
 
-      // Check if current service is in wishlist
-      // const isInWishlist = wishlistItems.some(
-      //   (item) => item.id === id || item.serviceId === id
-      // );
       const list = wishlistItems.wishList;
       console.log("list = ", list);
       const exists = list.includes(id);
@@ -43,6 +42,11 @@ const page = () => {
     } catch (error) {
       console.log("Error checking wishlist status:", error);
     }
+  };
+
+  const handleBookService = (service) => {
+    setSelectedService(service);
+    setShowBookingForm(true);
   };
 
   useEffect(() => {
@@ -62,6 +66,8 @@ const page = () => {
     }
     Get_Service();
   }, [id]);
+
+  // async function handleBooking() {}
 
   async function toggleWishList() {
     if (addToWish) {
@@ -288,7 +294,10 @@ const page = () => {
 
             {/* Animated CTA buttons */}
             <div className="space-y-4">
-              <button className="w-full bg-white/20 hover:bg-white/30 backdrop-blur-lg text-white py-4 px-8 rounded-2xl font-bold border border-white/30 hover:border-white/50 transition-all duration-300 hover:scale-105 hover:-translate-y-1 shadow-lg hover:shadow-xl">
+              <button
+                className="w-full bg-white/20 hover:bg-white/30 backdrop-blur-lg text-white py-4 px-8 rounded-2xl font-bold border border-white/30 hover:border-white/50 transition-all duration-300 hover:scale-105 hover:-translate-y-1 shadow-lg hover:shadow-xl"
+                onClick={() => handleBookService(id)}
+              >
                 🚀 Book This Service
               </button>
               <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
@@ -359,6 +368,16 @@ const page = () => {
           animation: wave 3s ease-in-out infinite;
         }
       `}</style>
+
+      {showBookingForm && selectedService && (
+        <BookingForm
+          service={selectedService}
+          onClose={() => {
+            setShowBookingForm(false);
+            setSelectedService(null);
+          }}
+        />
+      )}
     </div>
   );
 };
