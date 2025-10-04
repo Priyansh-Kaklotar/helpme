@@ -71,9 +71,10 @@ function Page() {
           transition: Bounce,
         });
         reset();
-        navigate.push("/customer/dashboard");
+        navigate.push("/customer");
       } else {
         toast.error(data.message || "Login failed!");
+        console.log("error while login");
       }
     } catch (error) {
       console.log(error);

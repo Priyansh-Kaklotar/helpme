@@ -15,7 +15,8 @@ export async function PATCH(req) {
       const updateWish = await UserModel.findByIdAndUpdate(
         userId,
         {
-          $push: { wishList: id },
+          // $push: { wishList: id },
+          $addToSet: { wishList: id },
         },
         { new: true }
       ).populate("wishList");

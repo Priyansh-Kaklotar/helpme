@@ -36,9 +36,15 @@ function page() {
       });
 
       console.log("Login successful:", response.data);
+      console.log("success : ", response.data.success);
+      if (response.data.success) {
+        alert(response.data.message);
+        router.push("/provider/dashboard");
+      } else {
+        alert(response.data.message);
+      }
 
       // Handle successful login (redirect, store token, etc.)
-      router.push("/provider/dashboard");
     } catch (error) {
       console.error("Login error:", error);
       setError(

@@ -1,6 +1,5 @@
 import connectToDatabase from "@/src/lib/mongodb";
 import ServiceModel from "@/src/models/Service.model";
-
 import ServiceProviderModel from "@/src/models/ServiceProvider.model";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";

@@ -75,7 +75,7 @@ const Page = () => {
           },
           {
             icon: <RiListCheck2 />,
-            title: "My Services",
+            title: "My Booked Services",
             text: "Track and manage your service requests.",
             color: "red",
           },

@@ -36,7 +36,7 @@ const page = () => {
 
       const list = wishlistItems.wishList;
       console.log("list = ", list);
-      const exists = list.includes(id);
+      const exists = list.some((item) => item._id === id);
       console.log("\nIs in Wish List = ", exists);
       setAddToWish(exists);
     } catch (error) {

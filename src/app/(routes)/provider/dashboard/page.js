@@ -1,45 +1,17 @@
-// "use client";
-// import axios from "axios";
-// import React from "react";
-// import { useState, useEffect } from "react";
-
-// function page() {
-//   const [allBooking, setAllBooking] = useState({});
-
-//   useEffect(() => {
-//     async function fetchBooking() {
-//       try {
-//         const res = await axios.get("/api/provider/bookings");
-//         const data = res.data;
-//         console.log(data.services);
-//         setAllBooking(data.services);
-//       } catch (error) {
-//         console.log("error in thr provide/dashboard ", error.message);
-//       }
-//     }
-
-//     fetchBooking();
-//   }, []);
-
-//   return (
-//     <>
-//       <h1>this is the dashboard page of the provider</h1>
-//     </>
-//   );
-// }
-
-// export default page;
-
 "use client";
 import axios from "axios";
 import React from "react";
 import { useState, useEffect } from "react";
+import { Bounce, toast } from "react-toastify";
 
 function page() {
   const [allBooking, setAllBooking] = useState([]);
+  const [confirmBooking, setConfirmBooking] = useState([]);
+  const [rejectedBooking, setRejectedBooking] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // first time all booking fetch
   useEffect(() => {
     async function fetchBooking() {
       try {
@@ -57,10 +29,16 @@ function page() {
         setLoading(false);
       }
     }
-
     fetchBooking();
   }, []);
 
+  useEffect(() => {
+    console.log("All Booking = ", allBooking);
+    console.log("Confirm Booking = ", confirmBooking);
+    console.log("Rejected Booking = ", rejectedBooking);
+  }, [allBooking, confirmBooking, rejectedBooking]);
+
+  //booking Card component
   const BookingCard = ({ booking, onConfirm, onReject }) => {
     const formatDate = (dateString) => {
       return new Date(dateString).toLocaleDateString("en-US", {
@@ -177,9 +155,11 @@ function page() {
         {/* Action Buttons */}
         <div className="flex gap-3">
           <button
+            // onClick={() => handleConfirm(booking._id)}
             onClick={() => onConfirm(booking._id)}
             disabled={booking.bookingStatus === "confirmed"}
-            className="flex-1 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
+            className="flex-1 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl z-10"
+            // className="flex-1 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700  text-white font-semibold py-3 px-6 z-10 rounded-xl transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
           >
             <div className="flex items-center justify-center">
               <svg
@@ -201,8 +181,13 @@ function page() {
 
           <button
             onClick={() => onReject(booking._id)}
-            disabled={booking.bookingStatus === "rejected"}
-            className="flex-1 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
+            // onClick={() => handleReject(booking._id)}
+            disabled={
+              booking.bookingStatus === "rejected" ||
+              booking.bookingStatus === "confirmed"
+            }
+            className="flex-1 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 active:scale-95 z-10 shadow-lg hover:shadow-xl"
+            // className="flex-1 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white font-semibold py-3 px-6 rounded-xl transition-all z-10 duration-200 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
           >
             <div className="flex items-center justify-center">
               <svg
@@ -226,13 +211,15 @@ function page() {
     );
   };
 
+  //handle confirm Booking
   const handleConfirm = async (bookingId) => {
     try {
+      setLoading(true);
       console.log("Confirming booking:", bookingId);
 
       // Update the booking status in the API
       const response = await axios.patch(
-        `/api/provider/bookings/${bookingId}`,
+        `/api/provider/bookings/${bookingId}/status`,
         {
           status: "confirmed",
         }
@@ -248,40 +235,84 @@ function page() {
       );
 
       console.log("Booking confirmed successfully");
+      setLoading(false);
+      toast.success("✅ Booking Confirm Successful", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     } catch (error) {
       console.error("Error confirming booking:", error.message);
-      // You can add a toast notification here
+      // we can add a toast notification here
     }
   };
 
+  //handle rejected Booking
   const handleReject = async (bookingId) => {
     try {
+      setLoading(true);
       console.log("Rejecting booking:", bookingId);
 
       // Update the booking status in the API
       const response = await axios.patch(
-        `/api/provider/bookings/${bookingId}`,
+        `/api/provider/bookings/${bookingId}/status`,
         {
           status: "rejected",
         }
       );
 
       // Update the local state
-      setAllBooking((prevBookings) =>
-        prevBookings.map((booking) =>
-          booking._id === bookingId
-            ? { ...booking, bookingStatus: "rejected" }
-            : booking
-        )
-      );
+      // setAllBooking((prevBookings) =>
+      //   prevBookings.map((booking) =>
+      //     booking._id === bookingId
+      //       ? { ...booking, bookingStatus: "rejected" }
+      //       : booking
+      //   )
+      // );
 
+      setAllBooking((prev) =>
+        prev.filter((booking) => booking._id !== bookingId)
+      );
       console.log("Booking rejected successfully");
+      setLoading(false);
     } catch (error) {
       console.error("Error rejecting booking:", error.message);
       // You can add a toast notification here
     }
   };
 
+  // function showConfirmeBooking() {
+  //   return allBooking
+  //     .filter((booking) => booking.bookingStatus === "confirmed")
+  //     .map((booking) => (
+  //       <BookingCard
+  //         key={booking._id}
+  //         booking={booking}
+  //         onConfirm={handleConfirm}
+  //         onReject={handleReject}
+  //       />
+  //     ));
+  // }
+
+  const [selectedStatus, setSelectedStatus] = useState("pending");
+  const showBookings = (status) => {
+    return allBooking
+      .filter((b) => b.bookingStatus === status)
+      .map((b) => (
+        <BookingCard
+          key={b._id}
+          booking={b}
+          onConfirm={handleConfirm}
+          onReject={handleReject}
+        />
+      ));
+  };
   // Loading state
   if (loading) {
     return (
@@ -348,13 +379,19 @@ function page() {
       {/* Stats Cards */}
       <div className="max-w-7xl mx-auto mb-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center border border-white/20">
+          <div
+            onClick={() => setSelectedStatus("pending")}
+            className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center border border-white/20"
+          >
             <div className="text-3xl font-bold text-white mb-2">
               {allBooking.filter((b) => b.bookingStatus === "pending").length}
             </div>
             <div className="text-white/70 font-medium">Pending</div>
           </div>
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center border border-white/20">
+          <div
+            onClick={() => setSelectedStatus("confirmed")}
+            className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center border border-white/20"
+          >
             <div className="text-3xl font-bold text-white mb-2">
               {allBooking.filter((b) => b.bookingStatus === "confirmed").length}
             </div>
@@ -370,7 +407,10 @@ function page() {
             </div>
             <div className="text-white/70 font-medium">Total Revenue</div>
           </div>
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center border border-white/20">
+          <div
+            onClick={() => setSelectedStatus("pending")}
+            className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center border border-white/20"
+          >
             <div className="text-3xl font-bold text-white mb-2">
               {allBooking.length}
             </div>
@@ -383,14 +423,27 @@ function page() {
       <div className="max-w-7xl mx-auto">
         {allBooking && allBooking.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-            {allBooking.map((booking) => (
+            {/* {allBooking.map((booking) => (
               <BookingCard
                 key={booking._id}
                 booking={booking}
                 onConfirm={handleConfirm}
                 onReject={handleReject}
               />
-            ))}
+            ))} */}
+
+            {/* {allBooking
+              .filter((booking) => booking.bookingStatus === "pending")
+              .map((booking) => (
+                <BookingCard
+                  key={booking._id}
+                  booking={booking}
+                  onConfirm={handleConfirm}
+                  onReject={handleReject}
+                />
+              ))} */}
+
+            {showBookings(selectedStatus)}
           </div>
         ) : (
           /* Empty State */
