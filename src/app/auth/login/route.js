@@ -13,9 +13,9 @@ export async function POST(req) {
   try {
     const { name, password, usertype } = await req.json();
     await connectToDatabase();
-    const cookieStore = cookies();
-    let userType = usertype || (await cookieStore).get("type")?.value;
-    let userId = (await cookieStore).get("userId")?.value;
+    const cookieStore = await cookies();
+    // let userType = usertype || (await cookieStore).get("type")?.value;
+    // let userId = (await cookieStore).get("userId")?.value;
 
     //aa code comment ma reva deje...
     // console.log("id = ", userId);
@@ -26,15 +26,24 @@ export async function POST(req) {
     // } else {
     //   userType = "serviceProvider";
     // }
+    console.log(
+      `in backend login route: name = ${name}, password = ${password}, userType = ${usertype}`
+    );
 
     let user;
-    if (userType === "Customer") {
+    if (usertype === "Customer") {
       user = await UserModel.findOne({ name }).select("+password");
     } else {
       user = await ServiceProviderModel.findOne({ name }).select("+password");
     }
-    const isMatch = await bcrypt.compare(password, user.password);
 
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (isMatch) {
+      console.log(`backend user = ${user}`);
+    } else {
+      console.log("not match");
+      console.log("match = ", isMatch);
+    }
     // const token = (await cookieStore).get("token")?.value;
     const token = jwt.sign({ foo: "bar" }, process.env.JWT_KEY);
 
@@ -52,7 +61,7 @@ export async function POST(req) {
         secure: process.env.NODE_ENV === "production",
       });
 
-      response.cookies.set("type", userType, {
+      response.cookies.set("type", usertype, {
         httpOnly: true,
         path: "/",
         sameSite: "strict",
@@ -70,7 +79,7 @@ export async function POST(req) {
       });
     }
   } catch (error) {
-    console.log("error", error.message);
+    console.log("error in login route in backend ", error.message);
     return new Response(
       JSON.stringify({
         error: error.message,

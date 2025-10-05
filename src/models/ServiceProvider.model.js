@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import ServiceModel from "./Service.model";
+import BookingModel from "./Booking.model";
 
 const ServiceProviderSchema = new mongoose.Schema({
   name: {
@@ -38,6 +39,12 @@ const ServiceProviderSchema = new mongoose.Schema({
   availability: {
     type: Boolean, // true or false  thay sake em ..
   },
+  allRequest: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Booking",
+    },
+  ],
   confirmService: [
     {
       type: mongoose.Schema.Types.ObjectId,

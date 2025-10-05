@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ThemeProvider } from "../ui/theme-provider";
 import ThemeToggleButton from "../ui/theme-toggle-button";
 
-const Main_navbar = () => {
+const Provider_navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -51,7 +51,7 @@ const Main_navbar = () => {
               <ul className="hidden lg:flex gap-12 mx-4">
                 <li className="relative group">
                   <Link
-                    href="/customer"
+                    href="/provider/home"
                     className={`hover:text-gray-300 transition-colors`}
                   >
                     Home
@@ -60,7 +60,7 @@ const Main_navbar = () => {
                 </li>
                 <li className="relative group">
                   <Link
-                    href="/customer/dashboard"
+                    href="/provider/dashboard"
                     className="hover:text-gray-300 transition-colors"
                   >
                     Dashboard
@@ -69,16 +69,16 @@ const Main_navbar = () => {
                 </li>
                 <li className="relative group">
                   <Link
-                    href="/customer/wishlist"
+                    href="/provider"
                     className="hover:text-gray-300 transition-colors"
                   >
-                    My Wishlist
+                    All Requests
                   </Link>
                   <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
                 </li>
                 <li className="relative group">
                   <Link
-                    href="/customer/Profile"
+                    href="/provider"
                     className="hover:text-gray-300 transition-colors"
                   >
                     Profile
@@ -97,7 +97,7 @@ const Main_navbar = () => {
               <ul className="flex flex-col items-end bg-gray-800 text-white p-4">
                 <li>
                   <Link
-                    href="/customer"
+                    href="/provider/home"
                     onClick={() => setIsOpen(false)}
                     className="hover:text-gray-300 transition-colors"
                   >
@@ -106,7 +106,7 @@ const Main_navbar = () => {
                 </li>
                 <li>
                   <Link
-                    href="/customer/dashboard"
+                    href="/provider/dashboard"
                     onClick={() => setIsOpen(false)}
                     className="hover:text-gray-300 transition-colors"
                   >
@@ -115,16 +115,16 @@ const Main_navbar = () => {
                 </li>
                 <li>
                   <Link
-                    href="/customer/wishlist"
+                    href="/provider"
                     onClick={() => setIsOpen(false)}
                     className="hover:text-gray-300 transition-colors"
                   >
-                    My Wishlist
+                    All Requests
                   </Link>
                 </li>
                 <li>
                   <Link
-                    href="/customer/profile"
+                    href="/provider"
                     onClick={() => setIsOpen(false)}
                     className="hover:text-gray-300 transition-colors"
                   >
@@ -140,4 +140,4 @@ const Main_navbar = () => {
   );
 };
 
-export default Main_navbar;
+export default Provider_navbar;

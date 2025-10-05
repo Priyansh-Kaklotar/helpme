@@ -11,7 +11,7 @@ import { NextResponse } from "next/server";
 export async function PATCH(req, { params }) {
   try {
     await connectToDatabase();
-    const { statusInfo } = await req.json();
+    const { status } = await req.json();
     const { id } = await params;
     const cookieStore = await cookies();
     const userId = cookieStore.get("userId")?.value;
@@ -19,14 +19,15 @@ export async function PATCH(req, { params }) {
 
     if (userType === "serviceProvider") {
       const bookingDetails = await BookingModel.findByIdAndUpdate(id, {
-        bookingStatus: statusInfo,
+        bookingStatus: status,
       }).populate("service");
 
       const customerId = bookingDetails.user;
+      console.log("Backend : Customer Id = ", customerId);
       const customer = await UserModel.findById(customerId);
       const provider = await ServiceProviderModel.findById(userId);
 
-      if (statusInfo === "accepted") {
+      if (status === "confirmed") {
         await sendMail(
           customer.email,
           "Your Booking Request is Accepted by Service Provider",
@@ -65,7 +66,8 @@ export async function PATCH(req, { params }) {
         await ServiceProviderModel.findByIdAndUpdate(
           userId,
           {
-            $pull: { allService: id },
+            // $pull: { allService: id },
+            $pull: { allRequest: new mongoose.Types.ObjectId(id) },
           },
           { new: true }
         );
@@ -73,7 +75,8 @@ export async function PATCH(req, { params }) {
         await UserModel.findByIdAndUpdate(
           customerId,
           {
-            $pull: { booking: id },
+            // $pull: { booking: id },
+            $pull: { booking: new mongoose.Types.ObjectId(id) },
           },
           { new: true }
         );

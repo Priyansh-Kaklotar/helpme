@@ -20,8 +20,9 @@ const ServiceSchema = new mongoose.Schema({
     ref: "ServiceProvider",
   },
   isActive: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "ServiceProvider",
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: "ServiceProvider",
+    type: String,
   },
 });
 

@@ -1,0 +1,293 @@
+"use client";
+import { useState, useEffect } from "react";
+import {
+  Plus,
+  TrendingUp,
+  Clock,
+  CheckCircle,
+  ArrowRight,
+  Star,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+
+export default function ProviderHomeV3() {
+  const [name, setName] = useState("Alex");
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(false);
+  // const [pendingBookings, setPendingBookings] = useState([
+  //   {
+  //     id: 1,
+  //     customer: "Rahul Sharma",
+  //     service: "Home Cleaning",
+  //     time: "10:00 AM",
+  //     date: "Today",
+  //   },
+  //   {
+  //     id: 2,
+  //     customer: "Priya Patel",
+  //     service: "Electrical Repair",
+  //     time: "2:30 PM",
+  //     date: "Today",
+  //   },
+  //   {
+  //     id: 3,
+  //     customer: "Amit Kumar",
+  //     service: "Plumbing",
+  //     time: "11:00 AM",
+  //     date: "Tomorrow",
+  //   },
+  // ]);
+
+  const [pendingBookings, setPendingBookings] = useState([]);
+  useEffect(() => {
+    async function confirmServiceFetch() {
+      try {
+        const response = await axios.get("/api/provider/confirmbooking");
+        const data = response.data;
+        console.log(data.confirmService);
+        setPendingBookings(data.confirmService);
+      } catch (error) {
+        console.log(
+          "error in the confirm service fetch in useEffect in provider/home"
+        );
+      }
+    }
+
+    confirmServiceFetch();
+  }, []);
+
+  useEffect(() => {
+    setServices([
+      {
+        _id: "1",
+        title: "Deep Home Cleaning",
+        price: 500,
+        category: "Cleaner",
+        isActive: "active",
+        bookings: 24,
+      },
+      {
+        _id: "2",
+        title: "Electrical Installation",
+        price: 800,
+        category: "Electrician",
+        isActive: "active",
+        bookings: 18,
+      },
+      {
+        _id: "3",
+        title: "Bathroom Plumbing",
+        price: 600,
+        category: "Plumber",
+        isActive: "active",
+        bookings: 15,
+      },
+      {
+        _id: "4",
+        title: "Wall Painting",
+        price: 1200,
+        category: "Painter",
+        isActive: "active",
+        bookings: 12,
+      },
+    ]);
+  }, []);
+
+  const categoryEmojis = {
+    Cleaner: "🧹",
+    Electrician: "⚡",
+    Plumber: "🔧",
+    Painter: "🎨",
+  };
+
+  const getDateLabel = (isoDate) => {
+    const bookingDate = new Date(isoDate);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    // Reset time to midnight for accurate comparison
+    today.setHours(0, 0, 0, 0);
+    tomorrow.setHours(0, 0, 0, 0);
+    bookingDate.setHours(0, 0, 0, 0);
+
+    if (bookingDate.getTime() === today.getTime()) {
+      return "Today";
+    } else if (bookingDate.getTime() === tomorrow.getTime()) {
+      return "Tomorrow";
+    } else {
+      // Return formatted date for other days
+      return bookingDate.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      });
+    }
+  };
+
+  const navigate = useRouter();
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 p-4 md:p-8">
+      {/* Header Section */}
+      <div className="mb-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-1">
+              Good morning, {name}!
+            </h1>
+            <p className="text-gray-600">Let's make today productive 💪</p>
+          </div>
+          <button
+            onClick={() => navigate.push("/provider/createService")}
+            className="flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-6 py-3 rounded-full font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300"
+          >
+            <Plus size={20} />
+            New Service
+          </button>
+        </div>
+      </div>
+
+      {/* Stats Row */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="bg-white rounded-2xl p-5 shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-emerald-500">
+          <div className="text-emerald-600 mb-2">
+            <TrendingUp size={28} />
+          </div>
+          <p className="text-gray-600 text-sm mb-1">Total Services</p>
+          <p className="text-2xl font-bold text-gray-800">12</p>
+        </div>
+
+        <div className="bg-white rounded-2xl p-5 shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-blue-500">
+          <div className="text-blue-600 mb-2">
+            <Clock size={28} />
+          </div>
+          <p className="text-gray-600 text-sm mb-1">Pending</p>
+          <p className="text-2xl font-bold text-gray-800">8</p>
+        </div>
+
+        <div className="bg-white rounded-2xl p-5 shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-green-500">
+          <div className="text-green-600 mb-2">
+            <CheckCircle size={28} />
+          </div>
+          <p className="text-gray-600 text-sm mb-1">Completed</p>
+          <p className="text-2xl font-bold text-gray-800">145</p>
+        </div>
+
+        <div className="bg-white rounded-2xl p-5 shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-yellow-500">
+          <div className="text-yellow-600 mb-2">
+            <Star size={28} />
+          </div>
+          <p className="text-gray-600 text-sm mb-1">Rating</p>
+          <p className="text-2xl font-bold text-gray-800">4.9</p>
+        </div>
+      </div>
+
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Column - Services */}
+        <div className="lg:col-span-2">
+          <div className="bg-white rounded-2xl p-6 shadow-md">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-bold text-gray-800">Your Services</h2>
+              <button className="text-emerald-600 font-semibold hover:text-emerald-700 flex items-center gap-1">
+                View All
+                <ArrowRight size={18} />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {services.map((service, index) => (
+                <div
+                  key={service._id}
+                  className="flex items-center gap-4 p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-200 hover:shadow-lg hover:scale-[1.02] transition-all duration-300"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center text-3xl flex-shrink-0">
+                    {categoryEmojis[service.category]}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-gray-800 truncate">
+                      {service.title}
+                    </h3>
+                    <p className="text-sm text-gray-500">{service.category}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-bold text-emerald-600">
+                      ₹{service.price}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      {service.bookings} bookings
+                    </p>
+                  </div>
+                  <button className="px-4 py-2 bg-emerald-100 text-emerald-700 rounded-lg hover:bg-emerald-200 transition-colors font-medium text-sm">
+                    Edit
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            <button
+              onClick={() => navigate.push("/provider/createService")}
+              className="w-full mt-4 py-3 border-2 border-dashed border-gray-300 rounded-xl text-gray-600 hover:border-emerald-500 hover:text-emerald-600 hover:bg-emerald-50 transition-all duration-300 font-medium"
+            >
+              + Add Another Service
+            </button>
+          </div>
+        </div>
+
+        {/* Right Column - Upcoming Bookings */}
+        <div className="space-y-6">
+          <div className="bg-white rounded-2xl p-6 shadow-md">
+            <h2 className="text-xl font-bold text-gray-800 mb-4">
+              Upcoming Bookings
+            </h2>
+            <div className="space-y-3">
+              {pendingBookings.map((booking, index) => (
+                <div
+                  key={booking._id}
+                  className="p-4 bg-gradient-to-r from-cyan-50 to-teal-50 rounded-xl border border-cyan-200 hover:shadow-md transition-all duration-300"
+                  style={{ animationDelay: `${index * 150}ms` }}
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <h4 className="font-semibold text-gray-800">
+                      {booking.user.name}
+                    </h4>
+                    <span className="text-xs bg-emerald-500 text-white px-2 py-1 rounded-full">
+                      {getDateLabel(booking.service.bookingTime)}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-1">
+                    {booking.service.price}
+                  </p>
+                  <p className="text-sm text-emerald-600 font-medium">
+                    🕐{" "}
+                    {new Date(booking.bookingTime).toLocaleTimeString("en-US", {
+                      hour: "numeric",
+                      minute: "2-digit",
+                      hour12: true,
+                    })}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <button className="w-full mt-4 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300">
+              View All Bookings
+            </button>
+          </div>
+
+          {/* Quick Tips */}
+          <div className="bg-gradient-to-br from-amber-100 to-orange-100 rounded-2xl p-6 border border-amber-200">
+            <h3 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
+              💡 Quick Tip
+            </h3>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              Keep your services updated with clear descriptions and competitive
+              pricing to attract more customers!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

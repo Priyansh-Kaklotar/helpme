@@ -75,7 +75,7 @@ const Page = () => {
           },
           {
             icon: <RiListCheck2 />,
-            title: "My Services",
+            title: "My Booked Services",
             text: "Track and manage your service requests.",
             color: "red",
           },
@@ -111,7 +111,7 @@ const Page = () => {
                   ? navigate.push("/customer/Profile")
                   : card.title === "Wallet"
                   ? navigate.push("/customer/my-wallet")
-                  : navigate.push("/customer/my-services");
+                  : navigate.push("/customer/bookservice");
                 setLoading(false);
               }}
             >

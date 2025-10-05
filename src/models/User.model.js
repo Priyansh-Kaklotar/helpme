@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import Booking from "./Booking.model";
+import ServiceModel from "./Service.model";
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -22,7 +23,6 @@ const UserSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: function (v) {
-        // Check if number is between 100000 and 999999 (6 digits)
         return v >= 100000 && v <= 999999;
       },
       message: (props) =>
