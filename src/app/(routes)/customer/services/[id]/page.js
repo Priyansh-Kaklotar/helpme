@@ -15,6 +15,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import Loader from "@/src/components/Loader/page";
+import { toast } from "react-toastify";
 
 const page = () => {
   const params = useParams();
@@ -111,6 +112,26 @@ const page = () => {
         </div>
       </div>
     );
+  }
+
+
+
+  const HandleBooking = async () => {
+    try {
+      const res = await axios.post('/api/bookings',{
+        serviceId : id
+      });
+      const data =await res.data;
+      console.log(data);
+      // have successfully book thay gayu ......
+      if(data.success){
+        toast.success("Service Booked Successfully");
+        router.push('/customer/my-services');
+      }
+
+    } catch (error) {
+      console.log(error.messageg);
+    }
   }
 
   return (
@@ -278,7 +299,9 @@ const page = () => {
                     <MessageCircle size={18} />
                     <span>Chat</span>
                   </button>
-                  <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full transition-all duration-300 hover:scale-110 backdrop-blur-sm flex items-center space-x-2">
+                  <button
+                  onClick={()=>{window.location = 'mailto:'+Service.providerName?.email}}
+                  className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full transition-all duration-300 hover:scale-110 backdrop-blur-sm flex items-center space-x-2">
                     <Mail size={18} />
                     <span>Email</span>
                   </button>
@@ -288,7 +311,9 @@ const page = () => {
 
             {/* Animated CTA buttons */}
             <div className="space-y-4">
-              <button className="w-full bg-white/20 hover:bg-white/30 backdrop-blur-lg text-white py-4 px-8 rounded-2xl font-bold border border-white/30 hover:border-white/50 transition-all duration-300 hover:scale-105 hover:-translate-y-1 shadow-lg hover:shadow-xl">
+              <button 
+              className="w-full bg-white/20 hover:bg-white/30 backdrop-blur-lg text-white py-4 px-8 rounded-2xl font-bold border border-white/30 hover:border-white/50 transition-all duration-300 hover:scale-105 hover:-translate-y-1 shadow-lg hover:shadow-xl"
+              onClick={HandleBooking}>
                 🚀 Book This Service
               </button>
               <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">

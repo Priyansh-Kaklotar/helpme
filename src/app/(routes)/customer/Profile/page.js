@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "@/src/components/Loader/page";
+import { toast, Bounce } from "react-toastify";
 
 const Page = () => {
   const [name, setName] = useState("");
@@ -88,7 +89,18 @@ const Page = () => {
 
       if (field === "pincode") {
         if (pincode.toString().length !== 6) {
-          alert("Pincode must be exactly 6 digits");
+          // alert("Pincode must be exactly 6 digits");
+          toast.error('Pincode Must be exactly 6 digits', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          })
           setLoading(false);
           return;
         }
@@ -96,9 +108,30 @@ const Page = () => {
       const res = await axios.patch("/api/customer/profile", payload);
 
       if (res.data.success) {
-        alert(res.data.message);
+        toast.success(res.data.message, {
+          position: "top-right",
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
       } else {
-        alert("Update failed");
+        toast.error('Update Failed', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        })
       }
     } catch (error) {
       console.error("Update error:", error.message);
