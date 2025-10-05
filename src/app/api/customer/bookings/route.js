@@ -88,17 +88,6 @@ export async function GET() {
     }
 
     await connectToDatabase();
-<<<<<<< HEAD
-    const all_booking = await BookingModel.find({ user: userid })
-        .populate("user")
-        .populate("service")
-        .populate("serviceProvider");
-    return NextResponse.json(all_booking, { status: 200, headers: { "Content-Type": "application/json" } });
-}
-
-
-// using in my-service page.js ..............
-=======
 
     const userBookings = await UserModel.findById(userId).populate({
       path: "booking",
@@ -132,4 +121,3 @@ export async function GET() {
     });
   }
 }
->>>>>>> 384c5dcee04235632648ff9818477bac363009f1
