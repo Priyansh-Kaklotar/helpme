@@ -17,9 +17,14 @@ const BookingSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "ServiceProvider",
     },
+    bookingDate: {
+      type: Date,
+    },
     bookingTime: {
       type: Date,
-      default: Date.now(),
+    },
+    timeSlot: {
+      type: String,
     },
     userAddress: {
       street: String,
@@ -35,6 +40,12 @@ const BookingSchema = new mongoose.Schema(
       type: String,
       enum: ["pending", "confirmed", "in-progress", "completed", "rejected"],
       default: "pending",
+    },
+    specialRequirements: {
+      type: String,
+    },
+    totalAmount: {
+      type: Number,
     },
   },
   { timestamps: true }

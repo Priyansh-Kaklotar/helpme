@@ -8,6 +8,7 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   try {
     const { serviceId } = await req.json();
+    console.log("booking backend data = ", req.json);
     await connectToDatabase();
     const cookieStore = await cookies();
     const userId = cookieStore.get("userId")?.value;
@@ -28,18 +29,24 @@ export async function POST(req) {
         .populate("service")
         .populate("serviceProvider");
 
-      return NextResponse.json({
-        fullBooking,
-        success: true,
-        message: "Booking created successfully",
-      }, {status :200 , headers :{"Content-Type" : "application/json"}}); 
+      return NextResponse.json(
+        {
+          fullBooking,
+          success: true,
+          message: "Booking created successfully",
+        },
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
     } else {
-      throw new Error("Only Customer can do the booking") // aam karay jenathi 3 vaar nextRespopnse no lakhvu pade aa me documentation ma vachyu hatu..
+      throw new Error("Only Customer can do the booking"); // aam karay jenathi 3 vaar nextRespopnse no lakhvu pade aa me documentation ma vachyu hatu..
     }
   } catch (error) {
-    return NextResponse.json({
-      message: error.message,
-      success: false,
-    }, {status : 400});
+    return NextResponse.json(
+      {
+        message: error.message,
+        success: false,
+      },
+      { status: 400 }
+    );
   }
 }

@@ -41,6 +41,8 @@ export default function BookingForm({ service, onClose }) {
           onClose?.();
         }, 2000);
       }
+
+      console.log("submited form data = ", formData);
     } catch (error) {
       alert("Error creating booking. Please try again.");
       console.error(error);

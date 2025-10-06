@@ -28,6 +28,8 @@ export async function POST(req) {
     const service = await ServiceModel.findById(bookingData.serviceId).populate(
       "providerName"
     );
+
+    console.log("service = ", service);
     if (!service) {
       return NextResponse.json({
         success: false,
