@@ -119,6 +119,26 @@ const page = () => {
     );
   }
 
+
+
+  const HandleBooking = async () => {
+    try {
+      const res = await axios.post('/api/bookings',{
+        serviceId : id
+      });
+      const data =await res.data;
+      console.log(data);
+      // have successfully book thay gayu ......
+      if(data.success){
+        toast.success("Service Booked Successfully");
+        router.push('/customer/my-services');
+      }
+
+    } catch (error) {
+      console.log(error.messageg);
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8">
       {/* Back Button */}
@@ -284,7 +304,9 @@ const page = () => {
                     <MessageCircle size={18} />
                     <span>Chat</span>
                   </button>
-                  <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full transition-all duration-300 hover:scale-110 backdrop-blur-sm flex items-center space-x-2">
+                  <button
+                  onClick={()=>{window.location = 'mailto:'+Service.providerName?.email}}
+                  className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full transition-all duration-300 hover:scale-110 backdrop-blur-sm flex items-center space-x-2">
                     <Mail size={18} />
                     <span>Email</span>
                   </button>
