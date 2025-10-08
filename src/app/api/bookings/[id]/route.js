@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(req, { params }) {
   try {
-    const { id } = params;
+    const { id } = await params;
     await connectToDatabase();
     const booking = await BookingModel.findById(id)
       .populate("user")
@@ -21,7 +21,5 @@ export async function GET(req, { params }) {
     );
   }
 }
-
-
 
 // this also been used in my-service page.js ......................

@@ -301,17 +301,34 @@ function page() {
   // }
 
   const [selectedStatus, setSelectedStatus] = useState("pending");
+
   const showBookings = (status) => {
-    return allBooking
-      .filter((b) => b.bookingStatus === status)
-      .map((b) => (
-        <BookingCard
-          key={b._id}
-          booking={b}
-          onConfirm={handleConfirm}
-          onReject={handleReject}
-        />
-      ));
+    if (status === "All") {
+      return allBooking
+        .filter(
+          (b) =>
+            b.bookingStatus === "pending" || b.bookingStatus === "confirmed"
+        )
+        .map((b) => (
+          <BookingCard
+            key={b._id}
+            booking={b}
+            onConfirm={handleConfirm}
+            onReject={handleReject}
+          />
+        ));
+    } else {
+      return allBooking
+        .filter((b) => b.bookingStatus === status)
+        .map((b) => (
+          <BookingCard
+            key={b._id}
+            booking={b}
+            onConfirm={handleConfirm}
+            onReject={handleReject}
+          />
+        ));
+    }
   };
   // Loading state
   if (loading) {
@@ -408,7 +425,7 @@ function page() {
             <div className="text-white/70 font-medium">Total Revenue</div>
           </div>
           <div
-            onClick={() => setSelectedStatus("pending")}
+            onClick={() => setSelectedStatus("All")}
             className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center border border-white/20"
           >
             <div className="text-3xl font-bold text-white mb-2">

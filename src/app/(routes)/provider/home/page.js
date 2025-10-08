@@ -15,30 +15,7 @@ export default function ProviderHomeV3() {
   const [name, setName] = useState("Alex");
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(false);
-  // const [pendingBookings, setPendingBookings] = useState([
-  //   {
-  //     id: 1,
-  //     customer: "Rahul Sharma",
-  //     service: "Home Cleaning",
-  //     time: "10:00 AM",
-  //     date: "Today",
-  //   },
-  //   {
-  //     id: 2,
-  //     customer: "Priya Patel",
-  //     service: "Electrical Repair",
-  //     time: "2:30 PM",
-  //     date: "Today",
-  //   },
-  //   {
-  //     id: 3,
-  //     customer: "Amit Kumar",
-  //     service: "Plumbing",
-  //     time: "11:00 AM",
-  //     date: "Tomorrow",
-  //   },
-  // ]);
-
+  const [showAllBookings, setShowAllBookings] = useState(false);
   const [pendingBookings, setPendingBookings] = useState([]);
   useEffect(() => {
     async function confirmServiceFetch() {
@@ -101,27 +78,24 @@ export default function ProviderHomeV3() {
     Painter: "🎨",
   };
 
-  const getDateLabel = (isoDate) => {
-    const bookingDate = new Date(isoDate);
+  const getDateLabel = (dateString) => {
+    const targetDate = new Date(dateString);
     const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
 
-    // Reset time to midnight for accurate comparison
+    // Normalize both dates (ignore hours/min/sec)
+    targetDate.setHours(0, 0, 0, 0);
     today.setHours(0, 0, 0, 0);
-    tomorrow.setHours(0, 0, 0, 0);
-    bookingDate.setHours(0, 0, 0, 0);
 
-    if (bookingDate.getTime() === today.getTime()) {
+    // Calculate difference
+    const diffInMs = targetDate - today;
+    const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+
+    if (diffInDays > 0) {
+      return `${diffInDays} days later`;
+    } else if (diffInDays === 0) {
       return "Today";
-    } else if (bookingDate.getTime() === tomorrow.getTime()) {
-      return "Tomorrow";
     } else {
-      // Return formatted date for other days
-      return bookingDate.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      });
+      return `Missed : ${Math.abs(diffInDays)} days Ago`;
     }
   };
 
@@ -239,40 +213,109 @@ export default function ProviderHomeV3() {
         {/* Right Column - Upcoming Bookings */}
         <div className="space-y-6">
           <div className="bg-white rounded-2xl p-6 shadow-md">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">
-              Upcoming Bookings
-            </h2>
-            <div className="space-y-3">
-              {pendingBookings.map((booking, index) => (
-                <div
-                  key={booking._id}
-                  className="p-4 bg-gradient-to-r from-cyan-50 to-teal-50 rounded-xl border border-cyan-200 hover:shadow-md transition-all duration-300"
-                  style={{ animationDelay: `${index * 150}ms` }}
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="font-semibold text-gray-800">
-                      {booking.user.name}
-                    </h4>
-                    <span className="text-xs bg-emerald-500 text-white px-2 py-1 rounded-full">
-                      {getDateLabel(booking.service.bookingTime)}
-                    </span>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-1">
-                    {booking.service.price}
-                  </p>
-                  <p className="text-sm text-emerald-600 font-medium">
-                    🕐{" "}
-                    {new Date(booking.bookingTime).toLocaleTimeString("en-US", {
-                      hour: "numeric",
-                      minute: "2-digit",
-                      hour12: true,
-                    })}
-                  </p>
-                </div>
-              ))}
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold text-gray-800">
+                Upcoming Bookings
+              </h2>
+              <span className="text-sm font-semibold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
+                {pendingBookings.length} pending
+              </span>
             </div>
-            <button className="w-full mt-4 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300">
-              View All Bookings
+            <div className="space-y-3">
+              {pendingBookings
+                .sort(
+                  (a, b) => new Date(a.bookingDate) - new Date(b.bookingDate)
+                )
+                .slice(0, showAllBookings ? pendingBookings.length : 3)
+                .map((booking, index) => {
+                  return (
+                    <div
+                      key={booking._id}
+                      className="relative p-4 bg-gradient-to-r from-cyan-50 via-teal-50 to-emerald-50 rounded-xl border-l-4 border-emerald-500 hover:shadow-lg hover:scale-[1.02] transition-all duration-300"
+                      style={{ animationDelay: `${index * 150}ms` }}
+                    >
+                      <div className="flex justify-between items-start mb-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                            {booking.user.name.charAt(0).toUpperCase()}
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-gray-800">
+                              {booking.user.name}
+                            </h4>
+                            <p className="text-xs text-gray-500">
+                              {booking.user.address}
+                            </p>
+                          </div>
+                        </div>
+                        <span className="text-xs bg-emerald-500 text-white px-2.5 py-1 rounded-full font-medium shadow-sm">
+                          {getDateLabel(booking.bookingDate)}
+                        </span>
+                      </div>
+
+                      <div className="bg-white rounded-lg p-3 mb-2 border border-gray-100">
+                        <div className="flex justify-between items-start mb-1">
+                          <p className="text-sm font-semibold text-gray-800">
+                            {booking.service.title}
+                          </p>
+                          <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">
+                            {booking.service.category}
+                          </span>
+                        </div>
+                        <p className="text-xs text-gray-500 line-clamp-1">
+                          {booking.service.description}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-1 text-emerald-600">
+                            <Clock size={16} />
+                            <span className="text-sm font-medium">
+                              {booking.timeSlot}
+                            </span>
+                          </div>
+                          <div className="text-sm font-bold text-emerald-700">
+                            ₹{booking.totalAmount}
+                          </div>
+                        </div>
+                        <button
+                          onClick={() =>
+                            navigate.push(
+                              `/provider/viewBooking/${booking._id}`
+                            )
+                          }
+                          className="text-xs bg-emerald-600 text-white px-3 py-1.5 rounded-lg hover:bg-emerald-700 transition-colors font-medium"
+                        >
+                          View Details
+                        </button>
+                      </div>
+
+                      {booking.specialRequirements && (
+                        <div className="mt-2 pt-2 border-t border-gray-200">
+                          <p className="text-xs text-gray-600">
+                            <span className="font-medium">Note:</span>{" "}
+                            {booking.specialRequirements}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+            </div>
+            {pendingBookings.length === 0 && (
+              <div className="text-center py-8">
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Clock size={32} className="text-gray-400" />
+                </div>
+                <p className="text-gray-500 text-sm">No upcoming bookings</p>
+              </div>
+            )}
+            <button
+              onClick={() => setShowAllBookings(!showAllBookings)}
+              className="w-full mt-4 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-semibold hover:shadow-lg hover:scale-[1.02] transition-all duration-300"
+            >
+              {showAllBookings ? `Show Less` : `View All Booking`}
             </button>
           </div>
 
