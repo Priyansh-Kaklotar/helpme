@@ -10,9 +10,13 @@ import {
   CheckCircle,
   FileText,
   MoveLeft,
+  Check,
 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
+import Loader from "@/src/components/Loader/page";
+import OTPInput from "@/src/components/OTPInput/page";
+import OTPVerificationModal from "../../verifyCompleteOTP/page";
 
 export default function BookingDetails() {
   const params = useParams();
@@ -21,6 +25,8 @@ export default function BookingDetails() {
   const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [showOTPModal, setShowOTPModal] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -58,6 +64,54 @@ export default function BookingDetails() {
       month: "long",
       day: "numeric",
     });
+  };
+
+  // async function handleCompleteButton() {
+  //   try {
+  //     router.push("/verify-otp");
+  //   } catch (error) {}
+  // }
+
+  async function handleCompleteButton() {
+    try {
+      // Send OTP to customer email
+      const response = await axios.post("/api/otp/serviceComplete", {
+        bookingId: booking._id,
+        userId: booking.user._id,
+        providerId: booking.serviceProvider._id,
+        email: booking.user.email,
+      });
+
+      if (response.data.success) {
+        // Show OTP modal
+        setShowOTPModal(true);
+      } else {
+        alert("Failed to send OTP. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      alert(
+        error.response?.data?.message || "Failed to send OTP. Please try again."
+      );
+    }
+  }
+
+  const handleOTPSuccess = async (data) => {
+    // Close modal
+    setShowOTPModal(false);
+
+    // Update booking status
+    setIsCompleted(true);
+
+    // Refresh booking details
+    await fetchBookingDetails();
+
+    // Show success message or redirect
+    alert("Service completed successfully!");
+  };
+
+  const handleCancelOTP = () => {
+    setShowOTPModal(false);
   };
 
   return (
@@ -241,9 +295,46 @@ export default function BookingDetails() {
                 </div>
               </div>
             </div>
+
+            {/* Service Complete Button */}
+
+            <button
+              onClick={handleCompleteButton}
+              className={`
+          relative px-8 py-3.5 rounded-lg font-medium text-white
+          transition-all duration-300
+          ${
+            isCompleted
+              ? "bg-emerald-500 hover:bg-emerald-600"
+              : "bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
+          }
+          shadow-lg hover:shadow-xl hover:-translate-y-0.5
+        `}
+            >
+              <span className="flex items-center gap-2">
+                {isCompleted ? (
+                  <>
+                    <Check className="w-5 h-5" />
+                    <span>Completed</span>
+                  </>
+                ) : (
+                  <span>Complete Service</span>
+                )}
+              </span>
+            </button>
           </div>
         )}
       </div>
+
+      {loading && <Loader></Loader>}
+
+      {showOTPModal && booking && (
+        <OTPVerificationModal
+          booking={booking}
+          onSuccess={handleOTPSuccess}
+          onCancel={handleCancelOTP}
+        />
+      )}
 
       <style jsx>{`
         @keyframes fadeIn {
