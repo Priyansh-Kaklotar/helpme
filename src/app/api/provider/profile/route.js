@@ -2,13 +2,17 @@ import connectToDatabase from "@/src/lib/mongodb";
 import ServiceProviderModel from "@/src/models/ServiceProvider.model";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import BookingModel from "@/src/models/Booking.model";
+import ServiceModel from "@/src/models/Service.model";
 
 export async function GET() {
   try {
     const cookieStore = cookies();
     const type = (await cookieStore).get("type")?.value;
     const userId = (await cookieStore).get("userId")?.value;
-    const user = await ServiceProviderModel.findById(userId);
+    const user = await ServiceProviderModel.findById(userId).populate(
+      "allService completedService confirmService"
+    );
 
     return NextResponse.json({
       user: user,

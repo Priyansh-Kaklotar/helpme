@@ -40,13 +40,18 @@ export default function BookingDetails() {
     try {
       setLoading(true);
       console.log("id = ", id);
-      // Replace with your actual API endpoint
+
       const response = await axios.get(`/api/bookings/${id}`);
 
       const data = response.data;
       console.log("data = ", data.booking);
+
       if (data.success) {
         setBooking(data.booking);
+        if (data.booking.bookingStatus == "completed") {
+          console.log("booking Status : ", data.booking.bookingStatus);
+          setIsCompleted(true);
+        }
       }
 
       setError(null);
@@ -65,12 +70,6 @@ export default function BookingDetails() {
       day: "numeric",
     });
   };
-
-  // async function handleCompleteButton() {
-  //   try {
-  //     router.push("/verify-otp");
-  //   } catch (error) {}
-  // }
 
   async function handleCompleteButton() {
     try {
@@ -102,6 +101,22 @@ export default function BookingDetails() {
 
     // Update booking status
     setIsCompleted(true);
+
+    // Booking model ma Staus chnage thay jse
+    try {
+      const response = await axios.patch(`/api/bookings/${id}/status`, {
+        bookingStatus: "completed",
+      });
+
+      const data = response.data;
+
+      console.log("after change the booking status : ", data);
+    } catch (error) {
+      console.log(
+        "error in the upadet the booking status to completed : ",
+        error.message
+      );
+    }
 
     // Refresh booking details
     await fetchBookingDetails();
@@ -300,6 +315,7 @@ export default function BookingDetails() {
 
             <button
               onClick={handleCompleteButton}
+              disabled={isCompleted}
               className={`
           relative px-8 py-3.5 rounded-lg font-medium text-white
           transition-all duration-300

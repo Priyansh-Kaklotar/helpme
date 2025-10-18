@@ -12,11 +12,15 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 
 export default function ProviderHomeV3() {
-  const [name, setName] = useState("Alex");
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showAllBookings, setShowAllBookings] = useState(false);
   const [pendingBookings, setPendingBookings] = useState([]);
+  const [providerDetails, setProviderDetails] = useState({});
+  const [pendingServiceCount, setPendingServiceCount] = useState(0);
+  const [allServicesCount, setAllServicesCount] = useState(0);
+  const [completeServiceCount, setCompleteServiceCount] = useState(0);
+
   useEffect(() => {
     async function confirmServiceFetch() {
       try {
@@ -31,44 +35,27 @@ export default function ProviderHomeV3() {
       }
     }
 
-    confirmServiceFetch();
-  }, []);
+    async function providerDetail() {
+      try {
+        const response = await axios.get("/api/provider/profile");
+        const data = response.data;
+        setProviderDetails(data.user);
+        setServices(data.user.allService);
+        console.log(data.user);
 
-  useEffect(() => {
-    setServices([
-      {
-        _id: "1",
-        title: "Deep Home Cleaning",
-        price: 500,
-        category: "Cleaner",
-        isActive: "active",
-        bookings: 24,
-      },
-      {
-        _id: "2",
-        title: "Electrical Installation",
-        price: 800,
-        category: "Electrician",
-        isActive: "active",
-        bookings: 18,
-      },
-      {
-        _id: "3",
-        title: "Bathroom Plumbing",
-        price: 600,
-        category: "Plumber",
-        isActive: "active",
-        bookings: 15,
-      },
-      {
-        _id: "4",
-        title: "Wall Painting",
-        price: 1200,
-        category: "Painter",
-        isActive: "active",
-        bookings: 12,
-      },
-    ]);
+        const allServiceCount = data.user.allService.length;
+        const pendingServiceC = data.user.confirmService.length;
+        const completeServiceC = data.user.completedService.length;
+        setAllServicesCount(allServiceCount);
+        setPendingServiceCount(pendingServiceC);
+        setCompleteServiceCount(completeServiceC);
+      } catch (error) {
+        console.log("Error in the Provider Details Route : ", error.message);
+      }
+    }
+
+    confirmServiceFetch();
+    providerDetail();
   }, []);
 
   const categoryEmojis = {
@@ -99,6 +86,7 @@ export default function ProviderHomeV3() {
     }
   };
 
+  // const allServiceCount = providerDetails.allService.length;
   const navigate = useRouter();
 
   return (
@@ -108,7 +96,7 @@ export default function ProviderHomeV3() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-1">
-              Good morning, {name}!
+              Good morning, {providerDetails.name}!
             </h1>
             <p className="text-gray-600">Let's make today productive 💪</p>
           </div>
@@ -129,7 +117,7 @@ export default function ProviderHomeV3() {
             <TrendingUp size={28} />
           </div>
           <p className="text-gray-600 text-sm mb-1">Total Services</p>
-          <p className="text-2xl font-bold text-gray-800">12</p>
+          <p className="text-2xl font-bold text-gray-800">{allServicesCount}</p>
         </div>
 
         <div className="bg-white rounded-2xl p-5 shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-blue-500">
@@ -137,7 +125,9 @@ export default function ProviderHomeV3() {
             <Clock size={28} />
           </div>
           <p className="text-gray-600 text-sm mb-1">Pending</p>
-          <p className="text-2xl font-bold text-gray-800">8</p>
+          <p className="text-2xl font-bold text-gray-800">
+            {pendingServiceCount}
+          </p>
         </div>
 
         <div className="bg-white rounded-2xl p-5 shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-green-500">
@@ -145,7 +135,9 @@ export default function ProviderHomeV3() {
             <CheckCircle size={28} />
           </div>
           <p className="text-gray-600 text-sm mb-1">Completed</p>
-          <p className="text-2xl font-bold text-gray-800">145</p>
+          <p className="text-2xl font-bold text-gray-800">
+            {completeServiceCount}
+          </p>
         </div>
 
         <div className="bg-white rounded-2xl p-5 shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-yellow-500">

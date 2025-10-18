@@ -51,6 +51,12 @@ const ServiceProviderSchema = new mongoose.Schema({
       ref: "Booking",
     },
   ],
+  completedService: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Booking",
+    },
+  ],
 });
 
 ServiceProviderSchema.pre("save", async function (next) {
