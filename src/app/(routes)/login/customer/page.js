@@ -58,6 +58,7 @@ function Page() {
       });
       const data = await res.data;
       console.log(data.success);
+      console.log(data);
       if (data.success) {
         toast.success("✅ Signin Successful", {
           position: "top-right",
