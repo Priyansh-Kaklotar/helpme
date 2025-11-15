@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "@/src/components/Loader/page";
-import { toast, Bounce } from "react-toastify";
+import { toast, Bounce, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const Page = () => {
+export default function Page() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
@@ -15,126 +16,67 @@ const Page = () => {
     async function getUserData() {
       try {
         const res = await axios.get("/api/customer-details");
-
-        // aa nichena route thi pan user no data fetch kari sakay pan have chalse
-        // const res = await axios.get("/api/customer/profile");
         const data = res.data;
         if (data.success) {
-          setName(data.name);
-          setEmail(data.email);
-          setPincode(data.pincode);
-          setAddress(data.address);
-        } else {
-          console.log("error in the get data useEffect");
+          setName(data.name || "");
+          setEmail(data.email || "");
+          setPincode(data.pincode || "");
+          setAddress(data.address || "");
         }
       } catch (error) {
-        console.log("Request Failed : ", error.message);
+        console.error("Request Failed:", error?.message || error);
       }
     }
-
     getUserData();
   }, []);
 
-  // useEffect(() => {
-  //   async function fetchName() {
-  //     try {
-  //       const res = await axios.get("/api/get-name");
-  //       const data = res.data;
-  //       if (data.success) {
-  //         setName(data.name);
-  //       } else {
-  //         console.error("Error fetching name:", data.message);
-  //       }
-  //     } catch (err) {
-  //       console.error("Request failed:", err);
-  //     }
-  //   }
-
-  //   if (name === "") {
-  //     // Fetch name only if not already set
-  //     fetchName();
-  //   }
-  // }, [name, setName]);
-
-  // useEffect(() => {
-  //   async function fetchEmail() {
-  //     try {
-  //       const res2 = await axios.get("/api/get-email");
-  //       const data2 = res2.data;
-  //       if (data2.success) {
-  //         setEmail(data2.email);
-  //       } else {
-  //         console.error("Error fetching name:", data.message);
-  //       }
-  //     } catch (error) {
-  //       console.log("Error Fetching email : ", error.message);
-  //     }
-  //   }
-
-  //   if (email == "") {
-  //     fetchEmail();
-  //   }
-  // }, [email, setEmail]);
-
-  const profileImage = name
+  const initials = (name || "U")
     .split(" ")
-    .map((name) => name[0])
+    .map((n) => n?.[0] ?? "")
     .join("")
+    .slice(0, 3)
     .toUpperCase();
 
   const updateProfile = async (field) => {
     setLoading(true);
     try {
       const payload = field === "address" ? { address } : { pincode };
-
       if (field === "pincode") {
         if (pincode.toString().length !== 6) {
-          // alert("Pincode must be exactly 6 digits");
-          toast.error('Pincode Must be exactly 6 digits', {
+          toast.error("Pincode must be exactly 6 digits", {
             position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
+            autoClose: 4000,
             transition: Bounce,
-          })
+            theme: "colored",
+          });
           setLoading(false);
           return;
         }
       }
       const res = await axios.patch("/api/customer/profile", payload);
-
-      if (res.data.success) {
-        toast.success(res.data.message, {
+      if (res.data?.success) {
+        toast.success(res.data.message || "Updated successfully", {
           position: "top-right",
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
+          autoClose: 3500,
           transition: Bounce,
+          theme: "colored",
         });
       } else {
-        toast.error('Update Failed', {
+        toast.error(res.data?.message || "Update failed", {
           position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
+          autoClose: 3500,
           transition: Bounce,
-        })
+          theme: "colored",
+        });
       }
-    } catch (error) {
-      console.error("Update error:", error.message);
+    } catch (err) {
+      console.error("Update error:", err?.message || err);
+      toast.error("Network error. Try again.", {
+        position: "top-right",
+        autoClose: 3500,
+        transition: Bounce,
+        theme: "colored",
+      });
     } finally {
       setLoading(false);
     }
@@ -142,118 +84,119 @@ const Page = () => {
 
   return (
     <>
-      <div>
-        {/* Profile Image section  */}
-        <div className="flex justify-between items-center">
-          <div className="flex justify-between gap-2 items-center mt-2 ml-4">
-            <div
-              id="profileImage"
-              className="w-30 h-30 rounded-full bg-[#004D3C] text-white text-[3.5rem] font-sans text-center flex justify-center items-center"
-            >
-              {profileImage}
-            </div>
-            <div>
-              <h2>{name}</h2>
-              <h3>{email}</h3>
+      <ToastContainer />
+      <div className="min-h-screen py-12 px-4 bg-gradient-to-b from-purple-900 via-purple-700 to-indigo-900">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white/6 backdrop-blur-md dark:bg-black/20 rounded-2xl border border-white/10 dark:border-white/6 shadow-xl overflow-hidden">
+            <div className="p-6 md:p-8">
+              <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
+                <div className="flex items-center gap-4 w-full md:w-auto">
+                  <div className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center text-white text-2xl md:text-4xl font-bold shadow-md">
+                    {initials}
+                  </div>
+                  <div>
+                    <h1 className="text-white text-lg md:text-2xl font-semibold">{name || "Unnamed User"}</h1>
+                    <p className="text-purple-200 text-sm md:text-base">{email || "No email set"}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:scale-[0.99] transition"
+                  >
+                    Contact Support
+                  </a>
+                  <button
+                    onClick={() => {
+                      setAddress("");
+                      setPincode("");
+                      toast.info("Fields cleared", { position: "top-right", autoClose: 2000, theme: "colored" });
+                    }}
+                    className="px-4 py-2 rounded-full bg-white/10 text-white border border-white/10 hover:bg-white/20 transition"
+                  >
+                    Clear
+                  </button>
+                </div>
+              </div>
+
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-purple-200 mb-1">Username</label>
+                    <div className="w-full rounded-xl border border-white/10 bg-white/5 p-3 text-white">
+                      {name || "—"}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-purple-200 mb-1">Email</label>
+                    <div className="w-full rounded-xl border border-white/10 bg-white/5 p-3 text-white">
+                      {email || "—"}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-purple-200 mb-1">Address</label>
+                    <textarea
+                      rows={4}
+                      placeholder="Update your address"
+                      onChange={(e) => setAddress(e.target.value)}
+                      value={address}
+                      className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white placeholder-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                    <div className="flex justify-end mt-2">
+                      <button
+                        onClick={() => updateProfile("address")}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:scale-[0.99] transition"
+                      >
+                        Update Address
+                      </button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-purple-200 mb-1">Pincode</label>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      placeholder="6-digit pincode"
+                      value={pincode}
+                      onChange={(e) => {
+                        if (/^\d{0,6}$/.test(e.target.value)) setPincode(e.target.value);
+                      }}
+                      className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white placeholder-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                    <div className="flex justify-end mt-2">
+                      <button
+                        onClick={() => updateProfile("pincode")}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:scale-[0.99] transition"
+                      >
+                        Update Pincode
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 border-t border-white/6 pt-4 text-center md:text-left">
+                <p className="text-sm text-purple-200">
+                  Need help? Email <a className="underline text-white" href="mailto:support@yourdomain.com">support@yourdomain.com</a>
+                </p>
+              </div>
             </div>
           </div>
 
-          <div className="mr-10">
-            <button className="px-5 py-3 rounded-xl bg-blue-400 hover:bg-blue-500">
-              {" "}
-              Edit{" "}
-            </button>
-          </div>
+          {loading && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
+              <Loader />
+            </div>
+          )}
         </div>
-
-        {/* Profile Related Details Section */}
-        <div className="flex flex-col justify-center items-center gap-5">
-          {/* User name */}
-          <div className="w-3/10">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Username :
-            </label>
-            <div className="mt-1 flex rounded-xl border border-gray-300 dark:border-gray-700 overflow-hidden">
-              <p className="w-full bg-white dark:bg-gray-950 px-3 py-2 text-gray-900 dark:text-gray-100 focus:outline-none">
-                {name}
-              </p>
-            </div>
-          </div>
-          {/* Email */}
-          <div className="w-3/10">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Email :
-            </label>
-            <div className="mt-1 flex rounded-xl border border-gray-300 dark:border-gray-700 overflow-hidden">
-              <p className="w-full bg-white dark:bg-gray-950 px-3 py-2 text-gray-900 dark:text-gray-100 focus:outline-none">
-                {email}
-              </p>
-            </div>
-          </div>
-          {/* Address */}
-          <div className="w-3/10">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Address :
-            </label>
-            <div className="mt-1 flex rounded-xl border border-gray-300 dark:border-gray-700 overflow-hidden">
-              <textarea
-                rows={4}
-                placeholder="Update Your Address"
-                onChange={(e) => setAddress(e.target.value)}
-                value={address}
-                className="w-full bg-white dark:bg-gray-950 px-3 py-2 text-gray-900 dark:text-gray-100 focus:outline-none"
-              >
-                {address}
-              </textarea>
-            </div>
-            <div className="flex justify-end">
-              <button
-                type="submit"
-                onClick={() => updateProfile("address")}
-                className="bg-blue-400 p-3 rounded-xl mt-1 hover:bg-blue-500 active:scale-85"
-              >
-                {" "}
-                Update{" "}
-              </button>
-            </div>
-          </div>
-          {/* Pincode */}
-          <div className="w-3/10">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Pincode :
-            </label>
-            <div className="mt-1 flex rounded-xl border border-gray-300 dark:border-gray-700 overflow-hidden">
-              <input
-                type="number"
-                placeholder="Update your Pincode"
-                min={0}
-                maxLength={6}
-                onChange={(e) => {
-                  // allow only digits and max 6
-                  if (/^\d{0,6}$/.test(e.target.value)) {
-                    setPincode(e.target.value);
-                  }
-                }}
-                value={pincode}
-                className="w-full bg-white dark:bg-gray-950 px-3 py-2 text-gray-900 dark:text-gray-100 focus:outline-none"
-              />
-            </div>
-            <div className="flex justify-end">
-              <button
-                type="submit"
-                onClick={() => updateProfile("pincode")}
-                className="bg-blue-400 p-3 rounded-xl mt-1 hover:bg-blue-500 active:scale-85"
-              >
-                {" "}
-                Update{" "}
-              </button>
-            </div>
-          </div>
-        </div>
-        {loading && <Loader />}
       </div>
     </>
   );
-};
-
-export default Page;
+}
