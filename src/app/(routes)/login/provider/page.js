@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-function page() {
+function Page() {
   const [formData, setFormData] = useState({
     name: "",
     password: "",
@@ -347,7 +347,7 @@ function page() {
           {/* Sign Up Link */}
           <div className="text-center mt-8">
             <p className="text-white/70 text-sm">
-              Don't have an account?{" "}
+              {`Don't have an account?`}{" "}
               <button
                 type="button"
                 className="text-green-300 cursor-pointer  hover:text-violet-200 font-medium transition-colors duration-200"
@@ -434,4 +434,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

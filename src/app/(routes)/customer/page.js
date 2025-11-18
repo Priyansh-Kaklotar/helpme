@@ -227,6 +227,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Home() {
   const [name, setName] = useState("");

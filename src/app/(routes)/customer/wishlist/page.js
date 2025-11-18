@@ -85,7 +85,7 @@ function WishlistPage() {
                 Empty Wishlist
               </h3>
               <p className="text-white/80 mb-6">
-                You haven't added any services to your wishlist yet.
+                {`You haven't added any services to your wishlist yet.`}
               </p>
               <button
                 onClick={() => window.history.back()}

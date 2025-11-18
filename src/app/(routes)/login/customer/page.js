@@ -189,7 +189,7 @@ function Page() {
                 Welcome Back,
               </h1>
               <p className="mt-2 lg:-ml-48 dark:text-gray-500 text-white text-sm sm:text-base">
-                Welcome to our Website, let's Help Others
+                {`Welcome to our Website, let's Help Others`}
               </p>
             </div>
           </div>

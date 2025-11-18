@@ -208,7 +208,7 @@ export default function OTPVerificationModal({ booking, onSuccess, onCancel }) {
             OTP has been sent to customer
           </p>
           <p className="text-indigo-600 font-medium">
-            {booking.user.email || booking.customerPhone}
+            {booking?.user?.email || booking?.customerPhone}
           </p>
         </div>
 

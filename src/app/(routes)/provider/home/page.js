@@ -96,9 +96,10 @@ export default function ProviderHomeV3() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-1">
-              Good morning, {providerDetails.name}!
+              {`Good morning,`} {providerDetails.name}
+              {`!`}
             </h1>
-            <p className="text-gray-600">Let's make today productive 💪</p>
+            <p className="text-gray-600">{`Let's make today productive 💪`}</p>
           </div>
           <button
             onClick={() => navigate.push("/provider/createService")}

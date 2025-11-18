@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { Bounce } from "react-toastify";
 import Loader from "@/src/components/Loader/page";
 
-const page = () => {
+const Page = () => {
   const [Email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -93,4 +93,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

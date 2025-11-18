@@ -66,7 +66,7 @@ export default function BookingForm({ service, onClose }) {
     }
 
     serviceDetails();
-  }, []);
+  }, [serviceDetails]);
 
   const nextStep = () => {
     if (currentStep < 3) setCurrentStep(currentStep + 1);

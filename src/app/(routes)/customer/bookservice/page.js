@@ -254,7 +254,7 @@ export default function BookingsPage() {
               No Bookings Yet
             </h2>
             <p className="text-white/80">
-              You haven't made any bookings yet. Start exploring our services!
+              {`You haven't made any bookings yet. Start exploring our services!`}
             </p>
           </div>
         ) : (

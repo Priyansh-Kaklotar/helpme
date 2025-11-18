@@ -4,7 +4,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Bounce, toast } from "react-toastify";
 
-function page() {
+function Page() {
   const [allBooking, setAllBooking] = useState([]);
   const [confirmBooking, setConfirmBooking] = useState([]);
   const [rejectedBooking, setRejectedBooking] = useState([]);
@@ -493,4 +493,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
