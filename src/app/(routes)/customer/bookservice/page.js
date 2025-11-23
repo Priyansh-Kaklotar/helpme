@@ -188,7 +188,7 @@ export default function BookingsPage() {
     try {
       const response = await fetch("/api/customer/bookings");
       const data = await response.json();
-      console.log("booking = ", data);
+      // console.log("booking = ", data);
       if (data.success) {
         setBookings(data.bookings);
         setError(null);
@@ -196,7 +196,7 @@ export default function BookingsPage() {
         setError("Failed to fetch bookings");
       }
     } catch (error) {
-      console.error("Error fetching bookings:", error);
+      // console.error("Error fetching bookings:", error);
       setError("Error fetching bookings. Please try again.");
     } finally {
       setLoading(false);

@@ -26,12 +26,12 @@ export default function ProviderHomeV3() {
       try {
         const response = await axios.get("/api/provider/confirmbooking");
         const data = response.data;
-        console.log(data.confirmService);
+        // console.log(data.confirmService);
         setPendingBookings(data.confirmService);
       } catch (error) {
-        console.log(
-          "error in the confirm service fetch in useEffect in provider/home"
-        );
+        // console.log(
+        //   "error in the confirm service fetch in useEffect in provider/home"
+        // );
       }
     }
 
@@ -41,7 +41,7 @@ export default function ProviderHomeV3() {
         const data = response.data;
         setProviderDetails(data.user);
         setServices(data.user.allService);
-        console.log(data.user);
+        // console.log(data.user);
 
         const allServiceCount = data.user.allService.length;
         const pendingServiceC = data.user.confirmService.length;
@@ -50,7 +50,7 @@ export default function ProviderHomeV3() {
         setPendingServiceCount(pendingServiceC);
         setCompleteServiceCount(completeServiceC);
       } catch (error) {
-        console.log("Error in the Provider Details Route : ", error.message);
+        // console.log("Error in the Provider Details Route : ", error.message);
       }
     }
 

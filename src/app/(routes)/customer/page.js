@@ -243,7 +243,7 @@ export default function Home() {
           setPopularServices(data.data);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     }
     fetchServices();
@@ -257,10 +257,10 @@ export default function Home() {
         if (data.success) {
           setName(data.name);
         } else {
-          console.error("Error fetching name:", data.message);
+          // console.error("Error fetching name:", data.message);
         }
       } catch (err) {
-        console.error("Request failed:", err);
+        // console.error("Request failed:", err);
       }
     }
     if (name === "") {
@@ -268,7 +268,7 @@ export default function Home() {
     }
   }, [name, setName]);
 
-  console.log("popular service : ", popularServices);
+  // console.log("popular service : ", popularServices);
   const categories = [
     {
       name: "Plumbing",
@@ -424,12 +424,12 @@ export default function Home() {
                 className="group min-w-[220px] sm:min-w-[240px] md:min-w-[280px] bg-white dark:bg-gray-800 rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-purple-500/30 p-4 flex-shrink-0 transition-all duration-300 hover:scale-105 cursor-pointer animate-slide-in-right"
                 style={{ animationDelay: `${index * 100}ms` }}
                 onClick={() => {
-                  console.log(
-                    "clicked service is ",
-                    service,
-                    "id is ",
-                    service._id
-                  );
+                  // console.log(
+                  //   "clicked service is ",
+                  //   service,
+                  //   "id is ",
+                  //   service._id
+                  // );
                   Router.push(`/customer/services/${service._id}`);
                 }}
               >

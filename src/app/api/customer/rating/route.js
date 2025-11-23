@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   const cookieStore = cookies();
   const userId = (await cookieStore).get("userId")?.value;
-  console.log(userId);
+  // console.log(userId);
   await connectToDatabase();
   const reviews = await Rating.find({ user: userId });
   return NextResponse.json(reviews, {

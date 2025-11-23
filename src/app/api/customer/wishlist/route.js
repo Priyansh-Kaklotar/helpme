@@ -7,7 +7,7 @@ import ServiceModel from "@/src/models/Service.model";
 export async function PATCH(req) {
   try {
     const { id } = await req.json();
-    console.log("id in patch is = ", id);
+    // console.log("id in patch is = ", id);
     const cookieStore = await cookies();
     const userId = cookieStore.get("userId")?.value;
     await connectToDatabase();
@@ -39,7 +39,7 @@ export async function PATCH(req) {
 export async function DELETE(req) {
   try {
     const { id } = await req.json();
-    console.log("id in delete is = ", id);
+    // console.log("id in delete is = ", id);
     const cookieStore = await cookies();
     const userId = cookieStore.get("userId")?.value;
     await connectToDatabase();
@@ -75,7 +75,7 @@ export async function GET() {
     if (userId) {
       const user = await UserModel.findById(userId).populate("wishList");
       const wishList = user.wishList;
-      console.log("wishlist = ", wishList);
+      // console.log("wishlist = ", wishList);
       return NextResponse.json({
         wishList,
         success: true,

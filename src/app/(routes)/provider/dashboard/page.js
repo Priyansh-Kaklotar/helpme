@@ -18,11 +18,11 @@ function Page() {
         setLoading(true);
         const res = await axios.get("/api/provider/bookings");
         const data = res.data;
-        console.log(data.services);
+        // console.log(data.services);
         setAllBooking(data.services || []);
         setError(null);
       } catch (error) {
-        console.log("error in the provider/dashboard ", error.message);
+        // console.log("error in the provider/dashboard ", error.message);
         setError("Failed to fetch bookings");
         setAllBooking([]);
       } finally {
@@ -33,9 +33,9 @@ function Page() {
   }, []);
 
   useEffect(() => {
-    console.log("All Booking = ", allBooking);
-    console.log("Confirm Booking = ", confirmBooking);
-    console.log("Rejected Booking = ", rejectedBooking);
+    // console.log("All Booking = ", allBooking);
+    // console.log("Confirm Booking = ", confirmBooking);
+    // console.log("Rejected Booking = ", rejected/Booking);
   }, [allBooking, confirmBooking, rejectedBooking]);
 
   //booking Card component
@@ -215,7 +215,7 @@ function Page() {
   const handleConfirm = async (bookingId) => {
     try {
       setLoading(true);
-      console.log("Confirming booking:", bookingId);
+      // console.log("Confirming booking:", bookingId);
 
       // Update the booking status in the API
       const response = await axios.patch(
@@ -234,7 +234,7 @@ function Page() {
         )
       );
 
-      console.log("Booking confirmed successfully");
+      // console.log("Booking confirmed successfully");
       setLoading(false);
       toast.success("✅ Booking Confirm Successful", {
         position: "top-right",
@@ -248,7 +248,7 @@ function Page() {
         transition: Bounce,
       });
     } catch (error) {
-      console.error("Error confirming booking:", error.message);
+      // console.error("Error confirming booking:", error.message);
       // we can add a toast notification here
     }
   };
@@ -257,7 +257,7 @@ function Page() {
   const handleReject = async (bookingId) => {
     try {
       setLoading(true);
-      console.log("Rejecting booking:", bookingId);
+      // console.log("Rejecting booking:", bookingId);
 
       // Update the booking status in the API
       const response = await axios.patch(
@@ -279,10 +279,10 @@ function Page() {
       setAllBooking((prev) =>
         prev.filter((booking) => booking._id !== bookingId)
       );
-      console.log("Booking rejected successfully");
+      // console.log("Booking rejected successfully");
       setLoading(false);
     } catch (error) {
-      console.error("Error rejecting booking:", error.message);
+      // console.error("Error rejecting booking:", error.message);
       // You can add a toast notification here
     }
   };

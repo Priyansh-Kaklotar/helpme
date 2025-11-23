@@ -18,9 +18,9 @@ const Page = () => {
         const res = await axios.get("/api/get-email");
         const data = await res.data;
         setEmail(data.email);
-        console.log("Email fetched:", data.email);
+        // console.log("Email fetched:", data.email);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     }
     GetEmail();
@@ -29,14 +29,14 @@ const Page = () => {
 
   const handleOtpComplete = async (otp) => {
     setLoading(true);
-    console.log("OTP entered:", otp);
+    // console.log("OTP entered:", otp);
     try {
       const response = await axios.post("/auth/verifyotp", {
         email: Email,
         otp: otp,
       });
       const data = await response.data;
-      console.log("OTP verification response:", data);
+      // console.log("OTP verification response:", data);
       toast.success(data.message);
       if (data.success == true) {
         toast.success("✅ Signin Successful");

@@ -26,12 +26,12 @@ export default function BookingForm({ service, onClose }) {
     setLoading(true);
 
     try {
-      console.log("service id = ", service);
+      // console.log("service id = ", service);
       const response = await axios.post("/api/customer/bookings", {
         serviceId: service,
         ...formData,
       });
-      console.log(response.data);
+      // console.log(response.data);
 
       if (response.data.success) {
         // Show success animation
@@ -42,10 +42,10 @@ export default function BookingForm({ service, onClose }) {
         }, 2000);
       }
 
-      console.log("submited form data = ", formData);
+      // console.log("submited form data = ", formData);
     } catch (error) {
       alert("Error creating booking. Please try again.");
-      console.error(error);
+      // console.error(error);
     } finally {
       setLoading(false);
     }
@@ -55,13 +55,13 @@ export default function BookingForm({ service, onClose }) {
     async function serviceDetails() {
       try {
         // api/service/service
-        console.log("service : ", service);
+        // console.log("service : ", service);
         const response = await axios.get(`/api/services/${service}`);
         const data = response.data;
         setServiceDetails(data);
       } catch (error) {
-        console.log("error in the booking form page");
-        console.log(error.message);
+        // console.log("error in the booking form page");
+        // console.log(error.message);
       }
     }
 

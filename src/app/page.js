@@ -37,8 +37,8 @@ export default function Home() {
             <button
               className="px-8 py-3 bg-purple-600 text-white rounded-lg font-semibold shadow hover:bg-purple-700 transition cursor-pointer"
               onClick={() => {
-                console.log("user type = ", userType);
-                console.log("token = ", token);
+                // console.log("user type = ", userType);
+                // console.log("token = ", token);
                 if (userType == "Customer" && token) {
                   router.push("/customer");
                 } else {
@@ -51,8 +51,8 @@ export default function Home() {
             <button
               className="px-8 py-3 bg-white dark:bg-gray-800 border border-purple-600 text-purple-700 dark:text-purple-400 rounded-lg font-semibold shadow hover:bg-purple-50 dark:hover:bg-gray-700 transition cursor-pointer"
               onClick={() => {
-                console.log("user type = ", userType);
-                console.log("token = ", token);
+                // console.log("user type = ", userType);
+                // console.log("token = ", token);
                 if (userType == "serviceProvider" && token) {
                   router.push("/provider/dashboard");
                 } else {

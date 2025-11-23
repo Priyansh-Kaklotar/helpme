@@ -16,7 +16,7 @@ export async function GET() {
         .populate("user")
         .populate("service");
 
-      console.log(services);
+      // console.log(services);
 
       return NextResponse.json({
         services,

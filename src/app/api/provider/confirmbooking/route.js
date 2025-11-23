@@ -25,10 +25,10 @@ export async function GET() {
       ],
     });
 
-    console.log(
-      "confirm service details in the backend : ",
-      provider.confirmService
-    );
+    // console.log(
+    //   "confirm service details in the backend : ",
+    //   provider.confirmService
+    // );
     return NextResponse.json({
       // allService: provider.allService,
       confirmService: provider.confirmService,

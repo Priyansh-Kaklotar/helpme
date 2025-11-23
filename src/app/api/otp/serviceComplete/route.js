@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   try {
     const { bookingId, userId, providerId, email } = await req.json();
-    console.log(bookingId, userId, providerId, email);
+    // console.log(bookingId, userId, providerId, email);
     // Generate 6-digit OTP
     const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
 

@@ -22,10 +22,10 @@ const Page = () => {
         if (data.success) {
           setName(data.name);
         } else {
-          console.error("Error fetching name:", data.message);
+          // console.error("Error fetching name:", data.message);
         }
       } catch (err) {
-        console.error("Request failed:", err);
+        // console.error("Request failed:", err);
       }
     }
     if (name === "") {

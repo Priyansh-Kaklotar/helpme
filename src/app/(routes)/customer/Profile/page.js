@@ -24,7 +24,7 @@ export default function Page() {
           setAddress(data.address || "");
         }
       } catch (error) {
-        console.error("Request Failed:", error?.message || error);
+        // console.error("Request Failed:", error?.message || error);
       }
     }
     getUserData();
@@ -70,7 +70,7 @@ export default function Page() {
         });
       }
     } catch (err) {
-      console.error("Update error:", err?.message || err);
+      // console.error("Update error:", err?.message || err);
       toast.error("Network error. Try again.", {
         position: "top-right",
         autoClose: 3500,
@@ -95,8 +95,12 @@ export default function Page() {
                     {initials}
                   </div>
                   <div>
-                    <h1 className="text-white text-lg md:text-2xl font-semibold">{name || "Unnamed User"}</h1>
-                    <p className="text-purple-200 text-sm md:text-base">{email || "No email set"}</p>
+                    <h1 className="text-white text-lg md:text-2xl font-semibold">
+                      {name || "Unnamed User"}
+                    </h1>
+                    <p className="text-purple-200 text-sm md:text-base">
+                      {email || "No email set"}
+                    </p>
                   </div>
                 </div>
 
@@ -111,7 +115,11 @@ export default function Page() {
                     onClick={() => {
                       setAddress("");
                       setPincode("");
-                      toast.info("Fields cleared", { position: "top-right", autoClose: 2000, theme: "colored" });
+                      toast.info("Fields cleared", {
+                        position: "top-right",
+                        autoClose: 2000,
+                        theme: "colored",
+                      });
                     }}
                     className="px-4 py-2 rounded-full bg-white/10 text-white border border-white/10 hover:bg-white/20 transition"
                   >
@@ -123,14 +131,18 @@ export default function Page() {
               <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-purple-200 mb-1">Username</label>
+                    <label className="block text-sm font-medium text-purple-200 mb-1">
+                      Username
+                    </label>
                     <div className="w-full rounded-xl border border-white/10 bg-white/5 p-3 text-white">
                       {name || "—"}
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-purple-200 mb-1">Email</label>
+                    <label className="block text-sm font-medium text-purple-200 mb-1">
+                      Email
+                    </label>
                     <div className="w-full rounded-xl border border-white/10 bg-white/5 p-3 text-white">
                       {email || "—"}
                     </div>
@@ -139,7 +151,9 @@ export default function Page() {
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-purple-200 mb-1">Address</label>
+                    <label className="block text-sm font-medium text-purple-200 mb-1">
+                      Address
+                    </label>
                     <textarea
                       rows={4}
                       placeholder="Update your address"
@@ -158,7 +172,9 @@ export default function Page() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-purple-200 mb-1">Pincode</label>
+                    <label className="block text-sm font-medium text-purple-200 mb-1">
+                      Pincode
+                    </label>
                     <input
                       type="text"
                       inputMode="numeric"
@@ -166,7 +182,8 @@ export default function Page() {
                       placeholder="6-digit pincode"
                       value={pincode}
                       onChange={(e) => {
-                        if (/^\d{0,6}$/.test(e.target.value)) setPincode(e.target.value);
+                        if (/^\d{0,6}$/.test(e.target.value))
+                          setPincode(e.target.value);
                       }}
                       className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-white placeholder-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
                     />
@@ -184,7 +201,13 @@ export default function Page() {
 
               <div className="mt-6 border-t border-white/6 pt-4 text-center md:text-left">
                 <p className="text-sm text-purple-200">
-                  Need help? Email <a className="underline text-white" href="mailto:support@yourdomain.com">support@yourdomain.com</a>
+                  Need help? Email{" "}
+                  <a
+                    className="underline text-white"
+                    href="mailto:support@yourdomain.com"
+                  >
+                    support@yourdomain.com
+                  </a>
                 </p>
               </div>
             </div>

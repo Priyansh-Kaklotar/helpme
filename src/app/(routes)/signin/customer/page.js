@@ -71,18 +71,18 @@ const Signin = () => {
       });
 
       const d = await response.data;
-      console.log("response = ", d);
+      // console.log("response = ", d);
       if (d.success) {
         toast.success("✅ Signin Successful");
         navigate.push("/verify-otp");
       } else {
-        console.log("Signin failed:", d.message);
+        // console.log("Signin failed:", d.message);
         toast.error("❌ Signin failed. Try again.");
         setLoading(false);
       }
       reset();
     } catch (error) {
-      console.error("Signin Error:", error);
+      // console.error("Signin Error:", error);
       toast.error("❌ An error occurred. Please try again.");
     } finally {
       setLoading(true);

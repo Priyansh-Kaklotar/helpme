@@ -35,12 +35,12 @@ const Page = () => {
       const wishlistItems = res.data;
 
       const list = wishlistItems.wishList;
-      console.log("list = ", list);
+      // console.log("list = ", list);
       const exists = list.some((item) => item._id === id);
-      console.log("\nIs in Wish List = ", exists);
+      // console.log("\nIs in Wish List = ", exists);
       setAddToWish(exists);
     } catch (error) {
-      console.log("Error checking wishlist status:", error);
+      // console.log("Error checking wishlist status:", error);
     }
   };
 
@@ -55,11 +55,11 @@ const Page = () => {
         setIsLoading(true);
         const res = await axios.get(`/api/services/${id}`);
         const data = res.data;
-        console.log(data);
+        // console.log(data);
         setService(data);
         await checkWishlistStatus();
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       } finally {
         setIsLoading(false);
       }
@@ -77,22 +77,22 @@ const Page = () => {
           data: { id: id },
         });
         const data = res.data;
-        console.log("Service Removed from Wish List");
-        console.log(data);
+        // console.log("Service Removed from Wish List");
+        // console.log(data);
         setAddToWish(false);
       } catch (error) {
-        console.log("Error in the special service page ", error.message);
+        // console.log("Error in the special service page ", error.message);
       }
     } else {
       // add
       try {
         const res = await axios.patch(`/api/customer/wishlist`, { id });
         const data = res.data;
-        console.log("Service added to Wish List");
-        console.log(data);
+        // console.log("Service added to Wish List");
+        // console.log(data);
         setAddToWish(true);
       } catch (error) {
-        console.log("Error in the special service page ", error.message);
+        // console.log("Error in the special service page ", error.message);
       }
     }
   }
@@ -125,14 +125,14 @@ const Page = () => {
         serviceId: id,
       });
       const data = await res.data;
-      console.log(data);
+      // console.log(data);
       // have successfully book thay gayu ......
       if (data.success) {
         toast.success("Service Booked Successfully");
         router.push("/customer/my-services");
       }
     } catch (error) {
-      console.log(error.messageg);
+      // console.log(error.messageg);
     }
   };
 

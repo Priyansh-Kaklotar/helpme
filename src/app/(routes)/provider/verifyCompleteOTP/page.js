@@ -125,8 +125,8 @@ export default function OTPVerificationModal({ booking, onSuccess, onCancel }) {
       });
 
       const data = response.data;
-      console.log("inserted OTP : ", otpString, typeof otpString);
-      console.log("data in the verify otp : ", data);
+      // console.log("inserted OTP : ", otpString, typeof otpString);
+      // console.log("data in the verify otp : ", data);
 
       if (response.status === 200 && data.success) {
         setSuccess("Service completed successfully!");

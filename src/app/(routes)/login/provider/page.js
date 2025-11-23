@@ -35,8 +35,8 @@ function Page() {
         usertype: "serviceProvider",
       });
 
-      console.log("Login successful:", response.data);
-      console.log("success : ", response.data.success);
+      // console.log("Login successful:", response.data);
+      // console.log("success : ", response.data.success);
       if (response.data.success) {
         alert(response.data.message);
         router.push("/provider/dashboard");
@@ -46,7 +46,7 @@ function Page() {
 
       // Handle successful login (redirect, store token, etc.)
     } catch (error) {
-      console.error("Login error:", error);
+      // console.error("Login error:", error);
       setError(
         error.response?.data?.message || "Login failed. Please try again."
       );

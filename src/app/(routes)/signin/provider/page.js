@@ -64,7 +64,7 @@ const Signin = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      console.log(data);
+      // console.log(data);
       const response = await axios.post("/auth/register/provider", {
         name: data.name,
         email: data.email,
@@ -74,14 +74,14 @@ const Signin = () => {
       });
 
       const d = response.data;
-      console.log("response = ", d, d.success);
+      // console.log("response = ", d, d.success);
       if (d.success == true) {
         toast.success("✅ Signin Successful");
         navigate.push("/verify-otp");
       }
       reset();
     } catch (error) {
-      console.error("Signin Error:", error);
+      // console.error("Signin Error:", error);
       toast.error("❌ Signup failed. Try again.");
     } finally {
       setLoading(false);

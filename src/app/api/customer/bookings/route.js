@@ -11,11 +11,11 @@ export async function POST(req) {
     await connectToDatabase();
     const bookingData = await req.json();
     const { serviceId, ...otherData } = bookingData;
-    console.log("otherdata = ", otherData);
-    console.log("id = ", serviceId);
+    // console.log("otherdata = ", otherData);
+    // console.log("id = ", serviceId);
     const cookieStore = await cookies();
     const userId = cookieStore.get("userId")?.value;
-    console.log("user Id = ", userId);
+    // console.log("user Id = ", userId);
 
     if (!userId) {
       return NextResponse.json({
@@ -29,7 +29,7 @@ export async function POST(req) {
       "providerName"
     );
 
-    console.log("service = ", service);
+    // console.log("service = ", service);
     if (!service) {
       return NextResponse.json({
         success: false,
@@ -81,7 +81,7 @@ export async function GET() {
     const cookieStore = await cookies();
     const userId = cookieStore.get("userId")?.value;
 
-    console.log("user id in customer/booking : ", userId);
+    // console.log("user id in customer/booking : ", userId);
     if (!userId) {
       return NextResponse.json({
         success: false,
@@ -104,7 +104,7 @@ export async function GET() {
       ],
     });
 
-    console.log("first");
+    // console.log("first");
     // path: "booking",
     // populate: [
     //   { path: "serviceId", select: "title category price" },

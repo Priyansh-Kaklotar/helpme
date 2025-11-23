@@ -23,7 +23,7 @@ export async function PATCH(req, { params }) {
       }).populate("service");
 
       const customerId = bookingDetails.user;
-      console.log("Backend : Customer Id = ", customerId);
+      // console.log("Backend : Customer Id = ", customerId);
       const customer = await UserModel.findById(customerId);
       const provider = await ServiceProviderModel.findById(userId);
 

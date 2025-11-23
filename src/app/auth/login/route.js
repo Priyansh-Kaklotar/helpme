@@ -26,9 +26,9 @@ export async function POST(req) {
     // } else {
     //   userType = "serviceProvider";
     // }
-    console.log(
-      `in backend login route: name = ${name}, password = ${password}, userType = ${usertype}`
-    );
+    // console.log(
+    //   `in backend login route: name = ${name}, password = ${password}, userType = ${usertype}`
+    // );
 
     let user;
     if (usertype === "Customer") {
@@ -39,10 +39,10 @@ export async function POST(req) {
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (isMatch) {
-      console.log(`backend user = ${user}`);
+      // console.log(`backend user = ${user}`);
     } else {
-      console.log("not match");
-      console.log("match = ", isMatch);
+      // console.log("not match");
+      // console.log("match = ", isMatch);
     }
     // const token = (await cookieStore).get("token")?.value;
     const token = jwt.sign({ foo: "bar" }, process.env.JWT_KEY);
@@ -79,7 +79,7 @@ export async function POST(req) {
       });
     }
   } catch (error) {
-    console.log("error in login route in backend ", error.message);
+    // console.log("error in login route in backend ", error.message);
     return new Response(
       JSON.stringify({
         error: error.message,
