@@ -67,24 +67,6 @@ const Provider_navbar = () => {
                   </Link>
                   <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
                 </li>
-                <li className="relative group">
-                  <Link
-                    href="/provider"
-                    className="hover:text-gray-300 transition-colors"
-                  >
-                    All Requests
-                  </Link>
-                  <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
-                </li>
-                <li className="relative group">
-                  <Link
-                    href="/provider"
-                    className="hover:text-gray-300 transition-colors"
-                  >
-                    Profile
-                  </Link>
-                  <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-white transition-all duration-300 group-hover:w-full"></span>
-                </li>
               </ul>
             </div>
 
@@ -112,25 +94,7 @@ const Provider_navbar = () => {
                   >
                     Dashboard
                   </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/provider"
-                    onClick={() => setIsOpen(false)}
-                    className="hover:text-gray-300 transition-colors"
-                  >
-                    All Requests
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/provider"
-                    onClick={() => setIsOpen(false)}
-                    className="hover:text-gray-300 transition-colors"
-                  >
-                    Profile
-                  </Link>
-                </li>
+                </li>  
               </ul>
             </div>
           </div>

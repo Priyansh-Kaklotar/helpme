@@ -7,7 +7,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const cookieStore = cookies();
+  const cookieStore =await cookies();
   const id = await cookieStore.get("userId")?.value;
 
   try {
