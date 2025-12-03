@@ -17,11 +17,11 @@ function WishlistPage() {
         const response = await axios.get("/api/customer/wishlist");
         const data = response.data;
         setWishlist(data.wishList);
-        console.log("data", data);
-        console.log("wishlist : ", data.wishList);
+        // console.log("data", data);
+        // console.log("wishlist : ", data.wishList);
       } catch (error) {
-        console.log("Error in the Wishlist Frontend");
-        console.log(error.message);
+        // console.log("Error in the Wishlist Frontend");
+        // console.log(error.message);
       } finally {
         setLoading(false);
       }
@@ -49,7 +49,7 @@ function WishlistPage() {
         alert("Service removed from wishlist!");
       }
     } catch (error) {
-      console.error("Error removing from wishlist:", error);
+      // console.error("Error removing from wishlist:", error);
       alert("Failed to remove from wishlist. Please try again.");
     }
   };
@@ -85,7 +85,7 @@ function WishlistPage() {
                 Empty Wishlist
               </h3>
               <p className="text-white/80 mb-6">
-                You haven't added any services to your wishlist yet.
+                {`You haven't added any services to your wishlist yet.`}
               </p>
               <button
                 onClick={() => window.history.back()}

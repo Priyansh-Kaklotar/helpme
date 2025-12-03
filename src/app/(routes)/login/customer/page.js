@@ -48,7 +48,7 @@ function Page() {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (d) => {
-    console.log(d);
+    // console.log(d);
     setLoading(true);
     try {
       const res = await axios.post("/auth/login", {
@@ -57,8 +57,8 @@ function Page() {
         usertype: "Customer",
       });
       const data = await res.data;
-      console.log(data.success);
-      console.log(data);
+      // console.log(data.success);
+      // console.log(data);
       if (data.success) {
         toast.success("✅ Signin Successful", {
           position: "top-right",
@@ -75,10 +75,10 @@ function Page() {
         navigate.push("/customer");
       } else {
         toast.error(data.message || "Login failed!");
-        console.log("error while login");
+        // console.log("error while login");
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     } finally {
       setLoading(false);
     }
@@ -189,7 +189,7 @@ function Page() {
                 Welcome Back,
               </h1>
               <p className="mt-2 lg:-ml-48 dark:text-gray-500 text-white text-sm sm:text-base">
-                Welcome to our Website, let's Help Others
+                {`Welcome to our Website, let's Help Others`}
               </p>
             </div>
           </div>

@@ -34,7 +34,7 @@ export default function ProfilePicUploader() {
         alert("Upload failed!");
       }
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       alert("Upload error");
     } finally {
       setUploading(false);
@@ -47,10 +47,12 @@ export default function ProfilePicUploader() {
   };
 
   return (
-    <div className="w-full max-w-sm mx-auto p-6 rounded-2xl
+    <div
+      className="w-full max-w-sm mx-auto p-6 rounded-2xl
                     bg-gradient-to-br from-purple-100 to-indigo-50
                     dark:from-purple-900 dark:to-indigo-800
-                    shadow-xl border border-white/10">
+                    shadow-xl border border-white/10"
+    >
       <h3 className="text-lg font-semibold text-purple-700 dark:text-purple-200 mb-4 text-center">
         Update Profile Picture
       </h3>
@@ -93,7 +95,12 @@ export default function ProfilePicUploader() {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16V8a4 4 0 014-4h2a4 4 0 014 4v8M7 16h10" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M7 16V8a4 4 0 014-4h2a4 4 0 014 4v8M7 16h10"
+                />
               </svg>
               <span className="text-xs text-purple-700 dark:text-purple-200 mt-1">
                 Click to choose
@@ -129,7 +136,11 @@ export default function ProfilePicUploader() {
             Uploaded Image
           </p>
           <div className="w-24 h-24 mx-auto rounded-full overflow-hidden ring-4 ring-purple-200 dark:ring-purple-700">
-            <img src={uploadedUrl} alt="Profile" className="w-full h-full object-cover" />
+            <img
+              src={uploadedUrl}
+              alt="Profile"
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
       )}

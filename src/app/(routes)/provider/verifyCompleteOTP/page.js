@@ -125,8 +125,8 @@ export default function OTPVerificationModal({ booking, onSuccess, onCancel }) {
       });
 
       const data = response.data;
-      console.log("inserted OTP : ", otpString, typeof otpString);
-      console.log("data in the verify otp : ", data);
+      // console.log("inserted OTP : ", otpString, typeof otpString);
+      // console.log("data in the verify otp : ", data);
 
       if (response.status === 200 && data.success) {
         setSuccess("Service completed successfully!");
@@ -208,7 +208,7 @@ export default function OTPVerificationModal({ booking, onSuccess, onCancel }) {
             OTP has been sent to customer
           </p>
           <p className="text-indigo-600 font-medium">
-            {booking.user.email || booking.customerPhone}
+            {booking?.user?.email || booking?.customerPhone}
           </p>
         </div>
 

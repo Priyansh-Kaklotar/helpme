@@ -35,7 +35,7 @@ export async function DELETE(req, { params }) {
   const { id } = params;
   await connectToDatabase();
   const deleted = await ServiceModel.findByIdAndDelete(id);
-  console.log(deleted);
+  // console.log(deleted);
   return NextResponse.json({
     success: true,
     message: "Service deleted Successfully",

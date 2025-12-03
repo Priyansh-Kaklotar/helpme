@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-function page() {
+function Page() {
   const [formData, setFormData] = useState({
     name: "",
     password: "",
@@ -35,8 +35,8 @@ function page() {
         usertype: "serviceProvider",
       });
 
-      console.log("Login successful:", response.data);
-      console.log("success : ", response.data.success);
+      // console.log("Login successful:", response.data);
+      // console.log("success : ", response.data.success);
       if (response.data.success) {
         alert(response.data.message);
         router.push("/provider/dashboard");
@@ -46,7 +46,7 @@ function page() {
 
       // Handle successful login (redirect, store token, etc.)
     } catch (error) {
-      console.error("Login error:", error);
+      // console.error("Login error:", error);
       setError(
         error.response?.data?.message || "Login failed. Please try again."
       );
@@ -347,7 +347,7 @@ function page() {
           {/* Sign Up Link */}
           <div className="text-center mt-8">
             <p className="text-white/70 text-sm">
-              Don't have an account?{" "}
+              {`Don't have an account?`}{" "}
               <button
                 type="button"
                 className="text-green-300 cursor-pointer  hover:text-violet-200 font-medium transition-colors duration-200"
@@ -434,4 +434,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

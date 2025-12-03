@@ -8,7 +8,7 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   try {
     const { serviceId } = await req.json();
-    console.log("booking backend data = ", req.json);
+    // console.log("booking backend data = ", req.json);
     await connectToDatabase();
     const cookieStore = await cookies();
     const userId = cookieStore.get("userId")?.value;

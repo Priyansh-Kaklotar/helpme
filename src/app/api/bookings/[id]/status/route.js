@@ -19,7 +19,7 @@ export async function PATCH(req, { params }) {
       });
     }
 
-    console.log("Provider Id in the Cookies: ", userId);
+    // console.log("Provider Id in the Cookies: ", userId);
     const update = await BookingModel.findByIdAndUpdate(id, data);
     const providerUpdate = await ServiceProviderModel.findByIdAndUpdate(
       userId,

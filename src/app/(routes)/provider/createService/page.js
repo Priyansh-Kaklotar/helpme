@@ -52,7 +52,7 @@ export default function CreateServiceV3() {
         navigate.push("/provider/dashboard");
       }
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     } finally {
       setLoading(false);
     }

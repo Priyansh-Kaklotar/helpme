@@ -17,7 +17,7 @@ import {
 import Loader from "@/src/components/Loader/page";
 import BookingForm from "@/src/components/bookingForm/page";
 
-const page = () => {
+const Page = () => {
   const params = useParams();
   const router = useRouter();
   const id = params.id;
@@ -35,12 +35,12 @@ const page = () => {
       const wishlistItems = res.data;
 
       const list = wishlistItems.wishList;
-      console.log("list = ", list);
+      // console.log("list = ", list);
       const exists = list.some((item) => item._id === id);
-      console.log("\nIs in Wish List = ", exists);
+      // console.log("\nIs in Wish List = ", exists);
       setAddToWish(exists);
     } catch (error) {
-      console.log("Error checking wishlist status:", error);
+      // console.log("Error checking wishlist status:", error);
     }
   };
 
@@ -55,11 +55,11 @@ const page = () => {
         setIsLoading(true);
         const res = await axios.get(`/api/services/${id}`);
         const data = res.data;
-        console.log(data);
+        // console.log(data);
         setService(data);
         await checkWishlistStatus();
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       } finally {
         setIsLoading(false);
       }
@@ -77,22 +77,22 @@ const page = () => {
           data: { id: id },
         });
         const data = res.data;
-        console.log("Service Removed from Wish List");
-        console.log(data);
+        // console.log("Service Removed from Wish List");
+        // console.log(data);
         setAddToWish(false);
       } catch (error) {
-        console.log("Error in the special service page ", error.message);
+        // console.log("Error in the special service page ", error.message);
       }
     } else {
       // add
       try {
         const res = await axios.patch(`/api/customer/wishlist`, { id });
         const data = res.data;
-        console.log("Service added to Wish List");
-        console.log(data);
+        // console.log("Service added to Wish List");
+        // console.log(data);
         setAddToWish(true);
       } catch (error) {
-        console.log("Error in the special service page ", error.message);
+        // console.log("Error in the special service page ", error.message);
       }
     }
   }
@@ -119,25 +119,22 @@ const page = () => {
     );
   }
 
-
-
   const HandleBooking = async () => {
     try {
-      const res = await axios.post('/api/bookings',{
-        serviceId : id
+      const res = await axios.post("/api/bookings", {
+        serviceId: id,
       });
-      const data =await res.data;
-      console.log(data);
+      const data = await res.data;
+      // console.log(data);
       // have successfully book thay gayu ......
-      if(data.success){
+      if (data.success) {
         toast.success("Service Booked Successfully");
-        router.push('/customer/my-services');
+        router.push("/customer/my-services");
       }
-
     } catch (error) {
-      console.log(error.messageg);
+      // console.log(error.messageg);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8">
@@ -305,8 +302,11 @@ const page = () => {
                     <span>Chat</span>
                   </button>
                   <button
-                  onClick={()=>{window.location = 'mailto:'+Service.providerName?.email}}
-                  className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full transition-all duration-300 hover:scale-110 backdrop-blur-sm flex items-center space-x-2">
+                    onClick={() => {
+                      window.location = "mailto:" + Service.providerName?.email;
+                    }}
+                    className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full transition-all duration-300 hover:scale-110 backdrop-blur-sm flex items-center space-x-2"
+                  >
                     <Mail size={18} />
                     <span>Email</span>
                   </button>
@@ -404,4 +404,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

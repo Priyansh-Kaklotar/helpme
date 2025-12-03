@@ -33,23 +33,23 @@ export default function BookingDetails() {
     if (id) {
       fetchBookingDetails();
     }
-    console.log("booking id = ", bookingId);
+    // console.log("booking id = ", bookingId);
   }, [bookingId]);
 
   const fetchBookingDetails = async () => {
     try {
       setLoading(true);
-      console.log("id = ", id);
+      // console.log("id = ", id);
 
       const response = await axios.get(`/api/bookings/${id}`);
 
       const data = response.data;
-      console.log("data = ", data.booking);
+      // console.log("data = ", data.booking);
 
       if (data.success) {
         setBooking(data.booking);
         if (data.booking.bookingStatus == "completed") {
-          console.log("booking Status : ", data.booking.bookingStatus);
+          // console.log("booking Status : ", data.booking.bookingStatus);
           setIsCompleted(true);
         }
       }
@@ -88,7 +88,7 @@ export default function BookingDetails() {
         alert("Failed to send OTP. Please try again.");
       }
     } catch (error) {
-      console.error("Error sending OTP:", error);
+      // console.error("Error sending OTP:", error);
       alert(
         error.response?.data?.message || "Failed to send OTP. Please try again."
       );
@@ -110,12 +110,12 @@ export default function BookingDetails() {
 
       const data = response.data;
 
-      console.log("after change the booking status : ", data);
+      // console.log("after change the booking status : ", data);
     } catch (error) {
-      console.log(
-        "error in the upadet the booking status to completed : ",
-        error.message
-      );
+      // console.log(
+      //   "error in the upadet the booking status to completed : ",
+      //   error.message
+      // );
     }
 
     // Refresh booking details

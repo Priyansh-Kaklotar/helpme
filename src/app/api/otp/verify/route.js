@@ -28,7 +28,7 @@ export async function POST(req) {
 
     // Verify OTP
     // const isMatch = await bcrypt.compare(enteredOTP, otpDoc.otpCode);
-    console.log("Entetred OTP : ", otp);
+    // console.log("Entetred OTP : ", otp);
     let isMatch;
     if (otp == otpDoc.otpCode) {
       isMatch = true;
@@ -36,7 +36,7 @@ export async function POST(req) {
       isMatch = false;
     }
 
-    console.log("isMatch = ", isMatch);
+    // console.log("isMatch = ", isMatch);
 
     if (isMatch) {
       // Mark as used
