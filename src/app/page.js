@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
+import ChatLogo from "@/components/chatLogo/ChatLogo";
 
 export default function Home() {
   const [userType, setUserType] = useState("");
@@ -21,6 +22,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
+      <ChatLogo/>
       <section className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-100 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900 px-4 py-16">
         <div className="max-w-2xl text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white mb-6">

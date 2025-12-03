@@ -45,8 +45,7 @@ export async function POST(req) {
       console.log("match = ", isMatch);
     }
     // const token = (await cookieStore).get("token")?.value;
-    const token = jwt.sign({ foo: "bar" }, process.env.JWT_KEY);
-
+    const token = jwt.sign({id : user._id,  foo: "bar" }, process.env.JWT_KEY ,{ expiresIn: '7d' });
     if (isMatch) {
       const response = NextResponse.json({
         success: true,

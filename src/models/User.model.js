@@ -47,6 +47,11 @@ const UserSchema = new mongoose.Schema({
       ref: "Service",
     },
   ],
+  chatThreadId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Chat', // This links to your Chat model
+    default: null,
+  },
 });
 
 UserSchema.pre("save", async function (next) {

@@ -41,7 +41,8 @@ export async function POST(req) {
     );
 
     //JWT Token created
-    const token = jwt.sign({ foo: "bar" }, process.env.JWT_KEY);
+    const token = jwt.sign({id : user._id,  foo: "bar" }, process.env.JWT_KEY ,{ expiresIn: '7d' });
+
 
     const userId = String(user._id);
 

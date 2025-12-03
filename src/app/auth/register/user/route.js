@@ -41,7 +41,7 @@ export async function POST(req) {
     );
 
     //JWT Token created
-    const token = jwt.sign({ foo: "bar" }, process.env.JWT_KEY);
+    const token = jwt.sign({id : user._id,  foo: "bar" }, process.env.JWT_KEY ,{ expiresIn: '7d' });
 
     // NextResponse = aa next app ma response send karva mate vapray che.
     const response = NextResponse.json({

@@ -1,7 +1,8 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
-const protectedRoutes = ['/customer/find-provider' , '/customer/dashboard']; // haji add karsu extra kem ke home page koi pan joi shake pan amuk route mate login ke registeration thavu pade atyare / rakhyu chhe pan pachhi booking , ke biju kak rakhshu . 
+const protectedRoutes = ['/customer/find-provider' , '/customer/dashboard' ,"/chat" ];
+ // haji add karsu extra kem ke home page koi pan joi shake pan amuk route mate login ke registeration thavu pade atyare / rakhyu chhe pan pachhi booking , ke biju kak rakhshu . 
 
 export async function middleware(request) {
   const  pathname  = request.nextUrl.pathname;
@@ -33,5 +34,6 @@ export const config = {
     '/api/:path*',
     '/auth/:path*',
     '/customer/:path*',
+    '/chat',
   ],
 };
