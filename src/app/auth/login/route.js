@@ -45,7 +45,9 @@ export async function POST(req) {
       // console.log("match = ", isMatch);
     }
     // const token = (await cookieStore).get("token")?.value;
-    const token = jwt.sign({id : user._id,  foo: "bar" }, process.env.JWT_KEY ,{ expiresIn: '7d' });
+    const token = jwt.sign({ id: user._id, foo: "bar" }, process.env.JWT_KEY, {
+      expiresIn: "7d",
+    });
     if (isMatch) {
       const response = NextResponse.json({
         success: true,
@@ -60,12 +62,14 @@ export async function POST(req) {
         secure: process.env.NODE_ENV === "production",
       });
 
-      response.cookies.set("type", usertype, {
-        httpOnly: true,
-        path: "/",
-        sameSite: "strict",
-        secure: process.env.NODE_ENV === "production",
-      });
+      // response.cookies.set("type", usertype, {
+      //   httpOnly: true,
+      //   path: "/",
+      //   sameSite: "strict",
+      //   secure: process.env.NODE_ENV === "production",
+      // });
+
+      response.cookies.set("type", usertype);
 
       //set JWT Token also as a cookie
       response.cookies.set("token", token);

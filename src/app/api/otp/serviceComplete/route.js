@@ -30,7 +30,12 @@ export async function POST(req) {
     await sendMail(
       email,
       "OTP for Your Service Completion ",
-      `<p>Your OTP code is <b>${hashedOTP}</b>. It expires in 5 minutes.</p>`
+      // `<p>Your OTP code is <b>${hashedOTP}</b>. It expires in 5 minutes.</p>`
+      `<div style="font-family: Arial; padding: 15px; background:#f3f3f3;">
+      <h2 style="color:#007bff;">Service Completion OTP</h2>
+      <p>Your OTP code is <b>${hashedOTP}</b>.</p>
+      <p><i>This OTP expires in 5 minutes.</i></p>
+      </div>`
     );
 
     return NextResponse.json({

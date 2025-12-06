@@ -13,16 +13,18 @@ export default function Home() {
   const [token, setToken] = useState("");
   const router = useRouter();
   useEffect(() => {
-    const typeCookie = Cookies.get("type");
     const tokenCookie = Cookies.get("token");
+    const typeCookie = Cookies.get("type");
 
+    console.log(Cookies.get("type"));
+    console.log(tokenCookie);
     if (typeCookie) setUserType(typeCookie);
     if (tokenCookie) setToken(tokenCookie);
   }, []);
   return (
     <>
       <Navbar />
-      <ChatLogo/>
+      <ChatLogo />
       <section className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-100 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900 px-4 py-16">
         <div className="max-w-2xl text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white mb-6">
@@ -56,7 +58,7 @@ export default function Home() {
                 // console.log("user type = ", userType);
                 // console.log("token = ", token);
                 if (userType == "serviceProvider" && token) {
-                  router.push("/provider/dashboard");
+                  router.push("/provider/home");
                 } else {
                   router.push("/signin/provider");
                 }
@@ -233,8 +235,7 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
-        <div className="flex justify-center mt-8 p-5">
-        </div>
+        <div className="flex justify-center mt-8 p-5"></div>
       </section>
     </>
   );

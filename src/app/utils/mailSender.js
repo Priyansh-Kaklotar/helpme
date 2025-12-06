@@ -15,7 +15,7 @@ const sendMail = async (to, subject, text) => {
     from: "Help me",
     to: to,
     subject: subject,
-    text: text,
+    html: text,
   };
 
   try {

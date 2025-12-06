@@ -37,12 +37,18 @@ export async function POST(req) {
     await sendMail(
       email,
       "OTP for your account",
-      `<p>Your OTP code is <b>${otp}</b>. It expires in 5 minutes.</p>`
+      // `<p>Your OTP code is <b>${otp}</b>. It expires in 5 minutes.</p>`
+      `<div style="font-family: Arial; padding: 15px; background:#f3f3f3;">
+      <h2 style="color:#007bff;">Verification Code</h2>
+      <p>Your OTP code is <b>${otp}</b>.</p>
+      <p><i>This OTP expires in 5 minutes.</i></p>
+      </div>`
     );
 
     //JWT Token created
-    const token = jwt.sign({id : user._id,  foo: "bar" }, process.env.JWT_KEY ,{ expiresIn: '7d' });
-
+    const token = jwt.sign({ id: user._id, foo: "bar" }, process.env.JWT_KEY, {
+      expiresIn: "7d",
+    });
 
     const userId = String(user._id);
 

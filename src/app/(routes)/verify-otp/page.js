@@ -40,7 +40,7 @@ const Page = () => {
       toast.success(data.message);
       if (data.success == true) {
         toast.success("✅ Signin Successful");
-        navigate.push("/");
+        navigate.push("/provider/home");
       }
     } catch (error) {
       const errormessage = await error.response.data;
