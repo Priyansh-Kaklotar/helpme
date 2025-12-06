@@ -50,6 +50,8 @@ const BookingCard = ({ booking }) => {
     }
   };
 
+  console.log(booking);
+
   return (
     <div className="group relative booking-card w-full max-w-md mx-auto mb-6">
       {/* Card Content */}
@@ -92,14 +94,14 @@ const BookingCard = ({ booking }) => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="info-item">
-              <span className="label">Booking Date</span>
+              <span className="label">Service Date</span>
               <span className="value">
-                {new Date(booking.bookingTime).toLocaleDateString()}
+                {new Date(booking.bookingDate).toLocaleDateString()}
               </span>
             </div>
             <div className="info-item">
-              <span className="label">Booking Time</span>
-              <span className="value">{formatTime(booking.bookingTime)}</span>
+              <span className="label">Service Time</span>
+              <span className="value">{booking.timeSlot}</span>
             </div>
           </div>
 
