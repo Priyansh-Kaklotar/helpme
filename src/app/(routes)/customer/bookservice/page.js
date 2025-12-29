@@ -96,7 +96,7 @@ const BookingCard = ({ booking }) => {
             <div className="info-item">
               <span className="label">Service Date</span>
               <span className="value">
-                {new Date(booking.bookingDate).toLocaleDateString()}
+                `{new Date(booking.bookingDate).toLocaleDateString()}`
               </span>
             </div>
             <div className="info-item">
